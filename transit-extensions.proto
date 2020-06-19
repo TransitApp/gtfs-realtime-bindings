@@ -6,7 +6,7 @@
 
 syntax = "proto2";
 import "gtfs-spec/gtfs-realtime/proto/gtfs-realtime.proto";
-import "agency-extensions/tfnsw-vehicle.proto";
+import "tfnsw-vehicle.proto";
 
 message TransitAlertExtension {
     // Create time of the alerts, in POSIX time
