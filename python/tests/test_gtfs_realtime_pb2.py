@@ -16,7 +16,7 @@
 
 
 import os.path
-from google.transit import gtfs_realtime_pb2
+from google.transit.gtfs_spec.gtfs_realtime.proto import gtfs_realtime_pb2
 import unittest
 
 class GtfsRealtimeTest(unittest.TestCase):
