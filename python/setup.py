@@ -21,7 +21,7 @@ import subprocess
 # We must use setuptools, not distutils, because we need to use the
 # namespace_packages option for the "google" package.
 try:
-  from setuptools import setup, Extension
+  from setuptools import setup, find_packages, Extension
 except ImportError:
   sys.stderr.write(
     "Could not import setuptools; make sure you have setuptools or "
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
   setup(name = 'gtfs-realtime-bindings',
         version = '0.0.5',
-        packages = ['google', 'google.transit'],
+        packages=find_packages(),
         namespace_packages = ['google'],
         install_requires = ['setuptools', 'protobuf'],
         url = 'https://github.com/google/gtfs-realtime-bindings',
