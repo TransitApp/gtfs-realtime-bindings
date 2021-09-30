@@ -31,8 +31,8 @@ except ImportError:
 if __name__ == '__main__':
   ext_module_list = []
 
-  setup(name = 'gtfs-realtime-bindings',
-        version = '0.0.5',
+  setup(name = 'gtfs-realtime-bindings-transit',
+        version = '1.0.0',
         packages=find_packages(),
         namespace_packages = ['google'],
         install_requires = ['setuptools', 'protobuf'],
