@@ -14,6 +14,11 @@ from .agency_extensions import tfnsw_vehicle_pb2 as agency__extensions_dot_tfnsw
 from .agency_extensions import mtas_realtime_pb2 as agency__extensions_dot_mtas__realtime__pb2
 ```
 
+And in `mtas_realtime_pb2.py` (add two leading periods)
+```python
+from ..gtfs_spec.gtfs_realtime.proto import gtfs_realtime_pb2 as gtfs__spec_dot_gtfs__realtime_dot_proto_dot_gtfs__realtime__pb2
+```
+
 
 Add the license header back to the generated source file.
 
