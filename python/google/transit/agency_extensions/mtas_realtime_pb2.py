@@ -13,7 +13,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from gtfs_spec.gtfs_realtime.proto import gtfs_realtime_pb2 as gtfs__spec_dot_gtfs__realtime_dot_proto_dot_gtfs__realtime__pb2
+from ..gtfs_spec.gtfs_realtime.proto import gtfs_realtime_pb2 as gtfs__spec_dot_gtfs__realtime_dot_proto_dot_gtfs__realtime__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
