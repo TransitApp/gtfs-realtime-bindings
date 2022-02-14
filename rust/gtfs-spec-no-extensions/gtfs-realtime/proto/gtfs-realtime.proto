@@ -197,6 +197,30 @@ message TripUpdate {
     extensions 9000 to 9999;
   }
 
+  message TransitStopTimeUpdateExtension {
+    enum PredictionAlgorithm {
+        // Prediction comes from Machine Learning
+        ML = 0;
+
+        // Prediction comes from Recency
+        RECENCY = 1;
+
+        // Prediction comes from Deterministic logic, like first stop of the trip
+        DETERMINISTIC = 2;
+
+        // Prediction comes from Propagating to the next trip
+        PROPAGATION = 3;
+    }
+
+    // If the prediction should be kept in the app until it receives an update from the server saying
+    // that the vehicle is past the stop. Should not assume that the vehicle is past the stop until
+    // the server says so
+    optional bool should_not_assume_vehicle_is_past = 1;
+
+    // What was the algorithm source of the prediction
+    optional PredictionAlgorithm prediction_algorithm = 2;
+}
+
   // Realtime update for arrival and/or departure events for a given stop on a
   // trip. Updates can be supplied for both past and future events.
   // The producer is allowed, although not required, to drop past events.
@@ -289,7 +313,8 @@ message TripUpdate {
     extensions 1000 to 1999;
 
     // The following extension IDs are reserved for private use by any organization.
-    extensions 9000 to 9999;
+    // extensions 9000 to 9999;
+    optional TransitStopTimeUpdateExtension transit_stop_time_update_extension = 9514;
   }
 
   // Updates to StopTimes for the trip (both future, i.e., predictions, and in
@@ -573,6 +598,19 @@ message VehiclePosition {
   extensions 9000 to 9999;
 }
 
+
+message TransitAlertExtension {
+    // Create time of the alerts, in POSIX time
+    required uint64 created_at = 1;
+
+    // Transit's source name for that alert's agency
+    optional string source_name = 2;
+
+    // Flag for automatically generated service change alerts
+    optional bool is_service_change_alert = 3;
+
+}
+
 // An alert, indicating some sort of incident in the public transit network.
 message Alert {
   // Time when the alert should be shown to the user. If missing, the
@@ -662,9 +700,14 @@ message Alert {
   // and modifications to the spec.
   extensions 1000 to 1999;
 
+
+
+  optional TransitAlertExtension transit_alert_extension = 9514;
+
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
 }
+
 
 //
 // Low level data structures used above.
@@ -719,6 +762,22 @@ message Position {
 
   // The following extension IDs are reserved for private use by any organization.
   extensions 9000 to 9999;
+}
+
+message TransitTripDescriptorExtension {
+    enum OriginPrediction {
+        // Prediction comes from the agency's original feed
+        AGENCY_ORIGINAL_DATA = 0;
+
+        // Prediction comes from Transit's prediction engine
+        TRANSIT_PREDICTION_ENGINE = 1;
+    }
+
+    // Who generated the prediction
+    optional OriginPrediction origin_prediction = 1 [default = AGENCY_ORIGINAL_DATA];
+
+    // Timestamp when the prediction was made, in POSIX time
+    optional uint64 prediction_made_at = 2;
 }
 
 // A descriptor that identifies an instance of a GTFS trip, or all instances of
@@ -826,8 +885,27 @@ message TripDescriptor {
   extensions 1000 to 1999;
 
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
+  optional TransitTripDescriptorExtension transit_trip_descriptor_extension = 9514;
 }
+
+message TransitVehicleDescriptorExtension {
+    // If that vehicle information is based on crowd information
+    optional bool based_on_crowdsourcing_data = 1;
+
+    // VehicleId in the transitBackend that generated that prediction
+    optional string transit_vehicle_id = 2;
+}
+
+
+message TfnswVehicleDescriptor {
+  // Indicates the availability of air-conditioning on this vehicle, Default is true because the whole fleet is air-conditioned. 
+  optional bool air_conditioned = 1 [default = true];
+
+  // Indicates whether the vehicle is wheelchair accessible or not. It returns 1 if the vehicle is accessible otherwise returns 0
+  optional int32 wheelchair_accessible = 2 [default = 0];
+}
+
 
 // Identification information for the vehicle performing the trip.
 message VehicleDescriptor {
@@ -846,10 +924,23 @@ message VehicleDescriptor {
   // The extensions namespace allows 3rd-party developers to extend the
   // GTFS Realtime Specification in order to add and evaluate new features and
   // modifications to the spec.
-  extensions 1000 to 1999;
+  // extensions 1000 to 1999;
+  optional TfnswVehicleDescriptor tfnsw_vehicle_descriptor = 1999;
 
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
+  optional TransitVehicleDescriptorExtension transit_vehicle_descriptor_extension = 9514;
+}
+
+message TransitInformedEntityExtension {
+    // Transit's feed id for that alert
+    optional int32 feed_id = 1;
+
+    // Transit's global route id related to the routeId
+    optional int32 global_route_id = 2;
+
+    // Transit's stable stop id related to the stopId
+    optional int32 stable_stop_id = 3;
 }
 
 // A selector for an entity in a GTFS feed.
@@ -874,7 +965,8 @@ message EntitySelector {
   extensions 1000 to 1999;
 
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
+  optional TransitInformedEntityExtension transit_entity_selector_extension = 9514;
 }
 
 // An internationalized message containing per-language versions of a snippet of
