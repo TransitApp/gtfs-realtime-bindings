@@ -4,7 +4,7 @@
 
     cargo install --git ssh://git@github.com/TransitApp/gtfs-realtime-bindings.git
 
-If this fails, you need to add your ssh keys to the ssh agent with `ssh-add -k`, or run with `CARGO_NET_GIT_FETCH_WITH_CLI=true` to use system git.
+If this fails, you need to add your ssh keys to the ssh agent with `ssh-add -K`, or run with `CARGO_NET_GIT_FETCH_WITH_CLI=true` to use system git.
 
 # Install local version globally
 
