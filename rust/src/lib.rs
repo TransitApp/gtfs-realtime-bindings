@@ -1,6 +1,6 @@
 pub use protobuf;
 
-use protobuf::Message;
+use protobuf::MessageFull;
 use std::{fs, path::Path};
 
 include!(concat!(env!("OUT_DIR"), "/protobuf-codegen/mod.rs"));
@@ -12,7 +12,7 @@ pub trait JsonFormat {
     fn from_json_at_path(path: impl AsRef<Path>) -> Self;
 }
 
-impl<T: Message> JsonFormat for T {
+impl<T: MessageFull> JsonFormat for T {
     fn to_json_string(&self) -> String {
         protobuf::json::print_to_string(self).unwrap()
     }
