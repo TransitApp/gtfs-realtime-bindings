@@ -1,28 +1,33 @@
 use std::env;
-use std::fs;
-use std::path::Path;
-
-use protobuf_codegen::Codegen;
-
-const PROTO_PATH: &str = "gtfs-spec-no-extensions/gtfs-realtime/proto/gtfs-realtime.proto";
+use std::path::PathBuf;
 
 fn main() {
-    println!("cargo:rerun-if-changed={PROTO_PATH}");
+    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("gtfs-spec-no-extensions/gtfs-realtime/proto");
 
-    let out_dir = env::var("OUT_DIR").unwrap();
-    let generated_dir = format!("{}/protobuf-codegen", out_dir);
+    let proto_files = vec![root.join("gtfs-realtime.proto")];
 
-    if Path::new(&generated_dir).exists() {
-        fs::remove_dir_all(&generated_dir).unwrap();
+    // Tell cargo to recompile if any of these proto files are changed
+    for proto_file in &proto_files {
+        println!("cargo:rerun-if-changed={}", proto_file.display());
     }
 
-    fs::create_dir(&generated_dir).unwrap();
+    let descriptor_path = PathBuf::from(env::var("OUT_DIR").unwrap()).join("proto_descriptor.bin");
 
-    Codegen::new()
-        .pure()
-        .out_dir(generated_dir)
-        .inputs(&[PROTO_PATH])
-        .include(".")
-        .run()
-        .expect("failed to build protobuf")
+    prost_build::Config::new()
+        // Save descriptors to file
+        .file_descriptor_set_path(&descriptor_path)
+        // Override prost-types with pbjson-types
+        .compile_well_known_types()
+        .extern_path(".google.protobuf", "::pbjson_types")
+        // Generate prost structs
+        .compile_protos(&proto_files, &[root])
+        .unwrap();
+
+    let descriptor_set = std::fs::read(descriptor_path).unwrap();
+    pbjson_build::Builder::new()
+        .register_descriptors(&descriptor_set)
+        .unwrap()
+        .build(&[".transit_realtime"])
+        .unwrap()
 }

@@ -1,9 +1,9 @@
-use std::{fs::File, io::Read};
+use std::{fs, io, io::Read};
 
 use anyhow::{bail, Result};
-use clap::{IntoApp, Parser};
-use gtfs_realtime_bindings_transit::{gtfs_realtime::FeedMessage, protobuf, JsonFormat};
-use protobuf::Message;
+use clap::{CommandFactory, Parser};
+use gtfs_realtime_bindings_transit::{prost::Message, FeedMessage, JsonFormat};
+use reqwest::blocking::Client;
 
 mod config;
 mod filters;
@@ -18,23 +18,26 @@ fn main() -> Result<()> {
     let mut message = if let Some(input) = cfg.input {
         // Process input
         if input.starts_with("http") {
-            let mut request = ureq::get(&input);
+            let mut request = Client::new()
+                .get(&input)
+                .header("Accept", "application/x-protobuf");
 
             if let Some(headers) = cfg.headers {
                 for header in headers {
                     let (key, value) = parse_header(&header)?;
-                    request = request.set(key, value);
+                    request = request.header(key, value);
                 }
             }
 
-            let response = request.call()?;
-            FeedMessage::parse_from_reader(&mut response.into_reader())?
+            let buf = request.send()?.bytes()?;
+            FeedMessage::decode(buf)?
         } else {
-            FeedMessage::parse_from_reader(&mut File::open(&input)?)?
+            let buf = fs::read(&input)?;
+            FeedMessage::decode(&buf[..])?
         }
     } else if atty::isnt(atty::Stream::Stdin) {
         // Process stdin
-        let stdin = std::io::stdin();
+        let stdin = io::stdin();
         let mut buffer = vec![];
 
         stdin.lock().read_to_end(&mut buffer)?;
@@ -48,9 +51,9 @@ fn main() -> Result<()> {
             bail!("stdin buffer is empty!")
         }
 
-        FeedMessage::parse_from_bytes(&buffer)?
+        FeedMessage::decode(&buffer[..])?
     } else {
-        Config::into_app().print_long_help()?;
+        Config::command().print_long_help()?;
         bail!("no file, url, or stdin detected!")
     };
 
@@ -68,11 +71,7 @@ fn main() -> Result<()> {
     }
 
     // Print
-    if cfg.json {
-        println!("{json}", json = message.to_json_string_pretty());
-    } else {
-        println!("{message:#}");
-    }
+    println!("{}", message.to_json_string_pretty());
 
     Ok(())
 }

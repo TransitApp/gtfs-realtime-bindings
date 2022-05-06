@@ -1,6 +1,5 @@
-use gtfs_realtime_bindings_transit::gtfs_realtime::{
-    trip_update::StopTimeUpdate, FeedEntity, FeedMessage, TripDescriptor,
-};
+use gtfs_realtime_bindings_transit::trip_update::StopTimeUpdate;
+use gtfs_realtime_bindings_transit::*;
 
 pub trait Filter {
     fn filter_stop(&mut self, stop_id: &str);
@@ -14,6 +13,7 @@ impl Filter for FeedMessage {
         self.entity
             .retain(|e| matches!(get_trip_id(e), Some(id) if id == trip_id))
     }
+
     fn filter_stop(&mut self, stop_id: &str) {
         for entity in self.entity.iter_mut() {
             if let Some(tu) = entity.trip_update.as_mut() {
@@ -42,21 +42,19 @@ impl Filter for FeedMessage {
 }
 
 fn get_trip_descriptor(entity: &FeedEntity) -> Option<&TripDescriptor> {
-    let trip_update_trip = entity.trip_update.as_ref().and_then(|tu| tu.trip.as_ref());
+    let trip_update_trip = entity.trip_update.as_ref().map(|tu| &tu.trip);
     let vehicle_trip = entity.vehicle.as_ref().and_then(|tu| tu.trip.as_ref());
     trip_update_trip.or(vehicle_trip)
 }
 
 fn get_trip_id(entity: &FeedEntity) -> Option<&str> {
-    get_trip_descriptor(entity).and_then(|trip| trip.has_trip_id().then(|| trip.get_trip_id()))
+    get_trip_descriptor(entity).and_then(|trip| trip.trip_id.as_deref())
 }
 
 fn get_route_id(entity: &FeedEntity) -> Option<&str> {
-    get_trip_descriptor(entity).and_then(|trip| trip.has_route_id().then(|| trip.get_route_id()))
+    get_trip_descriptor(entity).and_then(|trip| trip.route_id.as_deref())
 }
 
 fn get_stop_id(stop_time_update: &StopTimeUpdate) -> Option<&str> {
-    stop_time_update
-        .has_stop_id()
-        .then(|| stop_time_update.get_stop_id())
+    stop_time_update.stop_id.as_deref()
 }

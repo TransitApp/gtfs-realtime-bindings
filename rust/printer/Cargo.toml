@@ -8,6 +8,6 @@ edition = "2021"
 [dependencies]
 gtfs-realtime-bindings-transit = { path = "../" }
 atty = "0.2.14"
-clap = { version = "3.0.14", features = ["derive"] }
-anyhow = "1.0.53"
-ureq = "2.4.0"
+clap = { version = "3.1.17", features = ["derive"] }
+anyhow = "1.0.57"
+reqwest = { version = "0.11.10", features = ["blocking"] }
