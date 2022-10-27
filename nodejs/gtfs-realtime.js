@@ -84,9 +84,9 @@ $root.TransitAlertExtension = (function() {
         if (!writer)
             writer = $Writer.create();
         writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.createdAt);
-        if (message.sourceName != null && message.hasOwnProperty("sourceName"))
+        if (message.sourceName != null && Object.hasOwnProperty.call(message, "sourceName"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.sourceName);
-        if (message.isServiceChangeAlert != null && message.hasOwnProperty("isServiceChangeAlert"))
+        if (message.isServiceChangeAlert != null && Object.hasOwnProperty.call(message, "isServiceChangeAlert"))
             writer.uint32(/* id 3, wireType 0 =*/24).bool(message.isServiceChangeAlert);
         return writer;
     };
@@ -122,15 +122,18 @@ $root.TransitAlertExtension = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.createdAt = reader.uint64();
-                break;
-            case 2:
-                message.sourceName = reader.string();
-                break;
-            case 3:
-                message.isServiceChangeAlert = reader.bool();
-                break;
+            case 1: {
+                    message.createdAt = reader.uint64();
+                    break;
+                }
+            case 2: {
+                    message.sourceName = reader.string();
+                    break;
+                }
+            case 3: {
+                    message.isServiceChangeAlert = reader.bool();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -252,6 +255,21 @@ $root.TransitAlertExtension = (function() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
+    /**
+     * Gets the default type url for TransitAlertExtension
+     * @function getTypeUrl
+     * @memberof TransitAlertExtension
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitAlertExtension.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitAlertExtension";
+    };
+
     return TransitAlertExtension;
 })();
 
@@ -329,11 +347,11 @@ $root.TransitInformedEntityExtension = (function() {
     TransitInformedEntityExtension.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.feedId != null && message.hasOwnProperty("feedId"))
+        if (message.feedId != null && Object.hasOwnProperty.call(message, "feedId"))
             writer.uint32(/* id 1, wireType 0 =*/8).int32(message.feedId);
-        if (message.globalRouteId != null && message.hasOwnProperty("globalRouteId"))
+        if (message.globalRouteId != null && Object.hasOwnProperty.call(message, "globalRouteId"))
             writer.uint32(/* id 2, wireType 0 =*/16).int32(message.globalRouteId);
-        if (message.stableStopId != null && message.hasOwnProperty("stableStopId"))
+        if (message.stableStopId != null && Object.hasOwnProperty.call(message, "stableStopId"))
             writer.uint32(/* id 3, wireType 0 =*/24).int32(message.stableStopId);
         return writer;
     };
@@ -369,15 +387,18 @@ $root.TransitInformedEntityExtension = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.feedId = reader.int32();
-                break;
-            case 2:
-                message.globalRouteId = reader.int32();
-                break;
-            case 3:
-                message.stableStopId = reader.int32();
-                break;
+            case 1: {
+                    message.feedId = reader.int32();
+                    break;
+                }
+            case 2: {
+                    message.globalRouteId = reader.int32();
+                    break;
+                }
+            case 3: {
+                    message.stableStopId = reader.int32();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -484,6 +505,21 @@ $root.TransitInformedEntityExtension = (function() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
+    /**
+     * Gets the default type url for TransitInformedEntityExtension
+     * @function getTypeUrl
+     * @memberof TransitInformedEntityExtension
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitInformedEntityExtension.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitInformedEntityExtension";
+    };
+
     return TransitInformedEntityExtension;
 })();
 
@@ -552,9 +588,9 @@ $root.TransitVehicleDescriptorExtension = (function() {
     TransitVehicleDescriptorExtension.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.basedOnCrowdsourcingData != null && message.hasOwnProperty("basedOnCrowdsourcingData"))
+        if (message.basedOnCrowdsourcingData != null && Object.hasOwnProperty.call(message, "basedOnCrowdsourcingData"))
             writer.uint32(/* id 1, wireType 0 =*/8).bool(message.basedOnCrowdsourcingData);
-        if (message.transitVehicleId != null && message.hasOwnProperty("transitVehicleId"))
+        if (message.transitVehicleId != null && Object.hasOwnProperty.call(message, "transitVehicleId"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.transitVehicleId);
         return writer;
     };
@@ -590,12 +626,14 @@ $root.TransitVehicleDescriptorExtension = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.basedOnCrowdsourcingData = reader.bool();
-                break;
-            case 2:
-                message.transitVehicleId = reader.string();
-                break;
+            case 1: {
+                    message.basedOnCrowdsourcingData = reader.bool();
+                    break;
+                }
+            case 2: {
+                    message.transitVehicleId = reader.string();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -694,6 +732,21 @@ $root.TransitVehicleDescriptorExtension = (function() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
+    /**
+     * Gets the default type url for TransitVehicleDescriptorExtension
+     * @function getTypeUrl
+     * @memberof TransitVehicleDescriptorExtension
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitVehicleDescriptorExtension.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitVehicleDescriptorExtension";
+    };
+
     return TransitVehicleDescriptorExtension;
 })();
 
@@ -762,9 +815,9 @@ $root.TransitTripDescriptorExtension = (function() {
     TransitTripDescriptorExtension.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.originPrediction != null && message.hasOwnProperty("originPrediction"))
+        if (message.originPrediction != null && Object.hasOwnProperty.call(message, "originPrediction"))
             writer.uint32(/* id 1, wireType 0 =*/8).int32(message.originPrediction);
-        if (message.predictionMadeAt != null && message.hasOwnProperty("predictionMadeAt"))
+        if (message.predictionMadeAt != null && Object.hasOwnProperty.call(message, "predictionMadeAt"))
             writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.predictionMadeAt);
         return writer;
     };
@@ -800,12 +853,14 @@ $root.TransitTripDescriptorExtension = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.originPrediction = reader.int32();
-                break;
-            case 2:
-                message.predictionMadeAt = reader.uint64();
-                break;
+            case 1: {
+                    message.originPrediction = reader.int32();
+                    break;
+                }
+            case 2: {
+                    message.predictionMadeAt = reader.uint64();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -868,6 +923,12 @@ $root.TransitTripDescriptorExtension = (function() {
             return object;
         var message = new $root.TransitTripDescriptorExtension();
         switch (object.originPrediction) {
+        default:
+            if (typeof object.originPrediction === "number") {
+                message.originPrediction = object.originPrediction;
+                break;
+            }
+            break;
         case "AGENCY_ORIGINAL_DATA":
         case 0:
             message.originPrediction = 0;
@@ -911,7 +972,7 @@ $root.TransitTripDescriptorExtension = (function() {
                 object.predictionMadeAt = options.longs === String ? "0" : 0;
         }
         if (message.originPrediction != null && message.hasOwnProperty("originPrediction"))
-            object.originPrediction = options.enums === String ? $root.TransitTripDescriptorExtension.OriginPrediction[message.originPrediction] : message.originPrediction;
+            object.originPrediction = options.enums === String ? $root.TransitTripDescriptorExtension.OriginPrediction[message.originPrediction] === undefined ? message.originPrediction : $root.TransitTripDescriptorExtension.OriginPrediction[message.originPrediction] : message.originPrediction;
         if (message.predictionMadeAt != null && message.hasOwnProperty("predictionMadeAt"))
             if (typeof message.predictionMadeAt === "number")
                 object.predictionMadeAt = options.longs === String ? String(message.predictionMadeAt) : message.predictionMadeAt;
@@ -932,9 +993,24 @@ $root.TransitTripDescriptorExtension = (function() {
     };
 
     /**
+     * Gets the default type url for TransitTripDescriptorExtension
+     * @function getTypeUrl
+     * @memberof TransitTripDescriptorExtension
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitTripDescriptorExtension.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitTripDescriptorExtension";
+    };
+
+    /**
      * OriginPrediction enum.
      * @name TransitTripDescriptorExtension.OriginPrediction
-     * @enum {string}
+     * @enum {number}
      * @property {number} AGENCY_ORIGINAL_DATA=0 AGENCY_ORIGINAL_DATA value
      * @property {number} TRANSIT_PREDICTION_ENGINE=1 TRANSIT_PREDICTION_ENGINE value
      */
@@ -1013,9 +1089,9 @@ $root.TransitStopTimeUpdateExtension = (function() {
     TransitStopTimeUpdateExtension.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.shouldNotAssumeVehicleIsPast != null && message.hasOwnProperty("shouldNotAssumeVehicleIsPast"))
+        if (message.shouldNotAssumeVehicleIsPast != null && Object.hasOwnProperty.call(message, "shouldNotAssumeVehicleIsPast"))
             writer.uint32(/* id 1, wireType 0 =*/8).bool(message.shouldNotAssumeVehicleIsPast);
-        if (message.predictionAlgorithm != null && message.hasOwnProperty("predictionAlgorithm"))
+        if (message.predictionAlgorithm != null && Object.hasOwnProperty.call(message, "predictionAlgorithm"))
             writer.uint32(/* id 2, wireType 0 =*/16).int32(message.predictionAlgorithm);
         return writer;
     };
@@ -1051,12 +1127,14 @@ $root.TransitStopTimeUpdateExtension = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.shouldNotAssumeVehicleIsPast = reader.bool();
-                break;
-            case 2:
-                message.predictionAlgorithm = reader.int32();
-                break;
+            case 1: {
+                    message.shouldNotAssumeVehicleIsPast = reader.bool();
+                    break;
+                }
+            case 2: {
+                    message.predictionAlgorithm = reader.int32();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -1123,6 +1201,12 @@ $root.TransitStopTimeUpdateExtension = (function() {
         if (object.shouldNotAssumeVehicleIsPast != null)
             message.shouldNotAssumeVehicleIsPast = Boolean(object.shouldNotAssumeVehicleIsPast);
         switch (object.predictionAlgorithm) {
+        default:
+            if (typeof object.predictionAlgorithm === "number") {
+                message.predictionAlgorithm = object.predictionAlgorithm;
+                break;
+            }
+            break;
         case "ML":
         case 0:
             message.predictionAlgorithm = 0;
@@ -1163,7 +1247,7 @@ $root.TransitStopTimeUpdateExtension = (function() {
         if (message.shouldNotAssumeVehicleIsPast != null && message.hasOwnProperty("shouldNotAssumeVehicleIsPast"))
             object.shouldNotAssumeVehicleIsPast = message.shouldNotAssumeVehicleIsPast;
         if (message.predictionAlgorithm != null && message.hasOwnProperty("predictionAlgorithm"))
-            object.predictionAlgorithm = options.enums === String ? $root.TransitStopTimeUpdateExtension.PredictionAlgorithm[message.predictionAlgorithm] : message.predictionAlgorithm;
+            object.predictionAlgorithm = options.enums === String ? $root.TransitStopTimeUpdateExtension.PredictionAlgorithm[message.predictionAlgorithm] === undefined ? message.predictionAlgorithm : $root.TransitStopTimeUpdateExtension.PredictionAlgorithm[message.predictionAlgorithm] : message.predictionAlgorithm;
         return object;
     };
 
@@ -1179,9 +1263,24 @@ $root.TransitStopTimeUpdateExtension = (function() {
     };
 
     /**
+     * Gets the default type url for TransitStopTimeUpdateExtension
+     * @function getTypeUrl
+     * @memberof TransitStopTimeUpdateExtension
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitStopTimeUpdateExtension.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitStopTimeUpdateExtension";
+    };
+
+    /**
      * PredictionAlgorithm enum.
      * @name TransitStopTimeUpdateExtension.PredictionAlgorithm
-     * @enum {string}
+     * @enum {number}
      * @property {number} ML=0 ML value
      * @property {number} RECENCY=1 RECENCY value
      * @property {number} DETERMINISTIC=2 DETERMINISTIC value
@@ -1312,14 +1411,16 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.header = $root.transit_realtime.FeedHeader.decode(reader, reader.uint32());
-                    break;
-                case 2:
-                    if (!(message.entity && message.entity.length))
-                        message.entity = [];
-                    message.entity.push($root.transit_realtime.FeedEntity.decode(reader, reader.uint32()));
-                    break;
+                case 1: {
+                        message.header = $root.transit_realtime.FeedHeader.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 2: {
+                        if (!(message.entity && message.entity.length))
+                            message.entity = [];
+                        message.entity.push($root.transit_realtime.FeedEntity.decode(reader, reader.uint32()));
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1442,6 +1543,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for FeedMessage
+         * @function getTypeUrl
+         * @memberof transit_realtime.FeedMessage
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FeedMessage.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.FeedMessage";
+        };
+
         return FeedMessage;
     })();
 
@@ -1529,11 +1645,11 @@ $root.transit_realtime = (function() {
             if (!writer)
                 writer = $Writer.create();
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.gtfsRealtimeVersion);
-            if (message.incrementality != null && message.hasOwnProperty("incrementality"))
+            if (message.incrementality != null && Object.hasOwnProperty.call(message, "incrementality"))
                 writer.uint32(/* id 2, wireType 0 =*/16).int32(message.incrementality);
-            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
+            if (message.timestamp != null && Object.hasOwnProperty.call(message, "timestamp"))
                 writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.timestamp);
-            if (message[".nyctFeedHeader"] != null && message.hasOwnProperty(".nyctFeedHeader"))
+            if (message[".nyctFeedHeader"] != null && Object.hasOwnProperty.call(message, ".nyctFeedHeader"))
                 $root.NyctFeedHeader.encode(message[".nyctFeedHeader"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
             return writer;
         };
@@ -1569,18 +1685,22 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.gtfsRealtimeVersion = reader.string();
-                    break;
-                case 2:
-                    message.incrementality = reader.int32();
-                    break;
-                case 3:
-                    message.timestamp = reader.uint64();
-                    break;
-                case 1001:
-                    message[".nyctFeedHeader"] = $root.NyctFeedHeader.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.gtfsRealtimeVersion = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.incrementality = reader.int32();
+                        break;
+                    }
+                case 3: {
+                        message.timestamp = reader.uint64();
+                        break;
+                    }
+                case 1001: {
+                        message[".nyctFeedHeader"] = $root.NyctFeedHeader.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1654,6 +1774,12 @@ $root.transit_realtime = (function() {
             if (object.gtfsRealtimeVersion != null)
                 message.gtfsRealtimeVersion = String(object.gtfsRealtimeVersion);
             switch (object.incrementality) {
+            default:
+                if (typeof object.incrementality === "number") {
+                    message.incrementality = object.incrementality;
+                    break;
+                }
+                break;
             case "FULL_DATASET":
             case 0:
                 message.incrementality = 0;
@@ -1706,7 +1832,7 @@ $root.transit_realtime = (function() {
             if (message.gtfsRealtimeVersion != null && message.hasOwnProperty("gtfsRealtimeVersion"))
                 object.gtfsRealtimeVersion = message.gtfsRealtimeVersion;
             if (message.incrementality != null && message.hasOwnProperty("incrementality"))
-                object.incrementality = options.enums === String ? $root.transit_realtime.FeedHeader.Incrementality[message.incrementality] : message.incrementality;
+                object.incrementality = options.enums === String ? $root.transit_realtime.FeedHeader.Incrementality[message.incrementality] === undefined ? message.incrementality : $root.transit_realtime.FeedHeader.Incrementality[message.incrementality] : message.incrementality;
             if (message.timestamp != null && message.hasOwnProperty("timestamp"))
                 if (typeof message.timestamp === "number")
                     object.timestamp = options.longs === String ? String(message.timestamp) : message.timestamp;
@@ -1729,9 +1855,24 @@ $root.transit_realtime = (function() {
         };
 
         /**
+         * Gets the default type url for FeedHeader
+         * @function getTypeUrl
+         * @memberof transit_realtime.FeedHeader
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FeedHeader.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.FeedHeader";
+        };
+
+        /**
          * Incrementality enum.
          * @name transit_realtime.FeedHeader.Incrementality
-         * @enum {string}
+         * @enum {number}
          * @property {number} FULL_DATASET=0 FULL_DATASET value
          * @property {number} DIFFERENTIAL=1 DIFFERENTIAL value
          */
@@ -1847,15 +1988,15 @@ $root.transit_realtime = (function() {
             if (!writer)
                 writer = $Writer.create();
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
-            if (message.isDeleted != null && message.hasOwnProperty("isDeleted"))
+            if (message.isDeleted != null && Object.hasOwnProperty.call(message, "isDeleted"))
                 writer.uint32(/* id 2, wireType 0 =*/16).bool(message.isDeleted);
-            if (message.tripUpdate != null && message.hasOwnProperty("tripUpdate"))
+            if (message.tripUpdate != null && Object.hasOwnProperty.call(message, "tripUpdate"))
                 $root.transit_realtime.TripUpdate.encode(message.tripUpdate, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-            if (message.vehicle != null && message.hasOwnProperty("vehicle"))
+            if (message.vehicle != null && Object.hasOwnProperty.call(message, "vehicle"))
                 $root.transit_realtime.VehiclePosition.encode(message.vehicle, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
-            if (message.alert != null && message.hasOwnProperty("alert"))
+            if (message.alert != null && Object.hasOwnProperty.call(message, "alert"))
                 $root.transit_realtime.Alert.encode(message.alert, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
-            if (message.shape != null && message.hasOwnProperty("shape"))
+            if (message.shape != null && Object.hasOwnProperty.call(message, "shape"))
                 $root.transit_realtime.Shape.encode(message.shape, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             return writer;
         };
@@ -1891,24 +2032,30 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.string();
-                    break;
-                case 2:
-                    message.isDeleted = reader.bool();
-                    break;
-                case 3:
-                    message.tripUpdate = $root.transit_realtime.TripUpdate.decode(reader, reader.uint32());
-                    break;
-                case 4:
-                    message.vehicle = $root.transit_realtime.VehiclePosition.decode(reader, reader.uint32());
-                    break;
-                case 5:
-                    message.alert = $root.transit_realtime.Alert.decode(reader, reader.uint32());
-                    break;
-                case 6:
-                    message.shape = $root.transit_realtime.Shape.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.isDeleted = reader.bool();
+                        break;
+                    }
+                case 3: {
+                        message.tripUpdate = $root.transit_realtime.TripUpdate.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 4: {
+                        message.vehicle = $root.transit_realtime.VehiclePosition.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 5: {
+                        message.alert = $root.transit_realtime.Alert.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 6: {
+                        message.shape = $root.transit_realtime.Shape.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -2060,6 +2207,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for FeedEntity
+         * @function getTypeUrl
+         * @memberof transit_realtime.FeedEntity
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        FeedEntity.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.FeedEntity";
+        };
+
         return FeedEntity;
     })();
 
@@ -2169,13 +2331,13 @@ $root.transit_realtime = (function() {
             if (message.stopTimeUpdate != null && message.stopTimeUpdate.length)
                 for (var i = 0; i < message.stopTimeUpdate.length; ++i)
                     $root.transit_realtime.TripUpdate.StopTimeUpdate.encode(message.stopTimeUpdate[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            if (message.vehicle != null && message.hasOwnProperty("vehicle"))
+            if (message.vehicle != null && Object.hasOwnProperty.call(message, "vehicle"))
                 $root.transit_realtime.VehicleDescriptor.encode(message.vehicle, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
+            if (message.timestamp != null && Object.hasOwnProperty.call(message, "timestamp"))
                 writer.uint32(/* id 4, wireType 0 =*/32).uint64(message.timestamp);
-            if (message.delay != null && message.hasOwnProperty("delay"))
+            if (message.delay != null && Object.hasOwnProperty.call(message, "delay"))
                 writer.uint32(/* id 5, wireType 0 =*/40).int32(message.delay);
-            if (message.tripProperties != null && message.hasOwnProperty("tripProperties"))
+            if (message.tripProperties != null && Object.hasOwnProperty.call(message, "tripProperties"))
                 $root.transit_realtime.TripUpdate.TripProperties.encode(message.tripProperties, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             return writer;
         };
@@ -2211,26 +2373,32 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.trip = $root.transit_realtime.TripDescriptor.decode(reader, reader.uint32());
-                    break;
-                case 3:
-                    message.vehicle = $root.transit_realtime.VehicleDescriptor.decode(reader, reader.uint32());
-                    break;
-                case 2:
-                    if (!(message.stopTimeUpdate && message.stopTimeUpdate.length))
-                        message.stopTimeUpdate = [];
-                    message.stopTimeUpdate.push($root.transit_realtime.TripUpdate.StopTimeUpdate.decode(reader, reader.uint32()));
-                    break;
-                case 4:
-                    message.timestamp = reader.uint64();
-                    break;
-                case 5:
-                    message.delay = reader.int32();
-                    break;
-                case 6:
-                    message.tripProperties = $root.transit_realtime.TripUpdate.TripProperties.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.trip = $root.transit_realtime.TripDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 3: {
+                        message.vehicle = $root.transit_realtime.VehicleDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 2: {
+                        if (!(message.stopTimeUpdate && message.stopTimeUpdate.length))
+                            message.stopTimeUpdate = [];
+                        message.stopTimeUpdate.push($root.transit_realtime.TripUpdate.StopTimeUpdate.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 4: {
+                        message.timestamp = reader.uint64();
+                        break;
+                    }
+                case 5: {
+                        message.delay = reader.int32();
+                        break;
+                    }
+                case 6: {
+                        message.tripProperties = $root.transit_realtime.TripUpdate.TripProperties.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -2410,6 +2578,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for TripUpdate
+         * @function getTypeUrl
+         * @memberof transit_realtime.TripUpdate
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        TripUpdate.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.TripUpdate";
+        };
+
         TripUpdate.StopTimeEvent = (function() {
 
             /**
@@ -2484,11 +2667,11 @@ $root.transit_realtime = (function() {
             StopTimeEvent.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
-                if (message.delay != null && message.hasOwnProperty("delay"))
+                if (message.delay != null && Object.hasOwnProperty.call(message, "delay"))
                     writer.uint32(/* id 1, wireType 0 =*/8).int32(message.delay);
-                if (message.time != null && message.hasOwnProperty("time"))
+                if (message.time != null && Object.hasOwnProperty.call(message, "time"))
                     writer.uint32(/* id 2, wireType 0 =*/16).int64(message.time);
-                if (message.uncertainty != null && message.hasOwnProperty("uncertainty"))
+                if (message.uncertainty != null && Object.hasOwnProperty.call(message, "uncertainty"))
                     writer.uint32(/* id 3, wireType 0 =*/24).int32(message.uncertainty);
                 return writer;
             };
@@ -2524,15 +2707,18 @@ $root.transit_realtime = (function() {
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.delay = reader.int32();
-                        break;
-                    case 2:
-                        message.time = reader.int64();
-                        break;
-                    case 3:
-                        message.uncertainty = reader.int32();
-                        break;
+                    case 1: {
+                            message.delay = reader.int32();
+                            break;
+                        }
+                    case 2: {
+                            message.time = reader.int64();
+                            break;
+                        }
+                    case 3: {
+                            message.uncertainty = reader.int32();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -2651,6 +2837,21 @@ $root.transit_realtime = (function() {
              */
             StopTimeEvent.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for StopTimeEvent
+             * @function getTypeUrl
+             * @memberof transit_realtime.TripUpdate.StopTimeEvent
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            StopTimeEvent.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/transit_realtime.TripUpdate.StopTimeEvent";
             };
 
             return StopTimeEvent;
@@ -2784,23 +2985,23 @@ $root.transit_realtime = (function() {
             StopTimeUpdate.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
-                if (message.stopSequence != null && message.hasOwnProperty("stopSequence"))
+                if (message.stopSequence != null && Object.hasOwnProperty.call(message, "stopSequence"))
                     writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.stopSequence);
-                if (message.arrival != null && message.hasOwnProperty("arrival"))
+                if (message.arrival != null && Object.hasOwnProperty.call(message, "arrival"))
                     $root.transit_realtime.TripUpdate.StopTimeEvent.encode(message.arrival, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-                if (message.departure != null && message.hasOwnProperty("departure"))
+                if (message.departure != null && Object.hasOwnProperty.call(message, "departure"))
                     $root.transit_realtime.TripUpdate.StopTimeEvent.encode(message.departure, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-                if (message.stopId != null && message.hasOwnProperty("stopId"))
+                if (message.stopId != null && Object.hasOwnProperty.call(message, "stopId"))
                     writer.uint32(/* id 4, wireType 2 =*/34).string(message.stopId);
-                if (message.scheduleRelationship != null && message.hasOwnProperty("scheduleRelationship"))
+                if (message.scheduleRelationship != null && Object.hasOwnProperty.call(message, "scheduleRelationship"))
                     writer.uint32(/* id 5, wireType 0 =*/40).int32(message.scheduleRelationship);
-                if (message.stopTimeProperties != null && message.hasOwnProperty("stopTimeProperties"))
+                if (message.stopTimeProperties != null && Object.hasOwnProperty.call(message, "stopTimeProperties"))
                     $root.transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.encode(message.stopTimeProperties, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
-                if (message.departureOccupancyStatus != null && message.hasOwnProperty("departureOccupancyStatus"))
+                if (message.departureOccupancyStatus != null && Object.hasOwnProperty.call(message, "departureOccupancyStatus"))
                     writer.uint32(/* id 7, wireType 0 =*/56).int32(message.departureOccupancyStatus);
-                if (message[".nyctStopTimeUpdate"] != null && message.hasOwnProperty(".nyctStopTimeUpdate"))
+                if (message[".nyctStopTimeUpdate"] != null && Object.hasOwnProperty.call(message, ".nyctStopTimeUpdate"))
                     $root.NyctStopTimeUpdate.encode(message[".nyctStopTimeUpdate"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
-                if (message[".transitStopTimeUpdateExtension"] != null && message.hasOwnProperty(".transitStopTimeUpdateExtension"))
+                if (message[".transitStopTimeUpdateExtension"] != null && Object.hasOwnProperty.call(message, ".transitStopTimeUpdateExtension"))
                     $root.TransitStopTimeUpdateExtension.encode(message[".transitStopTimeUpdateExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
                 return writer;
             };
@@ -2836,33 +3037,42 @@ $root.transit_realtime = (function() {
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.stopSequence = reader.uint32();
-                        break;
-                    case 4:
-                        message.stopId = reader.string();
-                        break;
-                    case 2:
-                        message.arrival = $root.transit_realtime.TripUpdate.StopTimeEvent.decode(reader, reader.uint32());
-                        break;
-                    case 3:
-                        message.departure = $root.transit_realtime.TripUpdate.StopTimeEvent.decode(reader, reader.uint32());
-                        break;
-                    case 7:
-                        message.departureOccupancyStatus = reader.int32();
-                        break;
-                    case 5:
-                        message.scheduleRelationship = reader.int32();
-                        break;
-                    case 6:
-                        message.stopTimeProperties = $root.transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.decode(reader, reader.uint32());
-                        break;
-                    case 9514:
-                        message[".transitStopTimeUpdateExtension"] = $root.TransitStopTimeUpdateExtension.decode(reader, reader.uint32());
-                        break;
-                    case 1001:
-                        message[".nyctStopTimeUpdate"] = $root.NyctStopTimeUpdate.decode(reader, reader.uint32());
-                        break;
+                    case 1: {
+                            message.stopSequence = reader.uint32();
+                            break;
+                        }
+                    case 4: {
+                            message.stopId = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.arrival = $root.transit_realtime.TripUpdate.StopTimeEvent.decode(reader, reader.uint32());
+                            break;
+                        }
+                    case 3: {
+                            message.departure = $root.transit_realtime.TripUpdate.StopTimeEvent.decode(reader, reader.uint32());
+                            break;
+                        }
+                    case 7: {
+                            message.departureOccupancyStatus = reader.int32();
+                            break;
+                        }
+                    case 5: {
+                            message.scheduleRelationship = reader.int32();
+                            break;
+                        }
+                    case 6: {
+                            message.stopTimeProperties = $root.transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.decode(reader, reader.uint32());
+                            break;
+                        }
+                    case 9514: {
+                            message[".transitStopTimeUpdateExtension"] = $root.TransitStopTimeUpdateExtension.decode(reader, reader.uint32());
+                            break;
+                        }
+                    case 1001: {
+                            message[".nyctStopTimeUpdate"] = $root.NyctStopTimeUpdate.decode(reader, reader.uint32());
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -2984,6 +3194,12 @@ $root.transit_realtime = (function() {
                     message.departure = $root.transit_realtime.TripUpdate.StopTimeEvent.fromObject(object.departure);
                 }
                 switch (object.departureOccupancyStatus) {
+                default:
+                    if (typeof object.departureOccupancyStatus === "number") {
+                        message.departureOccupancyStatus = object.departureOccupancyStatus;
+                        break;
+                    }
+                    break;
                 case "EMPTY":
                 case 0:
                     message.departureOccupancyStatus = 0;
@@ -3022,6 +3238,12 @@ $root.transit_realtime = (function() {
                     break;
                 }
                 switch (object.scheduleRelationship) {
+                default:
+                    if (typeof object.scheduleRelationship === "number") {
+                        message.scheduleRelationship = object.scheduleRelationship;
+                        break;
+                    }
+                    break;
                 case "SCHEDULED":
                 case 0:
                     message.scheduleRelationship = 0;
@@ -3090,11 +3312,11 @@ $root.transit_realtime = (function() {
                 if (message.stopId != null && message.hasOwnProperty("stopId"))
                     object.stopId = message.stopId;
                 if (message.scheduleRelationship != null && message.hasOwnProperty("scheduleRelationship"))
-                    object.scheduleRelationship = options.enums === String ? $root.transit_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship[message.scheduleRelationship] : message.scheduleRelationship;
+                    object.scheduleRelationship = options.enums === String ? $root.transit_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship[message.scheduleRelationship] === undefined ? message.scheduleRelationship : $root.transit_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship[message.scheduleRelationship] : message.scheduleRelationship;
                 if (message.stopTimeProperties != null && message.hasOwnProperty("stopTimeProperties"))
                     object.stopTimeProperties = $root.transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.toObject(message.stopTimeProperties, options);
                 if (message.departureOccupancyStatus != null && message.hasOwnProperty("departureOccupancyStatus"))
-                    object.departureOccupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.departureOccupancyStatus] : message.departureOccupancyStatus;
+                    object.departureOccupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.departureOccupancyStatus] === undefined ? message.departureOccupancyStatus : $root.transit_realtime.VehiclePosition.OccupancyStatus[message.departureOccupancyStatus] : message.departureOccupancyStatus;
                 if (message[".nyctStopTimeUpdate"] != null && message.hasOwnProperty(".nyctStopTimeUpdate"))
                     object[".nyctStopTimeUpdate"] = $root.NyctStopTimeUpdate.toObject(message[".nyctStopTimeUpdate"], options);
                 if (message[".transitStopTimeUpdateExtension"] != null && message.hasOwnProperty(".transitStopTimeUpdateExtension"))
@@ -3114,9 +3336,24 @@ $root.transit_realtime = (function() {
             };
 
             /**
+             * Gets the default type url for StopTimeUpdate
+             * @function getTypeUrl
+             * @memberof transit_realtime.TripUpdate.StopTimeUpdate
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            StopTimeUpdate.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/transit_realtime.TripUpdate.StopTimeUpdate";
+            };
+
+            /**
              * ScheduleRelationship enum.
              * @name transit_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship
-             * @enum {string}
+             * @enum {number}
              * @property {number} SCHEDULED=0 SCHEDULED value
              * @property {number} SKIPPED=1 SKIPPED value
              * @property {number} NO_DATA=2 NO_DATA value
@@ -3187,7 +3424,7 @@ $root.transit_realtime = (function() {
                 StopTimeProperties.encode = function encode(message, writer) {
                     if (!writer)
                         writer = $Writer.create();
-                    if (message.assignedStopId != null && message.hasOwnProperty("assignedStopId"))
+                    if (message.assignedStopId != null && Object.hasOwnProperty.call(message, "assignedStopId"))
                         writer.uint32(/* id 1, wireType 2 =*/10).string(message.assignedStopId);
                     return writer;
                 };
@@ -3223,9 +3460,10 @@ $root.transit_realtime = (function() {
                     while (reader.pos < end) {
                         var tag = reader.uint32();
                         switch (tag >>> 3) {
-                        case 1:
-                            message.assignedStopId = reader.string();
-                            break;
+                        case 1: {
+                                message.assignedStopId = reader.string();
+                                break;
+                            }
                         default:
                             reader.skipType(tag & 7);
                             break;
@@ -3313,6 +3551,21 @@ $root.transit_realtime = (function() {
                  */
                 StopTimeProperties.prototype.toJSON = function toJSON() {
                     return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+                };
+
+                /**
+                 * Gets the default type url for StopTimeProperties
+                 * @function getTypeUrl
+                 * @memberof transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties
+                 * @static
+                 * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+                 * @returns {string} The default type url
+                 */
+                StopTimeProperties.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                    if (typeUrlPrefix === undefined) {
+                        typeUrlPrefix = "type.googleapis.com";
+                    }
+                    return typeUrlPrefix + "/transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties";
                 };
 
                 return StopTimeProperties;
@@ -3404,13 +3657,13 @@ $root.transit_realtime = (function() {
             TripProperties.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
-                if (message.tripId != null && message.hasOwnProperty("tripId"))
+                if (message.tripId != null && Object.hasOwnProperty.call(message, "tripId"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.tripId);
-                if (message.startDate != null && message.hasOwnProperty("startDate"))
+                if (message.startDate != null && Object.hasOwnProperty.call(message, "startDate"))
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.startDate);
-                if (message.startTime != null && message.hasOwnProperty("startTime"))
+                if (message.startTime != null && Object.hasOwnProperty.call(message, "startTime"))
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.startTime);
-                if (message.shapeId != null && message.hasOwnProperty("shapeId"))
+                if (message.shapeId != null && Object.hasOwnProperty.call(message, "shapeId"))
                     writer.uint32(/* id 4, wireType 2 =*/34).string(message.shapeId);
                 return writer;
             };
@@ -3446,18 +3699,22 @@ $root.transit_realtime = (function() {
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.tripId = reader.string();
-                        break;
-                    case 2:
-                        message.startDate = reader.string();
-                        break;
-                    case 3:
-                        message.startTime = reader.string();
-                        break;
-                    case 4:
-                        message.shapeId = reader.string();
-                        break;
+                    case 1: {
+                            message.tripId = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.startDate = reader.string();
+                            break;
+                        }
+                    case 3: {
+                            message.startTime = reader.string();
+                            break;
+                        }
+                    case 4: {
+                            message.shapeId = reader.string();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -3570,6 +3827,21 @@ $root.transit_realtime = (function() {
              */
             TripProperties.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for TripProperties
+             * @function getTypeUrl
+             * @memberof transit_realtime.TripUpdate.TripProperties
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            TripProperties.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/transit_realtime.TripUpdate.TripProperties";
             };
 
             return TripProperties;
@@ -3725,25 +3997,25 @@ $root.transit_realtime = (function() {
         VehiclePosition.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.trip != null && message.hasOwnProperty("trip"))
+            if (message.trip != null && Object.hasOwnProperty.call(message, "trip"))
                 $root.transit_realtime.TripDescriptor.encode(message.trip, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            if (message.position != null && message.hasOwnProperty("position"))
+            if (message.position != null && Object.hasOwnProperty.call(message, "position"))
                 $root.transit_realtime.Position.encode(message.position, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            if (message.currentStopSequence != null && message.hasOwnProperty("currentStopSequence"))
+            if (message.currentStopSequence != null && Object.hasOwnProperty.call(message, "currentStopSequence"))
                 writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.currentStopSequence);
-            if (message.currentStatus != null && message.hasOwnProperty("currentStatus"))
+            if (message.currentStatus != null && Object.hasOwnProperty.call(message, "currentStatus"))
                 writer.uint32(/* id 4, wireType 0 =*/32).int32(message.currentStatus);
-            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
+            if (message.timestamp != null && Object.hasOwnProperty.call(message, "timestamp"))
                 writer.uint32(/* id 5, wireType 0 =*/40).uint64(message.timestamp);
-            if (message.congestionLevel != null && message.hasOwnProperty("congestionLevel"))
+            if (message.congestionLevel != null && Object.hasOwnProperty.call(message, "congestionLevel"))
                 writer.uint32(/* id 6, wireType 0 =*/48).int32(message.congestionLevel);
-            if (message.stopId != null && message.hasOwnProperty("stopId"))
+            if (message.stopId != null && Object.hasOwnProperty.call(message, "stopId"))
                 writer.uint32(/* id 7, wireType 2 =*/58).string(message.stopId);
-            if (message.vehicle != null && message.hasOwnProperty("vehicle"))
+            if (message.vehicle != null && Object.hasOwnProperty.call(message, "vehicle"))
                 $root.transit_realtime.VehicleDescriptor.encode(message.vehicle, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
-            if (message.occupancyStatus != null && message.hasOwnProperty("occupancyStatus"))
+            if (message.occupancyStatus != null && Object.hasOwnProperty.call(message, "occupancyStatus"))
                 writer.uint32(/* id 9, wireType 0 =*/72).int32(message.occupancyStatus);
-            if (message.occupancyPercentage != null && message.hasOwnProperty("occupancyPercentage"))
+            if (message.occupancyPercentage != null && Object.hasOwnProperty.call(message, "occupancyPercentage"))
                 writer.uint32(/* id 10, wireType 0 =*/80).uint32(message.occupancyPercentage);
             if (message.multiCarriageDetails != null && message.multiCarriageDetails.length)
                 for (var i = 0; i < message.multiCarriageDetails.length; ++i)
@@ -3782,41 +4054,52 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.trip = $root.transit_realtime.TripDescriptor.decode(reader, reader.uint32());
-                    break;
-                case 8:
-                    message.vehicle = $root.transit_realtime.VehicleDescriptor.decode(reader, reader.uint32());
-                    break;
-                case 2:
-                    message.position = $root.transit_realtime.Position.decode(reader, reader.uint32());
-                    break;
-                case 3:
-                    message.currentStopSequence = reader.uint32();
-                    break;
-                case 7:
-                    message.stopId = reader.string();
-                    break;
-                case 4:
-                    message.currentStatus = reader.int32();
-                    break;
-                case 5:
-                    message.timestamp = reader.uint64();
-                    break;
-                case 6:
-                    message.congestionLevel = reader.int32();
-                    break;
-                case 9:
-                    message.occupancyStatus = reader.int32();
-                    break;
-                case 10:
-                    message.occupancyPercentage = reader.uint32();
-                    break;
-                case 11:
-                    if (!(message.multiCarriageDetails && message.multiCarriageDetails.length))
-                        message.multiCarriageDetails = [];
-                    message.multiCarriageDetails.push($root.transit_realtime.VehiclePosition.CarriageDetails.decode(reader, reader.uint32()));
-                    break;
+                case 1: {
+                        message.trip = $root.transit_realtime.TripDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 8: {
+                        message.vehicle = $root.transit_realtime.VehicleDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 2: {
+                        message.position = $root.transit_realtime.Position.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 3: {
+                        message.currentStopSequence = reader.uint32();
+                        break;
+                    }
+                case 7: {
+                        message.stopId = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.currentStatus = reader.int32();
+                        break;
+                    }
+                case 5: {
+                        message.timestamp = reader.uint64();
+                        break;
+                    }
+                case 6: {
+                        message.congestionLevel = reader.int32();
+                        break;
+                    }
+                case 9: {
+                        message.occupancyStatus = reader.int32();
+                        break;
+                    }
+                case 10: {
+                        message.occupancyPercentage = reader.uint32();
+                        break;
+                    }
+                case 11: {
+                        if (!(message.multiCarriageDetails && message.multiCarriageDetails.length))
+                            message.multiCarriageDetails = [];
+                        message.multiCarriageDetails.push($root.transit_realtime.VehiclePosition.CarriageDetails.decode(reader, reader.uint32()));
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -3966,6 +4249,12 @@ $root.transit_realtime = (function() {
             case 1:
                 message.currentStatus = 1;
                 break;
+            default:
+                if (typeof object.currentStatus === "number") {
+                    message.currentStatus = object.currentStatus;
+                    break;
+                }
+                break;
             case "IN_TRANSIT_TO":
             case 2:
                 message.currentStatus = 2;
@@ -3981,6 +4270,12 @@ $root.transit_realtime = (function() {
                 else if (typeof object.timestamp === "object")
                     message.timestamp = new $util.LongBits(object.timestamp.low >>> 0, object.timestamp.high >>> 0).toNumber(true);
             switch (object.congestionLevel) {
+            default:
+                if (typeof object.congestionLevel === "number") {
+                    message.congestionLevel = object.congestionLevel;
+                    break;
+                }
+                break;
             case "UNKNOWN_CONGESTION_LEVEL":
             case 0:
                 message.congestionLevel = 0;
@@ -4003,6 +4298,12 @@ $root.transit_realtime = (function() {
                 break;
             }
             switch (object.occupancyStatus) {
+            default:
+                if (typeof object.occupancyStatus === "number") {
+                    message.occupancyStatus = object.occupancyStatus;
+                    break;
+                }
+                break;
             case "EMPTY":
             case 0:
                 message.occupancyStatus = 0;
@@ -4093,20 +4394,20 @@ $root.transit_realtime = (function() {
             if (message.currentStopSequence != null && message.hasOwnProperty("currentStopSequence"))
                 object.currentStopSequence = message.currentStopSequence;
             if (message.currentStatus != null && message.hasOwnProperty("currentStatus"))
-                object.currentStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.VehicleStopStatus[message.currentStatus] : message.currentStatus;
+                object.currentStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.VehicleStopStatus[message.currentStatus] === undefined ? message.currentStatus : $root.transit_realtime.VehiclePosition.VehicleStopStatus[message.currentStatus] : message.currentStatus;
             if (message.timestamp != null && message.hasOwnProperty("timestamp"))
                 if (typeof message.timestamp === "number")
                     object.timestamp = options.longs === String ? String(message.timestamp) : message.timestamp;
                 else
                     object.timestamp = options.longs === String ? $util.Long.prototype.toString.call(message.timestamp) : options.longs === Number ? new $util.LongBits(message.timestamp.low >>> 0, message.timestamp.high >>> 0).toNumber(true) : message.timestamp;
             if (message.congestionLevel != null && message.hasOwnProperty("congestionLevel"))
-                object.congestionLevel = options.enums === String ? $root.transit_realtime.VehiclePosition.CongestionLevel[message.congestionLevel] : message.congestionLevel;
+                object.congestionLevel = options.enums === String ? $root.transit_realtime.VehiclePosition.CongestionLevel[message.congestionLevel] === undefined ? message.congestionLevel : $root.transit_realtime.VehiclePosition.CongestionLevel[message.congestionLevel] : message.congestionLevel;
             if (message.stopId != null && message.hasOwnProperty("stopId"))
                 object.stopId = message.stopId;
             if (message.vehicle != null && message.hasOwnProperty("vehicle"))
                 object.vehicle = $root.transit_realtime.VehicleDescriptor.toObject(message.vehicle, options);
             if (message.occupancyStatus != null && message.hasOwnProperty("occupancyStatus"))
-                object.occupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.occupancyStatus] : message.occupancyStatus;
+                object.occupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.occupancyStatus] === undefined ? message.occupancyStatus : $root.transit_realtime.VehiclePosition.OccupancyStatus[message.occupancyStatus] : message.occupancyStatus;
             if (message.occupancyPercentage != null && message.hasOwnProperty("occupancyPercentage"))
                 object.occupancyPercentage = message.occupancyPercentage;
             if (message.multiCarriageDetails && message.multiCarriageDetails.length) {
@@ -4129,9 +4430,24 @@ $root.transit_realtime = (function() {
         };
 
         /**
+         * Gets the default type url for VehiclePosition
+         * @function getTypeUrl
+         * @memberof transit_realtime.VehiclePosition
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        VehiclePosition.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.VehiclePosition";
+        };
+
+        /**
          * VehicleStopStatus enum.
          * @name transit_realtime.VehiclePosition.VehicleStopStatus
-         * @enum {string}
+         * @enum {number}
          * @property {number} INCOMING_AT=0 INCOMING_AT value
          * @property {number} STOPPED_AT=1 STOPPED_AT value
          * @property {number} IN_TRANSIT_TO=2 IN_TRANSIT_TO value
@@ -4147,7 +4463,7 @@ $root.transit_realtime = (function() {
         /**
          * CongestionLevel enum.
          * @name transit_realtime.VehiclePosition.CongestionLevel
-         * @enum {string}
+         * @enum {number}
          * @property {number} UNKNOWN_CONGESTION_LEVEL=0 UNKNOWN_CONGESTION_LEVEL value
          * @property {number} RUNNING_SMOOTHLY=1 RUNNING_SMOOTHLY value
          * @property {number} STOP_AND_GO=2 STOP_AND_GO value
@@ -4167,7 +4483,7 @@ $root.transit_realtime = (function() {
         /**
          * OccupancyStatus enum.
          * @name transit_realtime.VehiclePosition.OccupancyStatus
-         * @enum {string}
+         * @enum {number}
          * @property {number} EMPTY=0 EMPTY value
          * @property {number} MANY_SEATS_AVAILABLE=1 MANY_SEATS_AVAILABLE value
          * @property {number} FEW_SEATS_AVAILABLE=2 FEW_SEATS_AVAILABLE value
@@ -4284,15 +4600,15 @@ $root.transit_realtime = (function() {
             CarriageDetails.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
-                if (message.id != null && message.hasOwnProperty("id"))
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
-                if (message.label != null && message.hasOwnProperty("label"))
+                if (message.label != null && Object.hasOwnProperty.call(message, "label"))
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.label);
-                if (message.occupancyStatus != null && message.hasOwnProperty("occupancyStatus"))
+                if (message.occupancyStatus != null && Object.hasOwnProperty.call(message, "occupancyStatus"))
                     writer.uint32(/* id 3, wireType 0 =*/24).int32(message.occupancyStatus);
-                if (message.occupancyPercentage != null && message.hasOwnProperty("occupancyPercentage"))
+                if (message.occupancyPercentage != null && Object.hasOwnProperty.call(message, "occupancyPercentage"))
                     writer.uint32(/* id 4, wireType 0 =*/32).int32(message.occupancyPercentage);
-                if (message.carriageSequence != null && message.hasOwnProperty("carriageSequence"))
+                if (message.carriageSequence != null && Object.hasOwnProperty.call(message, "carriageSequence"))
                     writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.carriageSequence);
                 return writer;
             };
@@ -4328,21 +4644,26 @@ $root.transit_realtime = (function() {
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.id = reader.string();
-                        break;
-                    case 2:
-                        message.label = reader.string();
-                        break;
-                    case 3:
-                        message.occupancyStatus = reader.int32();
-                        break;
-                    case 4:
-                        message.occupancyPercentage = reader.int32();
-                        break;
-                    case 5:
-                        message.carriageSequence = reader.uint32();
-                        break;
+                    case 1: {
+                            message.id = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.label = reader.string();
+                            break;
+                        }
+                    case 3: {
+                            message.occupancyStatus = reader.int32();
+                            break;
+                        }
+                    case 4: {
+                            message.occupancyPercentage = reader.int32();
+                            break;
+                        }
+                    case 5: {
+                            message.carriageSequence = reader.uint32();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -4453,6 +4774,12 @@ $root.transit_realtime = (function() {
                 case 6:
                     message.occupancyStatus = 6;
                     break;
+                default:
+                    if (typeof object.occupancyStatus === "number") {
+                        message.occupancyStatus = object.occupancyStatus;
+                        break;
+                    }
+                    break;
                 case "NO_DATA_AVAILABLE":
                 case 7:
                     message.occupancyStatus = 7;
@@ -4494,7 +4821,7 @@ $root.transit_realtime = (function() {
                 if (message.label != null && message.hasOwnProperty("label"))
                     object.label = message.label;
                 if (message.occupancyStatus != null && message.hasOwnProperty("occupancyStatus"))
-                    object.occupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.occupancyStatus] : message.occupancyStatus;
+                    object.occupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.occupancyStatus] === undefined ? message.occupancyStatus : $root.transit_realtime.VehiclePosition.OccupancyStatus[message.occupancyStatus] : message.occupancyStatus;
                 if (message.occupancyPercentage != null && message.hasOwnProperty("occupancyPercentage"))
                     object.occupancyPercentage = message.occupancyPercentage;
                 if (message.carriageSequence != null && message.hasOwnProperty("carriageSequence"))
@@ -4511,6 +4838,21 @@ $root.transit_realtime = (function() {
              */
             CarriageDetails.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for CarriageDetails
+             * @function getTypeUrl
+             * @memberof transit_realtime.VehiclePosition.CarriageDetails
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            CarriageDetails.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/transit_realtime.VehiclePosition.CarriageDetails";
             };
 
             return CarriageDetails;
@@ -4691,27 +5033,27 @@ $root.transit_realtime = (function() {
             if (message.informedEntity != null && message.informedEntity.length)
                 for (var i = 0; i < message.informedEntity.length; ++i)
                     $root.transit_realtime.EntitySelector.encode(message.informedEntity[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
-            if (message.cause != null && message.hasOwnProperty("cause"))
+            if (message.cause != null && Object.hasOwnProperty.call(message, "cause"))
                 writer.uint32(/* id 6, wireType 0 =*/48).int32(message.cause);
-            if (message.effect != null && message.hasOwnProperty("effect"))
+            if (message.effect != null && Object.hasOwnProperty.call(message, "effect"))
                 writer.uint32(/* id 7, wireType 0 =*/56).int32(message.effect);
-            if (message.url != null && message.hasOwnProperty("url"))
+            if (message.url != null && Object.hasOwnProperty.call(message, "url"))
                 $root.transit_realtime.TranslatedString.encode(message.url, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
-            if (message.headerText != null && message.hasOwnProperty("headerText"))
+            if (message.headerText != null && Object.hasOwnProperty.call(message, "headerText"))
                 $root.transit_realtime.TranslatedString.encode(message.headerText, writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
-            if (message.descriptionText != null && message.hasOwnProperty("descriptionText"))
+            if (message.descriptionText != null && Object.hasOwnProperty.call(message, "descriptionText"))
                 $root.transit_realtime.TranslatedString.encode(message.descriptionText, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
-            if (message.ttsHeaderText != null && message.hasOwnProperty("ttsHeaderText"))
+            if (message.ttsHeaderText != null && Object.hasOwnProperty.call(message, "ttsHeaderText"))
                 $root.transit_realtime.TranslatedString.encode(message.ttsHeaderText, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
-            if (message.ttsDescriptionText != null && message.hasOwnProperty("ttsDescriptionText"))
+            if (message.ttsDescriptionText != null && Object.hasOwnProperty.call(message, "ttsDescriptionText"))
                 $root.transit_realtime.TranslatedString.encode(message.ttsDescriptionText, writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
-            if (message.severityLevel != null && message.hasOwnProperty("severityLevel"))
+            if (message.severityLevel != null && Object.hasOwnProperty.call(message, "severityLevel"))
                 writer.uint32(/* id 14, wireType 0 =*/112).int32(message.severityLevel);
-            if (message.image != null && message.hasOwnProperty("image"))
+            if (message.image != null && Object.hasOwnProperty.call(message, "image"))
                 $root.transit_realtime.TranslatedImage.encode(message.image, writer.uint32(/* id 15, wireType 2 =*/122).fork()).ldelim();
-            if (message.imageAlternativeText != null && message.hasOwnProperty("imageAlternativeText"))
+            if (message.imageAlternativeText != null && Object.hasOwnProperty.call(message, "imageAlternativeText"))
                 $root.transit_realtime.TranslatedString.encode(message.imageAlternativeText, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
-            if (message[".transitAlertExtension"] != null && message.hasOwnProperty(".transitAlertExtension"))
+            if (message[".transitAlertExtension"] != null && Object.hasOwnProperty.call(message, ".transitAlertExtension"))
                 $root.TransitAlertExtension.encode(message[".transitAlertExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
         };
@@ -4747,49 +5089,62 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    if (!(message.activePeriod && message.activePeriod.length))
-                        message.activePeriod = [];
-                    message.activePeriod.push($root.transit_realtime.TimeRange.decode(reader, reader.uint32()));
-                    break;
-                case 5:
-                    if (!(message.informedEntity && message.informedEntity.length))
-                        message.informedEntity = [];
-                    message.informedEntity.push($root.transit_realtime.EntitySelector.decode(reader, reader.uint32()));
-                    break;
-                case 6:
-                    message.cause = reader.int32();
-                    break;
-                case 7:
-                    message.effect = reader.int32();
-                    break;
-                case 8:
-                    message.url = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
-                    break;
-                case 10:
-                    message.headerText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
-                    break;
-                case 11:
-                    message.descriptionText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
-                    break;
-                case 12:
-                    message.ttsHeaderText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
-                    break;
-                case 13:
-                    message.ttsDescriptionText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
-                    break;
-                case 14:
-                    message.severityLevel = reader.int32();
-                    break;
-                case 15:
-                    message.image = $root.transit_realtime.TranslatedImage.decode(reader, reader.uint32());
-                    break;
-                case 16:
-                    message.imageAlternativeText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
-                    break;
-                case 9514:
-                    message[".transitAlertExtension"] = $root.TransitAlertExtension.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        if (!(message.activePeriod && message.activePeriod.length))
+                            message.activePeriod = [];
+                        message.activePeriod.push($root.transit_realtime.TimeRange.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 5: {
+                        if (!(message.informedEntity && message.informedEntity.length))
+                            message.informedEntity = [];
+                        message.informedEntity.push($root.transit_realtime.EntitySelector.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 6: {
+                        message.cause = reader.int32();
+                        break;
+                    }
+                case 7: {
+                        message.effect = reader.int32();
+                        break;
+                    }
+                case 8: {
+                        message.url = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 10: {
+                        message.headerText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 11: {
+                        message.descriptionText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 12: {
+                        message.ttsHeaderText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 13: {
+                        message.ttsDescriptionText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 14: {
+                        message.severityLevel = reader.int32();
+                        break;
+                    }
+                case 15: {
+                        message.image = $root.transit_realtime.TranslatedImage.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 16: {
+                        message.imageAlternativeText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 9514: {
+                        message[".transitAlertExtension"] = $root.TransitAlertExtension.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -4964,6 +5319,12 @@ $root.transit_realtime = (function() {
                 }
             }
             switch (object.cause) {
+            default:
+                if (typeof object.cause === "number") {
+                    message.cause = object.cause;
+                    break;
+                }
+                break;
             case "UNKNOWN_CAUSE":
             case 1:
                 message.cause = 1;
@@ -5042,6 +5403,12 @@ $root.transit_realtime = (function() {
             case 7:
                 message.effect = 7;
                 break;
+            default:
+                if (typeof object.effect === "number") {
+                    message.effect = object.effect;
+                    break;
+                }
+                break;
             case "UNKNOWN_EFFECT":
             case 8:
                 message.effect = 8;
@@ -5085,6 +5452,12 @@ $root.transit_realtime = (function() {
                 message.ttsDescriptionText = $root.transit_realtime.TranslatedString.fromObject(object.ttsDescriptionText);
             }
             switch (object.severityLevel) {
+            default:
+                if (typeof object.severityLevel === "number") {
+                    message.severityLevel = object.severityLevel;
+                    break;
+                }
+                break;
             case "UNKNOWN_SEVERITY":
             case 1:
                 message.severityLevel = 1;
@@ -5161,9 +5534,9 @@ $root.transit_realtime = (function() {
                     object.informedEntity[j] = $root.transit_realtime.EntitySelector.toObject(message.informedEntity[j], options);
             }
             if (message.cause != null && message.hasOwnProperty("cause"))
-                object.cause = options.enums === String ? $root.transit_realtime.Alert.Cause[message.cause] : message.cause;
+                object.cause = options.enums === String ? $root.transit_realtime.Alert.Cause[message.cause] === undefined ? message.cause : $root.transit_realtime.Alert.Cause[message.cause] : message.cause;
             if (message.effect != null && message.hasOwnProperty("effect"))
-                object.effect = options.enums === String ? $root.transit_realtime.Alert.Effect[message.effect] : message.effect;
+                object.effect = options.enums === String ? $root.transit_realtime.Alert.Effect[message.effect] === undefined ? message.effect : $root.transit_realtime.Alert.Effect[message.effect] : message.effect;
             if (message.url != null && message.hasOwnProperty("url"))
                 object.url = $root.transit_realtime.TranslatedString.toObject(message.url, options);
             if (message.headerText != null && message.hasOwnProperty("headerText"))
@@ -5175,7 +5548,7 @@ $root.transit_realtime = (function() {
             if (message.ttsDescriptionText != null && message.hasOwnProperty("ttsDescriptionText"))
                 object.ttsDescriptionText = $root.transit_realtime.TranslatedString.toObject(message.ttsDescriptionText, options);
             if (message.severityLevel != null && message.hasOwnProperty("severityLevel"))
-                object.severityLevel = options.enums === String ? $root.transit_realtime.Alert.SeverityLevel[message.severityLevel] : message.severityLevel;
+                object.severityLevel = options.enums === String ? $root.transit_realtime.Alert.SeverityLevel[message.severityLevel] === undefined ? message.severityLevel : $root.transit_realtime.Alert.SeverityLevel[message.severityLevel] : message.severityLevel;
             if (message.image != null && message.hasOwnProperty("image"))
                 object.image = $root.transit_realtime.TranslatedImage.toObject(message.image, options);
             if (message.imageAlternativeText != null && message.hasOwnProperty("imageAlternativeText"))
@@ -5197,9 +5570,24 @@ $root.transit_realtime = (function() {
         };
 
         /**
+         * Gets the default type url for Alert
+         * @function getTypeUrl
+         * @memberof transit_realtime.Alert
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Alert.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.Alert";
+        };
+
+        /**
          * Cause enum.
          * @name transit_realtime.Alert.Cause
-         * @enum {string}
+         * @enum {number}
          * @property {number} UNKNOWN_CAUSE=1 UNKNOWN_CAUSE value
          * @property {number} OTHER_CAUSE=2 OTHER_CAUSE value
          * @property {number} TECHNICAL_PROBLEM=3 TECHNICAL_PROBLEM value
@@ -5233,7 +5621,7 @@ $root.transit_realtime = (function() {
         /**
          * Effect enum.
          * @name transit_realtime.Alert.Effect
-         * @enum {string}
+         * @enum {number}
          * @property {number} NO_SERVICE=1 NO_SERVICE value
          * @property {number} REDUCED_SERVICE=2 REDUCED_SERVICE value
          * @property {number} SIGNIFICANT_DELAYS=3 SIGNIFICANT_DELAYS value
@@ -5265,7 +5653,7 @@ $root.transit_realtime = (function() {
         /**
          * SeverityLevel enum.
          * @name transit_realtime.Alert.SeverityLevel
-         * @enum {string}
+         * @enum {number}
          * @property {number} UNKNOWN_SEVERITY=1 UNKNOWN_SEVERITY value
          * @property {number} INFO=2 INFO value
          * @property {number} WARNING=3 WARNING value
@@ -5348,9 +5736,9 @@ $root.transit_realtime = (function() {
         TimeRange.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.start != null && message.hasOwnProperty("start"))
+            if (message.start != null && Object.hasOwnProperty.call(message, "start"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.start);
-            if (message.end != null && message.hasOwnProperty("end"))
+            if (message.end != null && Object.hasOwnProperty.call(message, "end"))
                 writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.end);
             return writer;
         };
@@ -5386,12 +5774,14 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.start = reader.uint64();
-                    break;
-                case 2:
-                    message.end = reader.uint64();
-                    break;
+                case 1: {
+                        message.start = reader.uint64();
+                        break;
+                    }
+                case 2: {
+                        message.end = reader.uint64();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -5518,6 +5908,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for TimeRange
+         * @function getTypeUrl
+         * @memberof transit_realtime.TimeRange
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        TimeRange.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.TimeRange";
+        };
+
         return TimeRange;
     })();
 
@@ -5615,11 +6020,11 @@ $root.transit_realtime = (function() {
                 writer = $Writer.create();
             writer.uint32(/* id 1, wireType 5 =*/13).float(message.latitude);
             writer.uint32(/* id 2, wireType 5 =*/21).float(message.longitude);
-            if (message.bearing != null && message.hasOwnProperty("bearing"))
+            if (message.bearing != null && Object.hasOwnProperty.call(message, "bearing"))
                 writer.uint32(/* id 3, wireType 5 =*/29).float(message.bearing);
-            if (message.odometer != null && message.hasOwnProperty("odometer"))
+            if (message.odometer != null && Object.hasOwnProperty.call(message, "odometer"))
                 writer.uint32(/* id 4, wireType 1 =*/33).double(message.odometer);
-            if (message.speed != null && message.hasOwnProperty("speed"))
+            if (message.speed != null && Object.hasOwnProperty.call(message, "speed"))
                 writer.uint32(/* id 5, wireType 5 =*/45).float(message.speed);
             return writer;
         };
@@ -5655,21 +6060,26 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.latitude = reader.float();
-                    break;
-                case 2:
-                    message.longitude = reader.float();
-                    break;
-                case 3:
-                    message.bearing = reader.float();
-                    break;
-                case 4:
-                    message.odometer = reader.double();
-                    break;
-                case 5:
-                    message.speed = reader.float();
-                    break;
+                case 1: {
+                        message.latitude = reader.float();
+                        break;
+                    }
+                case 2: {
+                        message.longitude = reader.float();
+                        break;
+                    }
+                case 3: {
+                        message.bearing = reader.float();
+                        break;
+                    }
+                case 4: {
+                        message.odometer = reader.double();
+                        break;
+                    }
+                case 5: {
+                        message.speed = reader.float();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -5794,6 +6204,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for Position
+         * @function getTypeUrl
+         * @memberof transit_realtime.Position
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Position.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.Position";
+        };
+
         return Position;
     })();
 
@@ -5916,21 +6341,21 @@ $root.transit_realtime = (function() {
         TripDescriptor.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.tripId != null && message.hasOwnProperty("tripId"))
+            if (message.tripId != null && Object.hasOwnProperty.call(message, "tripId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.tripId);
-            if (message.startTime != null && message.hasOwnProperty("startTime"))
+            if (message.startTime != null && Object.hasOwnProperty.call(message, "startTime"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.startTime);
-            if (message.startDate != null && message.hasOwnProperty("startDate"))
+            if (message.startDate != null && Object.hasOwnProperty.call(message, "startDate"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.startDate);
-            if (message.scheduleRelationship != null && message.hasOwnProperty("scheduleRelationship"))
+            if (message.scheduleRelationship != null && Object.hasOwnProperty.call(message, "scheduleRelationship"))
                 writer.uint32(/* id 4, wireType 0 =*/32).int32(message.scheduleRelationship);
-            if (message.routeId != null && message.hasOwnProperty("routeId"))
+            if (message.routeId != null && Object.hasOwnProperty.call(message, "routeId"))
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.routeId);
-            if (message.directionId != null && message.hasOwnProperty("directionId"))
+            if (message.directionId != null && Object.hasOwnProperty.call(message, "directionId"))
                 writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.directionId);
-            if (message[".nyctTripDescriptor"] != null && message.hasOwnProperty(".nyctTripDescriptor"))
+            if (message[".nyctTripDescriptor"] != null && Object.hasOwnProperty.call(message, ".nyctTripDescriptor"))
                 $root.NyctTripDescriptor.encode(message[".nyctTripDescriptor"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
-            if (message[".transitTripDescriptorExtension"] != null && message.hasOwnProperty(".transitTripDescriptorExtension"))
+            if (message[".transitTripDescriptorExtension"] != null && Object.hasOwnProperty.call(message, ".transitTripDescriptorExtension"))
                 $root.TransitTripDescriptorExtension.encode(message[".transitTripDescriptorExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
         };
@@ -5966,30 +6391,38 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.tripId = reader.string();
-                    break;
-                case 5:
-                    message.routeId = reader.string();
-                    break;
-                case 6:
-                    message.directionId = reader.uint32();
-                    break;
-                case 2:
-                    message.startTime = reader.string();
-                    break;
-                case 3:
-                    message.startDate = reader.string();
-                    break;
-                case 4:
-                    message.scheduleRelationship = reader.int32();
-                    break;
-                case 9514:
-                    message[".transitTripDescriptorExtension"] = $root.TransitTripDescriptorExtension.decode(reader, reader.uint32());
-                    break;
-                case 1001:
-                    message[".nyctTripDescriptor"] = $root.NyctTripDescriptor.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.tripId = reader.string();
+                        break;
+                    }
+                case 5: {
+                        message.routeId = reader.string();
+                        break;
+                    }
+                case 6: {
+                        message.directionId = reader.uint32();
+                        break;
+                    }
+                case 2: {
+                        message.startTime = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.startDate = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.scheduleRelationship = reader.int32();
+                        break;
+                    }
+                case 9514: {
+                        message[".transitTripDescriptorExtension"] = $root.TransitTripDescriptorExtension.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 1001: {
+                        message[".nyctTripDescriptor"] = $root.NyctTripDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -6088,6 +6521,12 @@ $root.transit_realtime = (function() {
             if (object.startDate != null)
                 message.startDate = String(object.startDate);
             switch (object.scheduleRelationship) {
+            default:
+                if (typeof object.scheduleRelationship === "number") {
+                    message.scheduleRelationship = object.scheduleRelationship;
+                    break;
+                }
+                break;
             case "SCHEDULED":
             case 0:
                 message.scheduleRelationship = 0;
@@ -6156,7 +6595,7 @@ $root.transit_realtime = (function() {
             if (message.startDate != null && message.hasOwnProperty("startDate"))
                 object.startDate = message.startDate;
             if (message.scheduleRelationship != null && message.hasOwnProperty("scheduleRelationship"))
-                object.scheduleRelationship = options.enums === String ? $root.transit_realtime.TripDescriptor.ScheduleRelationship[message.scheduleRelationship] : message.scheduleRelationship;
+                object.scheduleRelationship = options.enums === String ? $root.transit_realtime.TripDescriptor.ScheduleRelationship[message.scheduleRelationship] === undefined ? message.scheduleRelationship : $root.transit_realtime.TripDescriptor.ScheduleRelationship[message.scheduleRelationship] : message.scheduleRelationship;
             if (message.routeId != null && message.hasOwnProperty("routeId"))
                 object.routeId = message.routeId;
             if (message.directionId != null && message.hasOwnProperty("directionId"))
@@ -6180,9 +6619,24 @@ $root.transit_realtime = (function() {
         };
 
         /**
+         * Gets the default type url for TripDescriptor
+         * @function getTypeUrl
+         * @memberof transit_realtime.TripDescriptor
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        TripDescriptor.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.TripDescriptor";
+        };
+
+        /**
          * ScheduleRelationship enum.
          * @name transit_realtime.TripDescriptor.ScheduleRelationship
-         * @enum {string}
+         * @enum {number}
          * @property {number} SCHEDULED=0 SCHEDULED value
          * @property {number} ADDED=1 ADDED value
          * @property {number} UNSCHEDULED=2 UNSCHEDULED value
@@ -6296,15 +6750,15 @@ $root.transit_realtime = (function() {
         VehicleDescriptor.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.id != null && message.hasOwnProperty("id"))
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
-            if (message.label != null && message.hasOwnProperty("label"))
+            if (message.label != null && Object.hasOwnProperty.call(message, "label"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.label);
-            if (message.licensePlate != null && message.hasOwnProperty("licensePlate"))
+            if (message.licensePlate != null && Object.hasOwnProperty.call(message, "licensePlate"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.licensePlate);
-            if (message[".tfnswVehicleDescriptor"] != null && message.hasOwnProperty(".tfnswVehicleDescriptor"))
+            if (message[".tfnswVehicleDescriptor"] != null && Object.hasOwnProperty.call(message, ".tfnswVehicleDescriptor"))
                 $root.TfnswVehicleDescriptor.encode(message[".tfnswVehicleDescriptor"], writer.uint32(/* id 1999, wireType 2 =*/15994).fork()).ldelim();
-            if (message[".transitVehicleDescriptorExtension"] != null && message.hasOwnProperty(".transitVehicleDescriptorExtension"))
+            if (message[".transitVehicleDescriptorExtension"] != null && Object.hasOwnProperty.call(message, ".transitVehicleDescriptorExtension"))
                 $root.TransitVehicleDescriptorExtension.encode(message[".transitVehicleDescriptorExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
         };
@@ -6340,21 +6794,26 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.string();
-                    break;
-                case 2:
-                    message.label = reader.string();
-                    break;
-                case 3:
-                    message.licensePlate = reader.string();
-                    break;
-                case 9514:
-                    message[".transitVehicleDescriptorExtension"] = $root.TransitVehicleDescriptorExtension.decode(reader, reader.uint32());
-                    break;
-                case 1999:
-                    message[".tfnswVehicleDescriptor"] = $root.TfnswVehicleDescriptor.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.id = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.label = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.licensePlate = reader.string();
+                        break;
+                    }
+                case 9514: {
+                        message[".transitVehicleDescriptorExtension"] = $root.TransitVehicleDescriptorExtension.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 1999: {
+                        message[".tfnswVehicleDescriptor"] = $root.TfnswVehicleDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -6487,6 +6946,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for VehicleDescriptor
+         * @function getTypeUrl
+         * @memberof transit_realtime.VehicleDescriptor
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        VehicleDescriptor.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.VehicleDescriptor";
+        };
+
         return VehicleDescriptor;
     })();
 
@@ -6600,19 +7074,19 @@ $root.transit_realtime = (function() {
         EntitySelector.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.agencyId != null && message.hasOwnProperty("agencyId"))
+            if (message.agencyId != null && Object.hasOwnProperty.call(message, "agencyId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.agencyId);
-            if (message.routeId != null && message.hasOwnProperty("routeId"))
+            if (message.routeId != null && Object.hasOwnProperty.call(message, "routeId"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.routeId);
-            if (message.routeType != null && message.hasOwnProperty("routeType"))
+            if (message.routeType != null && Object.hasOwnProperty.call(message, "routeType"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.routeType);
-            if (message.trip != null && message.hasOwnProperty("trip"))
+            if (message.trip != null && Object.hasOwnProperty.call(message, "trip"))
                 $root.transit_realtime.TripDescriptor.encode(message.trip, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
-            if (message.stopId != null && message.hasOwnProperty("stopId"))
+            if (message.stopId != null && Object.hasOwnProperty.call(message, "stopId"))
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.stopId);
-            if (message.directionId != null && message.hasOwnProperty("directionId"))
+            if (message.directionId != null && Object.hasOwnProperty.call(message, "directionId"))
                 writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.directionId);
-            if (message[".transitEntitySelectorExtension"] != null && message.hasOwnProperty(".transitEntitySelectorExtension"))
+            if (message[".transitEntitySelectorExtension"] != null && Object.hasOwnProperty.call(message, ".transitEntitySelectorExtension"))
                 $root.TransitInformedEntityExtension.encode(message[".transitEntitySelectorExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
         };
@@ -6648,27 +7122,34 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.agencyId = reader.string();
-                    break;
-                case 2:
-                    message.routeId = reader.string();
-                    break;
-                case 3:
-                    message.routeType = reader.int32();
-                    break;
-                case 4:
-                    message.trip = $root.transit_realtime.TripDescriptor.decode(reader, reader.uint32());
-                    break;
-                case 5:
-                    message.stopId = reader.string();
-                    break;
-                case 6:
-                    message.directionId = reader.uint32();
-                    break;
-                case 9514:
-                    message[".transitEntitySelectorExtension"] = $root.TransitInformedEntityExtension.decode(reader, reader.uint32());
-                    break;
+                case 1: {
+                        message.agencyId = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.routeId = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.routeType = reader.int32();
+                        break;
+                    }
+                case 4: {
+                        message.trip = $root.transit_realtime.TripDescriptor.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 5: {
+                        message.stopId = reader.string();
+                        break;
+                    }
+                case 6: {
+                        message.directionId = reader.uint32();
+                        break;
+                    }
+                case 9514: {
+                        message[".transitEntitySelectorExtension"] = $root.TransitInformedEntityExtension.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -6817,6 +7298,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for EntitySelector
+         * @function getTypeUrl
+         * @memberof transit_realtime.EntitySelector
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        EntitySelector.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.EntitySelector";
+        };
+
         return EntitySelector;
     })();
 
@@ -6914,11 +7410,12 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    if (!(message.translation && message.translation.length))
-                        message.translation = [];
-                    message.translation.push($root.transit_realtime.TranslatedString.Translation.decode(reader, reader.uint32()));
-                    break;
+                case 1: {
+                        if (!(message.translation && message.translation.length))
+                            message.translation = [];
+                        message.translation.push($root.transit_realtime.TranslatedString.Translation.decode(reader, reader.uint32()));
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -7025,6 +7522,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for TranslatedString
+         * @function getTypeUrl
+         * @memberof transit_realtime.TranslatedString
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        TranslatedString.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.TranslatedString";
+        };
+
         TranslatedString.Translation = (function() {
 
             /**
@@ -7091,7 +7603,7 @@ $root.transit_realtime = (function() {
                 if (!writer)
                     writer = $Writer.create();
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.text);
-                if (message.language != null && message.hasOwnProperty("language"))
+                if (message.language != null && Object.hasOwnProperty.call(message, "language"))
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.language);
                 return writer;
             };
@@ -7127,12 +7639,14 @@ $root.transit_realtime = (function() {
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.text = reader.string();
-                        break;
-                    case 2:
-                        message.language = reader.string();
-                        break;
+                    case 1: {
+                            message.text = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.language = reader.string();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -7230,6 +7744,21 @@ $root.transit_realtime = (function() {
              */
             Translation.prototype.toJSON = function toJSON() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            /**
+             * Gets the default type url for Translation
+             * @function getTypeUrl
+             * @memberof transit_realtime.TranslatedString.Translation
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            Translation.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/transit_realtime.TranslatedString.Translation";
             };
 
             return Translation;
@@ -7332,11 +7861,12 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    if (!(message.localizedImage && message.localizedImage.length))
-                        message.localizedImage = [];
-                    message.localizedImage.push($root.transit_realtime.TranslatedImage.LocalizedImage.decode(reader, reader.uint32()));
-                    break;
+                case 1: {
+                        if (!(message.localizedImage && message.localizedImage.length))
+                            message.localizedImage = [];
+                        message.localizedImage.push($root.transit_realtime.TranslatedImage.LocalizedImage.decode(reader, reader.uint32()));
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -7443,6 +7973,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for TranslatedImage
+         * @function getTypeUrl
+         * @memberof transit_realtime.TranslatedImage
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        TranslatedImage.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.TranslatedImage";
+        };
+
         TranslatedImage.LocalizedImage = (function() {
 
             /**
@@ -7519,7 +8064,7 @@ $root.transit_realtime = (function() {
                     writer = $Writer.create();
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.url);
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.mediaType);
-                if (message.language != null && message.hasOwnProperty("language"))
+                if (message.language != null && Object.hasOwnProperty.call(message, "language"))
                     writer.uint32(/* id 3, wireType 2 =*/26).string(message.language);
                 return writer;
             };
@@ -7555,15 +8100,18 @@ $root.transit_realtime = (function() {
                 while (reader.pos < end) {
                     var tag = reader.uint32();
                     switch (tag >>> 3) {
-                    case 1:
-                        message.url = reader.string();
-                        break;
-                    case 2:
-                        message.mediaType = reader.string();
-                        break;
-                    case 3:
-                        message.language = reader.string();
-                        break;
+                    case 1: {
+                            message.url = reader.string();
+                            break;
+                        }
+                    case 2: {
+                            message.mediaType = reader.string();
+                            break;
+                        }
+                    case 3: {
+                            message.language = reader.string();
+                            break;
+                        }
                     default:
                         reader.skipType(tag & 7);
                         break;
@@ -7672,6 +8220,21 @@ $root.transit_realtime = (function() {
                 return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
             };
 
+            /**
+             * Gets the default type url for LocalizedImage
+             * @function getTypeUrl
+             * @memberof transit_realtime.TranslatedImage.LocalizedImage
+             * @static
+             * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns {string} The default type url
+             */
+            LocalizedImage.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+                if (typeUrlPrefix === undefined) {
+                    typeUrlPrefix = "type.googleapis.com";
+                }
+                return typeUrlPrefix + "/transit_realtime.TranslatedImage.LocalizedImage";
+            };
+
             return LocalizedImage;
         })();
 
@@ -7743,9 +8306,9 @@ $root.transit_realtime = (function() {
         Shape.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.shapeId != null && message.hasOwnProperty("shapeId"))
+            if (message.shapeId != null && Object.hasOwnProperty.call(message, "shapeId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.shapeId);
-            if (message.encodedPolyline != null && message.hasOwnProperty("encodedPolyline"))
+            if (message.encodedPolyline != null && Object.hasOwnProperty.call(message, "encodedPolyline"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.encodedPolyline);
             return writer;
         };
@@ -7781,12 +8344,14 @@ $root.transit_realtime = (function() {
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
-                case 1:
-                    message.shapeId = reader.string();
-                    break;
-                case 2:
-                    message.encodedPolyline = reader.string();
-                    break;
+                case 1: {
+                        message.shapeId = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.encodedPolyline = reader.string();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -7885,6 +8450,21 @@ $root.transit_realtime = (function() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
+        /**
+         * Gets the default type url for Shape
+         * @function getTypeUrl
+         * @memberof transit_realtime.Shape
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Shape.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/transit_realtime.Shape";
+        };
+
         return Shape;
     })();
 
@@ -7956,9 +8536,9 @@ $root.TfnswVehicleDescriptor = (function() {
     TfnswVehicleDescriptor.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.airConditioned != null && message.hasOwnProperty("airConditioned"))
+        if (message.airConditioned != null && Object.hasOwnProperty.call(message, "airConditioned"))
             writer.uint32(/* id 1, wireType 0 =*/8).bool(message.airConditioned);
-        if (message.wheelchairAccessible != null && message.hasOwnProperty("wheelchairAccessible"))
+        if (message.wheelchairAccessible != null && Object.hasOwnProperty.call(message, "wheelchairAccessible"))
             writer.uint32(/* id 2, wireType 0 =*/16).int32(message.wheelchairAccessible);
         return writer;
     };
@@ -7994,12 +8574,14 @@ $root.TfnswVehicleDescriptor = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.airConditioned = reader.bool();
-                break;
-            case 2:
-                message.wheelchairAccessible = reader.int32();
-                break;
+            case 1: {
+                    message.airConditioned = reader.bool();
+                    break;
+                }
+            case 2: {
+                    message.wheelchairAccessible = reader.int32();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -8098,6 +8680,21 @@ $root.TfnswVehicleDescriptor = (function() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
+    /**
+     * Gets the default type url for TfnswVehicleDescriptor
+     * @function getTypeUrl
+     * @memberof TfnswVehicleDescriptor
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TfnswVehicleDescriptor.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TfnswVehicleDescriptor";
+    };
+
     return TfnswVehicleDescriptor;
 })();
 
@@ -8166,9 +8763,9 @@ $root.TripReplacementPeriod = (function() {
     TripReplacementPeriod.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.routeId != null && message.hasOwnProperty("routeId"))
+        if (message.routeId != null && Object.hasOwnProperty.call(message, "routeId"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.routeId);
-        if (message.replacementPeriod != null && message.hasOwnProperty("replacementPeriod"))
+        if (message.replacementPeriod != null && Object.hasOwnProperty.call(message, "replacementPeriod"))
             $root.transit_realtime.TimeRange.encode(message.replacementPeriod, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
         return writer;
     };
@@ -8204,12 +8801,14 @@ $root.TripReplacementPeriod = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.routeId = reader.string();
-                break;
-            case 2:
-                message.replacementPeriod = $root.transit_realtime.TimeRange.decode(reader, reader.uint32());
-                break;
+            case 1: {
+                    message.routeId = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.replacementPeriod = $root.transit_realtime.TimeRange.decode(reader, reader.uint32());
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -8311,6 +8910,21 @@ $root.TripReplacementPeriod = (function() {
      */
     TripReplacementPeriod.prototype.toJSON = function toJSON() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for TripReplacementPeriod
+     * @function getTypeUrl
+     * @memberof TripReplacementPeriod
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TripReplacementPeriod.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TripReplacementPeriod";
     };
 
     return TripReplacementPeriod;
@@ -8420,14 +9034,16 @@ $root.NyctFeedHeader = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.nyctSubwayVersion = reader.string();
-                break;
-            case 2:
-                if (!(message.tripReplacementPeriod && message.tripReplacementPeriod.length))
-                    message.tripReplacementPeriod = [];
-                message.tripReplacementPeriod.push($root.TripReplacementPeriod.decode(reader, reader.uint32()));
-                break;
+            case 1: {
+                    message.nyctSubwayVersion = reader.string();
+                    break;
+                }
+            case 2: {
+                    if (!(message.tripReplacementPeriod && message.tripReplacementPeriod.length))
+                        message.tripReplacementPeriod = [];
+                    message.tripReplacementPeriod.push($root.TripReplacementPeriod.decode(reader, reader.uint32()));
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -8544,6 +9160,21 @@ $root.NyctFeedHeader = (function() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
+    /**
+     * Gets the default type url for NyctFeedHeader
+     * @function getTypeUrl
+     * @memberof NyctFeedHeader
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    NyctFeedHeader.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/NyctFeedHeader";
+    };
+
     return NyctFeedHeader;
 })();
 
@@ -8621,11 +9252,11 @@ $root.NyctTripDescriptor = (function() {
     NyctTripDescriptor.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.trainId != null && message.hasOwnProperty("trainId"))
+        if (message.trainId != null && Object.hasOwnProperty.call(message, "trainId"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.trainId);
-        if (message.isAssigned != null && message.hasOwnProperty("isAssigned"))
+        if (message.isAssigned != null && Object.hasOwnProperty.call(message, "isAssigned"))
             writer.uint32(/* id 2, wireType 0 =*/16).bool(message.isAssigned);
-        if (message.direction != null && message.hasOwnProperty("direction"))
+        if (message.direction != null && Object.hasOwnProperty.call(message, "direction"))
             writer.uint32(/* id 3, wireType 0 =*/24).int32(message.direction);
         return writer;
     };
@@ -8661,15 +9292,18 @@ $root.NyctTripDescriptor = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.trainId = reader.string();
-                break;
-            case 2:
-                message.isAssigned = reader.bool();
-                break;
-            case 3:
-                message.direction = reader.int32();
-                break;
+            case 1: {
+                    message.trainId = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.isAssigned = reader.bool();
+                    break;
+                }
+            case 3: {
+                    message.direction = reader.int32();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -8741,6 +9375,12 @@ $root.NyctTripDescriptor = (function() {
         if (object.isAssigned != null)
             message.isAssigned = Boolean(object.isAssigned);
         switch (object.direction) {
+        default:
+            if (typeof object.direction === "number") {
+                message.direction = object.direction;
+                break;
+            }
+            break;
         case "NORTH":
         case 1:
             message.direction = 1;
@@ -8784,7 +9424,7 @@ $root.NyctTripDescriptor = (function() {
         if (message.isAssigned != null && message.hasOwnProperty("isAssigned"))
             object.isAssigned = message.isAssigned;
         if (message.direction != null && message.hasOwnProperty("direction"))
-            object.direction = options.enums === String ? $root.NyctTripDescriptor.Direction[message.direction] : message.direction;
+            object.direction = options.enums === String ? $root.NyctTripDescriptor.Direction[message.direction] === undefined ? message.direction : $root.NyctTripDescriptor.Direction[message.direction] : message.direction;
         return object;
     };
 
@@ -8800,9 +9440,24 @@ $root.NyctTripDescriptor = (function() {
     };
 
     /**
+     * Gets the default type url for NyctTripDescriptor
+     * @function getTypeUrl
+     * @memberof NyctTripDescriptor
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    NyctTripDescriptor.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/NyctTripDescriptor";
+    };
+
+    /**
      * Direction enum.
      * @name NyctTripDescriptor.Direction
-     * @enum {string}
+     * @enum {number}
      * @property {number} NORTH=1 NORTH value
      * @property {number} EAST=2 EAST value
      * @property {number} SOUTH=3 SOUTH value
@@ -8885,9 +9540,9 @@ $root.NyctStopTimeUpdate = (function() {
     NyctStopTimeUpdate.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.scheduledTrack != null && message.hasOwnProperty("scheduledTrack"))
+        if (message.scheduledTrack != null && Object.hasOwnProperty.call(message, "scheduledTrack"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.scheduledTrack);
-        if (message.actualTrack != null && message.hasOwnProperty("actualTrack"))
+        if (message.actualTrack != null && Object.hasOwnProperty.call(message, "actualTrack"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.actualTrack);
         return writer;
     };
@@ -8923,12 +9578,14 @@ $root.NyctStopTimeUpdate = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-            case 1:
-                message.scheduledTrack = reader.string();
-                break;
-            case 2:
-                message.actualTrack = reader.string();
-                break;
+            case 1: {
+                    message.scheduledTrack = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.actualTrack = reader.string();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -9025,6 +9682,21 @@ $root.NyctStopTimeUpdate = (function() {
      */
     NyctStopTimeUpdate.prototype.toJSON = function toJSON() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for NyctStopTimeUpdate
+     * @function getTypeUrl
+     * @memberof NyctStopTimeUpdate
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    NyctStopTimeUpdate.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/NyctStopTimeUpdate";
     };
 
     return NyctStopTimeUpdate;
