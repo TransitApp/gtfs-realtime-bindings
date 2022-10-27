@@ -5,7 +5,7 @@
     "tags": [
         "gtfs-realtime"
     ],
-    "version": "1.8.0",
+    "version": "1.8.1 ",
     "repository": {
         "type": "git",
         "url": "https://github.com/google/gtfs-realtime-bindings.git"
@@ -23,10 +23,11 @@
         "node": ">=8.0.0"
     },
     "dependencies": {
-        "protobufjs": "^6.8.8"
+        "protobufjs": "^7.1.2"
     },
     "devDependencies": {
         "mocha": "1.19.0",
+        "protobufjs-cli": "^1.0.2",
         "should": "3.3.1"
     },
     "licenses": [
