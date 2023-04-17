@@ -1,7 +1,5 @@
 # JavaScript GTFS-realtime Language Bindings
 
-[![npm version](https://badge.fury.io/js/gtfs-realtime-bindings.svg)](http://badge.fury.io/js/gtfs-realtime-bindings)
-
 Provides JavaScript classes generated from the
 [GTFS-realtime](https://developers.google.com/transit/gtfs-realtime/) Protocol
 Buffer specification.  These classes will allow you to parse a binary Protocol
@@ -55,3 +53,8 @@ from the
 [gtfs-realtime.proto](https://developers.google.com/transit/gtfs-realtime/gtfs-realtime-proto),
 check out the [ProtoBuf.js project](https://github.com/dcodeIO/ProtoBuf.js/wiki)
 which we use to handle our Protocol Buffer serialization.
+
+
+## Updating
+
+Note that, to maintain compatability with CommonJS typescript projects, we need to manually change the `Long` type to the stub type included in the ProtobufJS library. 
