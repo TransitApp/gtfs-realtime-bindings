@@ -1,5 +1,6 @@
 import * as $protobuf from "protobufjs";
-import Long = require("long");
+import { Long } from "protobufjs";
+
 /** Properties of a TransitAlertExtension. */
 export interface ITransitAlertExtension {
 
