@@ -17,6 +17,8 @@ Test the generated code:
 npm run test
 ```
 
+Note that, to maintain compatability with CommonJS typescript projects, we need to manually change the `Long` type to the stub type included in the ProtobufJS library. 
+
 Update the version number in `package.json`.
 
 Publish the package to NPM:
