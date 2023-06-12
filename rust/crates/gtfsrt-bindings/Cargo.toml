@@ -1,0 +1,17 @@
+[package]
+name = "gtfsrt-bindings"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+pbjson = "0.5.1"
+pbjson-types = "0.5.1"
+prost = { workspace = true }
+serde = { workspace = true }
+
+
+[build-dependencies]
+pbjson-build = "0.5.1"
+prost-build = "0.11.9"

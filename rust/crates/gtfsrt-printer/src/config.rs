@@ -7,10 +7,6 @@ pub struct Config {
     pub input: Option<String>,
 
     #[clap(short, long)]
-    /// Print the gtfs-rt as json
-    pub json: bool,
-
-    #[clap(short, long)]
     /// Pass headers to HTTP request, by key:value
     pub headers: Option<Vec<String>>,
 
