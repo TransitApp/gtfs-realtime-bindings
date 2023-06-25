@@ -14,6 +14,8 @@ fn main() {
 
     let descriptor_path = PathBuf::from(env::var("OUT_DIR").unwrap()).join("proto_descriptor.bin");
 
+    env::set_var("PROTOC", protobuf_src::protoc());
+
     prost_build::Config::new()
         // Save descriptors to file
         .file_descriptor_set_path(&descriptor_path)
