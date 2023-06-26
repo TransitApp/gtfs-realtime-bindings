@@ -15,4 +15,3 @@ prost = "0.11.9"
 [build-dependencies]
 pbjson-build = "0.5.1"
 prost-build = "0.11.9"
-protobuf-src = "1.1.0"

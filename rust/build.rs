@@ -2,8 +2,12 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("gtfs-spec-no-extensions/gtfs-realtime/proto");
+    if env::var("COMPILE_GTFSRT_PROTOBUF").is_err() {
+        // Skip compilation by default
+        return;
+    }
+
+    let root = crate_root().join("gtfs-spec-no-extensions/gtfs-realtime/proto");
 
     let proto_files = vec![root.join("gtfs-realtime.proto")];
 
@@ -13,8 +17,6 @@ fn main() {
     }
 
     let descriptor_path = PathBuf::from(env::var("OUT_DIR").unwrap()).join("proto_descriptor.bin");
-
-    env::set_var("PROTOC", protobuf_src::protoc());
 
     prost_build::Config::new()
         // Save descriptors to file
@@ -31,5 +33,28 @@ fn main() {
         .register_descriptors(&descriptor_set)
         .unwrap()
         .build(&[".transit_realtime"])
-        .unwrap()
+        .unwrap();
+
+    // Copy the generated files to the output directory
+    std::fs::create_dir_all(crate_root().join("prebuilt")).unwrap();
+
+    std::fs::copy(
+        out_dir().join("transit_realtime.rs"),
+        crate_root().join("prebuilt/transit_realtime.rs"),
+    )
+    .unwrap();
+
+    std::fs::copy(
+        out_dir().join("transit_realtime.serde.rs"),
+        crate_root().join("prebuilt/transit_realtime.serde.rs"),
+    )
+    .unwrap();
+}
+
+fn crate_root() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+}
+
+fn out_dir() -> PathBuf {
+    PathBuf::from(env::var("OUT_DIR").unwrap())
 }
