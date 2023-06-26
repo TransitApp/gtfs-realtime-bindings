@@ -5,9 +5,6 @@ edition = "2021"
 description = "bindings for gtfs-realtime"
 publish = ["transit"]
 
-[package.metadata.workspaces]
-independent = true
-
 [dependencies]
 pbjson = "0.5.1"
 pbjson-types = "0.5.1"
