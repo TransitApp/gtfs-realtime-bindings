@@ -4879,6 +4879,8 @@ $root.transit_realtime = (function() {
          * @property {transit_realtime.Alert.SeverityLevel|null} [severityLevel] Alert severityLevel
          * @property {transit_realtime.ITranslatedImage|null} [image] Alert image
          * @property {transit_realtime.ITranslatedString|null} [imageAlternativeText] Alert imageAlternativeText
+         * @property {transit_realtime.ITranslatedString|null} [causeDetail] Alert causeDetail
+         * @property {transit_realtime.ITranslatedString|null} [effectDetail] Alert effectDetail
          * @property {ITransitAlertExtension|null} [".transitAlertExtension"] Alert .transitAlertExtension
          */
 
@@ -4996,6 +4998,22 @@ $root.transit_realtime = (function() {
         Alert.prototype.imageAlternativeText = null;
 
         /**
+         * Alert causeDetail.
+         * @member {transit_realtime.ITranslatedString|null|undefined} causeDetail
+         * @memberof transit_realtime.Alert
+         * @instance
+         */
+        Alert.prototype.causeDetail = null;
+
+        /**
+         * Alert effectDetail.
+         * @member {transit_realtime.ITranslatedString|null|undefined} effectDetail
+         * @memberof transit_realtime.Alert
+         * @instance
+         */
+        Alert.prototype.effectDetail = null;
+
+        /**
          * Alert .transitAlertExtension.
          * @member {ITransitAlertExtension|null|undefined} .transitAlertExtension
          * @memberof transit_realtime.Alert
@@ -5053,6 +5071,10 @@ $root.transit_realtime = (function() {
                 $root.transit_realtime.TranslatedImage.encode(message.image, writer.uint32(/* id 15, wireType 2 =*/122).fork()).ldelim();
             if (message.imageAlternativeText != null && Object.hasOwnProperty.call(message, "imageAlternativeText"))
                 $root.transit_realtime.TranslatedString.encode(message.imageAlternativeText, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
+            if (message.causeDetail != null && Object.hasOwnProperty.call(message, "causeDetail"))
+                $root.transit_realtime.TranslatedString.encode(message.causeDetail, writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
+            if (message.effectDetail != null && Object.hasOwnProperty.call(message, "effectDetail"))
+                $root.transit_realtime.TranslatedString.encode(message.effectDetail, writer.uint32(/* id 18, wireType 2 =*/146).fork()).ldelim();
             if (message[".transitAlertExtension"] != null && Object.hasOwnProperty.call(message, ".transitAlertExtension"))
                 $root.TransitAlertExtension.encode(message[".transitAlertExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
@@ -5139,6 +5161,14 @@ $root.transit_realtime = (function() {
                     }
                 case 16: {
                         message.imageAlternativeText = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 17: {
+                        message.causeDetail = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 18: {
+                        message.effectDetail = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
                         break;
                     }
                 case 9514: {
@@ -5277,6 +5307,16 @@ $root.transit_realtime = (function() {
                 var error = $root.transit_realtime.TranslatedString.verify(message.imageAlternativeText);
                 if (error)
                     return "imageAlternativeText." + error;
+            }
+            if (message.causeDetail != null && message.hasOwnProperty("causeDetail")) {
+                var error = $root.transit_realtime.TranslatedString.verify(message.causeDetail);
+                if (error)
+                    return "causeDetail." + error;
+            }
+            if (message.effectDetail != null && message.hasOwnProperty("effectDetail")) {
+                var error = $root.transit_realtime.TranslatedString.verify(message.effectDetail);
+                if (error)
+                    return "effectDetail." + error;
             }
             if (message[".transitAlertExtension"] != null && message.hasOwnProperty(".transitAlertExtension")) {
                 var error = $root.TransitAlertExtension.verify(message[".transitAlertExtension"]);
@@ -5485,6 +5525,16 @@ $root.transit_realtime = (function() {
                     throw TypeError(".transit_realtime.Alert.imageAlternativeText: object expected");
                 message.imageAlternativeText = $root.transit_realtime.TranslatedString.fromObject(object.imageAlternativeText);
             }
+            if (object.causeDetail != null) {
+                if (typeof object.causeDetail !== "object")
+                    throw TypeError(".transit_realtime.Alert.causeDetail: object expected");
+                message.causeDetail = $root.transit_realtime.TranslatedString.fromObject(object.causeDetail);
+            }
+            if (object.effectDetail != null) {
+                if (typeof object.effectDetail !== "object")
+                    throw TypeError(".transit_realtime.Alert.effectDetail: object expected");
+                message.effectDetail = $root.transit_realtime.TranslatedString.fromObject(object.effectDetail);
+            }
             if (object[".transitAlertExtension"] != null) {
                 if (typeof object[".transitAlertExtension"] !== "object")
                     throw TypeError(".transit_realtime.Alert..transitAlertExtension: object expected");
@@ -5521,6 +5571,8 @@ $root.transit_realtime = (function() {
                 object.severityLevel = options.enums === String ? "UNKNOWN_SEVERITY" : 1;
                 object.image = null;
                 object.imageAlternativeText = null;
+                object.causeDetail = null;
+                object.effectDetail = null;
                 object[".transitAlertExtension"] = null;
             }
             if (message.activePeriod && message.activePeriod.length) {
@@ -5553,6 +5605,10 @@ $root.transit_realtime = (function() {
                 object.image = $root.transit_realtime.TranslatedImage.toObject(message.image, options);
             if (message.imageAlternativeText != null && message.hasOwnProperty("imageAlternativeText"))
                 object.imageAlternativeText = $root.transit_realtime.TranslatedString.toObject(message.imageAlternativeText, options);
+            if (message.causeDetail != null && message.hasOwnProperty("causeDetail"))
+                object.causeDetail = $root.transit_realtime.TranslatedString.toObject(message.causeDetail, options);
+            if (message.effectDetail != null && message.hasOwnProperty("effectDetail"))
+                object.effectDetail = $root.transit_realtime.TranslatedString.toObject(message.effectDetail, options);
             if (message[".transitAlertExtension"] != null && message.hasOwnProperty(".transitAlertExtension"))
                 object[".transitAlertExtension"] = $root.TransitAlertExtension.toObject(message[".transitAlertExtension"], options);
             return object;
@@ -6483,6 +6539,7 @@ $root.transit_realtime = (function() {
                 case 3:
                 case 5:
                 case 6:
+                case 7:
                     break;
                 }
             if (message[".transitTripDescriptorExtension"] != null && message.hasOwnProperty(".transitTripDescriptorExtension")) {
@@ -6550,6 +6607,10 @@ $root.transit_realtime = (function() {
             case "DUPLICATED":
             case 6:
                 message.scheduleRelationship = 6;
+                break;
+            case "DELETED":
+            case 7:
+                message.scheduleRelationship = 7;
                 break;
             }
             if (object[".transitTripDescriptorExtension"] != null) {
@@ -6643,6 +6704,7 @@ $root.transit_realtime = (function() {
          * @property {number} CANCELED=3 CANCELED value
          * @property {number} REPLACEMENT=5 REPLACEMENT value
          * @property {number} DUPLICATED=6 DUPLICATED value
+         * @property {number} DELETED=7 DELETED value
          */
         TripDescriptor.ScheduleRelationship = (function() {
             var valuesById = {}, values = Object.create(valuesById);
@@ -6652,6 +6714,7 @@ $root.transit_realtime = (function() {
             values[valuesById[3] = "CANCELED"] = 3;
             values[valuesById[5] = "REPLACEMENT"] = 5;
             values[valuesById[6] = "DUPLICATED"] = 6;
+            values[valuesById[7] = "DELETED"] = 7;
             return values;
         })();
 
@@ -6667,6 +6730,7 @@ $root.transit_realtime = (function() {
          * @property {string|null} [id] VehicleDescriptor id
          * @property {string|null} [label] VehicleDescriptor label
          * @property {string|null} [licensePlate] VehicleDescriptor licensePlate
+         * @property {transit_realtime.VehicleDescriptor.WheelchairAccessible|null} [wheelchairAccessible] VehicleDescriptor wheelchairAccessible
          * @property {ITransitVehicleDescriptorExtension|null} [".transitVehicleDescriptorExtension"] VehicleDescriptor .transitVehicleDescriptorExtension
          * @property {ITfnswVehicleDescriptor|null} [".tfnswVehicleDescriptor"] VehicleDescriptor .tfnswVehicleDescriptor
          */
@@ -6709,6 +6773,14 @@ $root.transit_realtime = (function() {
          * @instance
          */
         VehicleDescriptor.prototype.licensePlate = "";
+
+        /**
+         * VehicleDescriptor wheelchairAccessible.
+         * @member {transit_realtime.VehicleDescriptor.WheelchairAccessible} wheelchairAccessible
+         * @memberof transit_realtime.VehicleDescriptor
+         * @instance
+         */
+        VehicleDescriptor.prototype.wheelchairAccessible = 0;
 
         /**
          * VehicleDescriptor .transitVehicleDescriptorExtension.
@@ -6756,6 +6828,8 @@ $root.transit_realtime = (function() {
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.label);
             if (message.licensePlate != null && Object.hasOwnProperty.call(message, "licensePlate"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.licensePlate);
+            if (message.wheelchairAccessible != null && Object.hasOwnProperty.call(message, "wheelchairAccessible"))
+                writer.uint32(/* id 4, wireType 0 =*/32).int32(message.wheelchairAccessible);
             if (message[".tfnswVehicleDescriptor"] != null && Object.hasOwnProperty.call(message, ".tfnswVehicleDescriptor"))
                 $root.TfnswVehicleDescriptor.encode(message[".tfnswVehicleDescriptor"], writer.uint32(/* id 1999, wireType 2 =*/15994).fork()).ldelim();
             if (message[".transitVehicleDescriptorExtension"] != null && Object.hasOwnProperty.call(message, ".transitVehicleDescriptorExtension"))
@@ -6804,6 +6878,10 @@ $root.transit_realtime = (function() {
                     }
                 case 3: {
                         message.licensePlate = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.wheelchairAccessible = reader.int32();
                         break;
                     }
                 case 9514: {
@@ -6858,6 +6936,16 @@ $root.transit_realtime = (function() {
             if (message.licensePlate != null && message.hasOwnProperty("licensePlate"))
                 if (!$util.isString(message.licensePlate))
                     return "licensePlate: string expected";
+            if (message.wheelchairAccessible != null && message.hasOwnProperty("wheelchairAccessible"))
+                switch (message.wheelchairAccessible) {
+                default:
+                    return "wheelchairAccessible: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    break;
+                }
             if (message[".transitVehicleDescriptorExtension"] != null && message.hasOwnProperty(".transitVehicleDescriptorExtension")) {
                 var error = $root.TransitVehicleDescriptorExtension.verify(message[".transitVehicleDescriptorExtension"]);
                 if (error)
@@ -6889,6 +6977,30 @@ $root.transit_realtime = (function() {
                 message.label = String(object.label);
             if (object.licensePlate != null)
                 message.licensePlate = String(object.licensePlate);
+            switch (object.wheelchairAccessible) {
+            default:
+                if (typeof object.wheelchairAccessible === "number") {
+                    message.wheelchairAccessible = object.wheelchairAccessible;
+                    break;
+                }
+                break;
+            case "NO_VALUE":
+            case 0:
+                message.wheelchairAccessible = 0;
+                break;
+            case "UNKNOWN":
+            case 1:
+                message.wheelchairAccessible = 1;
+                break;
+            case "WHEELCHAIR_ACCESSIBLE":
+            case 2:
+                message.wheelchairAccessible = 2;
+                break;
+            case "WHEELCHAIR_INACCESSIBLE":
+            case 3:
+                message.wheelchairAccessible = 3;
+                break;
+            }
             if (object[".transitVehicleDescriptorExtension"] != null) {
                 if (typeof object[".transitVehicleDescriptorExtension"] !== "object")
                     throw TypeError(".transit_realtime.VehicleDescriptor..transitVehicleDescriptorExtension: object expected");
@@ -6919,6 +7031,7 @@ $root.transit_realtime = (function() {
                 object.id = "";
                 object.label = "";
                 object.licensePlate = "";
+                object.wheelchairAccessible = options.enums === String ? "NO_VALUE" : 0;
                 object[".tfnswVehicleDescriptor"] = null;
                 object[".transitVehicleDescriptorExtension"] = null;
             }
@@ -6928,6 +7041,8 @@ $root.transit_realtime = (function() {
                 object.label = message.label;
             if (message.licensePlate != null && message.hasOwnProperty("licensePlate"))
                 object.licensePlate = message.licensePlate;
+            if (message.wheelchairAccessible != null && message.hasOwnProperty("wheelchairAccessible"))
+                object.wheelchairAccessible = options.enums === String ? $root.transit_realtime.VehicleDescriptor.WheelchairAccessible[message.wheelchairAccessible] === undefined ? message.wheelchairAccessible : $root.transit_realtime.VehicleDescriptor.WheelchairAccessible[message.wheelchairAccessible] : message.wheelchairAccessible;
             if (message[".tfnswVehicleDescriptor"] != null && message.hasOwnProperty(".tfnswVehicleDescriptor"))
                 object[".tfnswVehicleDescriptor"] = $root.TfnswVehicleDescriptor.toObject(message[".tfnswVehicleDescriptor"], options);
             if (message[".transitVehicleDescriptorExtension"] != null && message.hasOwnProperty(".transitVehicleDescriptorExtension"))
@@ -6960,6 +7075,24 @@ $root.transit_realtime = (function() {
             }
             return typeUrlPrefix + "/transit_realtime.VehicleDescriptor";
         };
+
+        /**
+         * WheelchairAccessible enum.
+         * @name transit_realtime.VehicleDescriptor.WheelchairAccessible
+         * @enum {number}
+         * @property {number} NO_VALUE=0 NO_VALUE value
+         * @property {number} UNKNOWN=1 UNKNOWN value
+         * @property {number} WHEELCHAIR_ACCESSIBLE=2 WHEELCHAIR_ACCESSIBLE value
+         * @property {number} WHEELCHAIR_INACCESSIBLE=3 WHEELCHAIR_INACCESSIBLE value
+         */
+        VehicleDescriptor.WheelchairAccessible = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "NO_VALUE"] = 0;
+            values[valuesById[1] = "UNKNOWN"] = 1;
+            values[valuesById[2] = "WHEELCHAIR_ACCESSIBLE"] = 2;
+            values[valuesById[3] = "WHEELCHAIR_INACCESSIBLE"] = 3;
+            return values;
+        })();
 
         return VehicleDescriptor;
     })();

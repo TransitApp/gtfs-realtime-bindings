@@ -1861,6 +1861,12 @@ export namespace transit_realtime {
         /** Alert imageAlternativeText */
         imageAlternativeText?: (transit_realtime.ITranslatedString|null);
 
+        /** Alert causeDetail */
+        causeDetail?: (transit_realtime.ITranslatedString|null);
+
+        /** Alert effectDetail */
+        effectDetail?: (transit_realtime.ITranslatedString|null);
+
         /** Alert .transitAlertExtension */
         ".transitAlertExtension"?: (ITransitAlertExtension|null);
     }
@@ -1909,6 +1915,12 @@ export namespace transit_realtime {
 
         /** Alert imageAlternativeText. */
         public imageAlternativeText?: (transit_realtime.ITranslatedString|null);
+
+        /** Alert causeDetail. */
+        public causeDetail?: (transit_realtime.ITranslatedString|null);
+
+        /** Alert effectDetail. */
+        public effectDetail?: (transit_realtime.ITranslatedString|null);
 
         /** Alert .transitAlertExtension. */
         public transitAlertExtension?: (ITransitAlertExtension|null);
@@ -2405,7 +2417,8 @@ export namespace transit_realtime {
             UNSCHEDULED = 2,
             CANCELED = 3,
             REPLACEMENT = 5,
-            DUPLICATED = 6
+            DUPLICATED = 6,
+            DELETED = 7
         }
     }
 
@@ -2420,6 +2433,9 @@ export namespace transit_realtime {
 
         /** VehicleDescriptor licensePlate */
         licensePlate?: (string|null);
+
+        /** VehicleDescriptor wheelchairAccessible */
+        wheelchairAccessible?: (transit_realtime.VehicleDescriptor.WheelchairAccessible|null);
 
         /** VehicleDescriptor .transitVehicleDescriptorExtension */
         ".transitVehicleDescriptorExtension"?: (ITransitVehicleDescriptorExtension|null);
@@ -2445,6 +2461,9 @@ export namespace transit_realtime {
 
         /** VehicleDescriptor licensePlate. */
         public licensePlate: string;
+
+        /** VehicleDescriptor wheelchairAccessible. */
+        public wheelchairAccessible: transit_realtime.VehicleDescriptor.WheelchairAccessible;
 
         /** VehicleDescriptor .transitVehicleDescriptorExtension. */
         public transitVehicleDescriptorExtension?: (ITransitVehicleDescriptorExtension|null);
@@ -2528,6 +2547,17 @@ export namespace transit_realtime {
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    namespace VehicleDescriptor {
+
+        /** WheelchairAccessible enum. */
+        enum WheelchairAccessible {
+            NO_VALUE = 0,
+            UNKNOWN = 1,
+            WHEELCHAIR_ACCESSIBLE = 2,
+            WHEELCHAIR_INACCESSIBLE = 3
+        }
     }
 
     /** Properties of an EntitySelector. */
