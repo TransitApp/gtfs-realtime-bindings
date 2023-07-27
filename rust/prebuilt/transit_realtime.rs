@@ -237,71 +237,6 @@ pub mod trip_update {
         #[prost(int32, optional, tag = "3")]
         pub uncertainty: ::core::option::Option<i32>,
     }
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct TransitStopTimeUpdateExtension {
-        /// If the prediction should be kept in the app until it receives an update from the server saying
-        /// that the vehicle is past the stop. Should not assume that the vehicle is past the stop until
-        /// the server says so
-        #[prost(bool, optional, tag = "1")]
-        pub should_not_assume_vehicle_is_past: ::core::option::Option<bool>,
-        /// What was the algorithm source of the prediction
-        #[prost(
-            enumeration = "transit_stop_time_update_extension::PredictionAlgorithm",
-            optional,
-            tag = "2"
-        )]
-        pub prediction_algorithm: ::core::option::Option<i32>,
-    }
-    /// Nested message and enum types in `TransitStopTimeUpdateExtension`.
-    pub mod transit_stop_time_update_extension {
-        #[derive(
-            Clone,
-            Copy,
-            Debug,
-            PartialEq,
-            Eq,
-            Hash,
-            PartialOrd,
-            Ord,
-            ::prost::Enumeration
-        )]
-        #[repr(i32)]
-        pub enum PredictionAlgorithm {
-            /// Prediction comes from Machine Learning
-            Ml = 0,
-            /// Prediction comes from Recency
-            Recency = 1,
-            /// Prediction comes from Deterministic logic, like first stop of the trip
-            Deterministic = 2,
-            /// Prediction comes from Propagating to the next trip
-            Propagation = 3,
-        }
-        impl PredictionAlgorithm {
-            /// String value of the enum field names used in the ProtoBuf definition.
-            ///
-            /// The values are not transformed in any way and thus are considered stable
-            /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-            pub fn as_str_name(&self) -> &'static str {
-                match self {
-                    PredictionAlgorithm::Ml => "ML",
-                    PredictionAlgorithm::Recency => "RECENCY",
-                    PredictionAlgorithm::Deterministic => "DETERMINISTIC",
-                    PredictionAlgorithm::Propagation => "PROPAGATION",
-                }
-            }
-            /// Creates an enum from field names used in the ProtoBuf definition.
-            pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-                match value {
-                    "ML" => Some(Self::Ml),
-                    "RECENCY" => Some(Self::Recency),
-                    "DETERMINISTIC" => Some(Self::Deterministic),
-                    "PROPAGATION" => Some(Self::Propagation),
-                    _ => None,
-                }
-            }
-        }
-    }
     /// Realtime update for arrival and/or departure events for a given stop on a
     /// trip. Updates can be supplied for both past and future events.
     /// The producer is allowed, although not required, to drop past events.
@@ -344,12 +279,6 @@ pub mod trip_update {
         #[prost(message, optional, tag = "6")]
         pub stop_time_properties: ::core::option::Option<
             stop_time_update::StopTimeProperties,
-        >,
-        /// The following extension IDs are reserved for private use by any organization.
-        /// extensions 9000 to 9999;
-        #[prost(message, optional, tag = "9514")]
-        pub transit_stop_time_update_extension: ::core::option::Option<
-            TransitStopTimeUpdateExtension,
         >,
     }
     /// Nested message and enum types in `StopTimeUpdate`.
@@ -772,19 +701,6 @@ pub mod vehicle_position {
         }
     }
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TransitAlertExtension {
-    /// Create time of the alerts, in POSIX time
-    #[prost(uint64, required, tag = "1")]
-    pub created_at: u64,
-    /// Transit's source name for that alert's agency
-    #[prost(string, optional, tag = "2")]
-    pub source_name: ::core::option::Option<::prost::alloc::string::String>,
-    /// Flag for automatically generated service change alerts
-    #[prost(bool, optional, tag = "3")]
-    pub is_service_change_alert: ::core::option::Option<bool>,
-}
 /// An alert, indicating some sort of incident in the public transit network.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -839,12 +755,18 @@ pub struct Alert {
     /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     #[prost(message, optional, tag = "16")]
     pub image_alternative_text: ::core::option::Option<TranslatedString>,
-    #[prost(message, optional, tag = "9514")]
-    pub transit_alert_extension: ::core::option::Option<TransitAlertExtension>,
+    /// Description of the cause of the alert that allows for agency-specific language; more specific than the Cause. If cause_detail is included, then Cause must also be included.
+    /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+    #[prost(message, optional, tag = "17")]
+    pub cause_detail: ::core::option::Option<TranslatedString>,
+    /// Description of the effect of the alert that allows for agency-specific language; more specific than the Effect. If effect_detail is included, then Effect must also be included.
+    /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+    #[prost(message, optional, tag = "18")]
+    pub effect_detail: ::core::option::Option<TranslatedString>,
 }
 /// Nested message and enum types in `Alert`.
 pub mod alert {
-    /// Cause of this alert.
+    /// Cause of this alert. If cause_detail is included, then Cause must also be included.
     #[derive(
         Clone,
         Copy,
@@ -914,7 +836,7 @@ pub mod alert {
             }
         }
     }
-    /// What is the effect of this problem on the affected entity.
+    /// What is the effect of this problem on the affected entity. If effect_detail is included, then Effect must also be included.
     #[derive(
         Clone,
         Copy,
@@ -1065,62 +987,6 @@ pub struct Position {
     #[prost(float, optional, tag = "5")]
     pub speed: ::core::option::Option<f32>,
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TransitTripDescriptorExtension {
-    /// Who generated the prediction
-    #[prost(
-        enumeration = "transit_trip_descriptor_extension::OriginPrediction",
-        optional,
-        tag = "1",
-        default = "AgencyOriginalData"
-    )]
-    pub origin_prediction: ::core::option::Option<i32>,
-    /// Timestamp when the prediction was made, in POSIX time
-    #[prost(uint64, optional, tag = "2")]
-    pub prediction_made_at: ::core::option::Option<u64>,
-}
-/// Nested message and enum types in `TransitTripDescriptorExtension`.
-pub mod transit_trip_descriptor_extension {
-    #[derive(
-        Clone,
-        Copy,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-        PartialOrd,
-        Ord,
-        ::prost::Enumeration
-    )]
-    #[repr(i32)]
-    pub enum OriginPrediction {
-        /// Prediction comes from the agency's original feed
-        AgencyOriginalData = 0,
-        /// Prediction comes from Transit's prediction engine
-        TransitPredictionEngine = 1,
-    }
-    impl OriginPrediction {
-        /// String value of the enum field names used in the ProtoBuf definition.
-        ///
-        /// The values are not transformed in any way and thus are considered stable
-        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-        pub fn as_str_name(&self) -> &'static str {
-            match self {
-                OriginPrediction::AgencyOriginalData => "AGENCY_ORIGINAL_DATA",
-                OriginPrediction::TransitPredictionEngine => "TRANSIT_PREDICTION_ENGINE",
-            }
-        }
-        /// Creates an enum from field names used in the ProtoBuf definition.
-        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-            match value {
-                "AGENCY_ORIGINAL_DATA" => Some(Self::AgencyOriginalData),
-                "TRANSIT_PREDICTION_ENGINE" => Some(Self::TransitPredictionEngine),
-                _ => None,
-            }
-        }
-    }
-}
 /// A descriptor that identifies an instance of a GTFS trip, or all instances of
 /// a trip along a route.
 /// - To specify a single trip instance, the trip_id (and if necessary,
@@ -1179,12 +1045,6 @@ pub struct TripDescriptor {
     pub start_date: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(enumeration = "trip_descriptor::ScheduleRelationship", optional, tag = "4")]
     pub schedule_relationship: ::core::option::Option<i32>,
-    /// The following extension IDs are reserved for private use by any organization.
-    /// extensions 9000 to 9999;
-    #[prost(message, optional, tag = "9514")]
-    pub transit_trip_descriptor_extension: ::core::option::Option<
-        TransitTripDescriptorExtension,
-    >,
 }
 /// Nested message and enum types in `TripDescriptor`.
 pub mod trip_descriptor {
@@ -1229,8 +1089,8 @@ pub mod trip_descriptor {
         /// (in calendar.txt or calendar_dates.txt) is operating within the next 30 days. The trip to be duplicated is
         /// identified via TripUpdate.TripDescriptor.trip_id. This enumeration does not modify the existing trip referenced by
         /// TripUpdate.TripDescriptor.trip_id - if a producer wants to cancel the original trip, it must publish a separate
-        /// TripUpdate with the value of CANCELED. Trips defined in GTFS frequencies.txt with exact_times that is empty or
-        /// equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
+        /// TripUpdate with the value of CANCELED or DELETED. Trips defined in GTFS frequencies.txt with exact_times that is
+        /// empty or equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
         /// the matching value from TripUpdate.TripProperties.trip_id and VehiclePosition.TripDescriptor.ScheduleRelationship
         /// must also be set to DUPLICATED.
         /// Existing producers and consumers that were using the ADDED enumeration to represent duplicated trips must follow
@@ -1238,6 +1098,15 @@ pub mod trip_descriptor {
         /// to transition to the DUPLICATED enumeration.
         /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
         Duplicated = 6,
+        /// A trip that existed in the schedule but was removed and must not be shown to users.
+        /// DELETED should be used instead of CANCELED to indicate that a transit provider would like to entirely remove
+        /// information about the corresponding trip from consuming applications, so the trip is not shown as cancelled to
+        /// riders, e.g. a trip that is entirely being replaced by another trip.
+        /// This designation becomes particularly important if several trips are cancelled and replaced with substitute service.
+        /// If consumers were to show explicit information about the cancellations it would distract from the more important
+        /// real-time predictions.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+        Deleted = 7,
     }
     impl ScheduleRelationship {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -1252,6 +1121,7 @@ pub mod trip_descriptor {
                 ScheduleRelationship::Canceled => "CANCELED",
                 ScheduleRelationship::Replacement => "REPLACEMENT",
                 ScheduleRelationship::Duplicated => "DUPLICATED",
+                ScheduleRelationship::Deleted => "DELETED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1263,30 +1133,11 @@ pub mod trip_descriptor {
                 "CANCELED" => Some(Self::Canceled),
                 "REPLACEMENT" => Some(Self::Replacement),
                 "DUPLICATED" => Some(Self::Duplicated),
+                "DELETED" => Some(Self::Deleted),
                 _ => None,
             }
         }
     }
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TransitVehicleDescriptorExtension {
-    /// If that vehicle information is based on crowd information
-    #[prost(bool, optional, tag = "1")]
-    pub based_on_crowdsourcing_data: ::core::option::Option<bool>,
-    /// VehicleId in the transitBackend that generated that prediction
-    #[prost(string, optional, tag = "2")]
-    pub transit_vehicle_id: ::core::option::Option<::prost::alloc::string::String>,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TfnswVehicleDescriptor {
-    /// Indicates the availability of air-conditioning on this vehicle, Default is true because the whole fleet is air-conditioned.
-    #[prost(bool, optional, tag = "1", default = "true")]
-    pub air_conditioned: ::core::option::Option<bool>,
-    /// Indicates whether the vehicle is wheelchair accessible or not. It returns 1 if the vehicle is accessible otherwise returns 0
-    #[prost(int32, optional, tag = "2", default = "0")]
-    pub wheelchair_accessible: ::core::option::Option<i32>,
 }
 /// Identification information for the vehicle performing the trip.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1304,31 +1155,67 @@ pub struct VehicleDescriptor {
     /// The license plate of the vehicle.
     #[prost(string, optional, tag = "3")]
     pub license_plate: ::core::option::Option<::prost::alloc::string::String>,
-    /// The extensions namespace allows 3rd-party developers to extend the
-    /// GTFS Realtime Specification in order to add and evaluate new features and
-    /// modifications to the spec.
-    /// extensions 1000 to 1999;
-    #[prost(message, optional, tag = "1999")]
-    pub tfnsw_vehicle_descriptor: ::core::option::Option<TfnswVehicleDescriptor>,
-    /// The following extension IDs are reserved for private use by any organization.
-    /// extensions 9000 to 9999;
-    #[prost(message, optional, tag = "9514")]
-    pub transit_vehicle_descriptor_extension: ::core::option::Option<
-        TransitVehicleDescriptorExtension,
-    >,
+    #[prost(
+        enumeration = "vehicle_descriptor::WheelchairAccessible",
+        optional,
+        tag = "4",
+        default = "NoValue"
+    )]
+    pub wheelchair_accessible: ::core::option::Option<i32>,
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TransitInformedEntityExtension {
-    /// Transit's feed id for that alert
-    #[prost(int32, optional, tag = "1")]
-    pub feed_id: ::core::option::Option<i32>,
-    /// Transit's global route id related to the routeId
-    #[prost(int32, optional, tag = "2")]
-    pub global_route_id: ::core::option::Option<i32>,
-    /// Transit's stable stop id related to the stopId
-    #[prost(int32, optional, tag = "3")]
-    pub stable_stop_id: ::core::option::Option<i32>,
+/// Nested message and enum types in `VehicleDescriptor`.
+pub mod vehicle_descriptor {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum WheelchairAccessible {
+        /// The trip doesn't have information about wheelchair accessibility.
+        /// This is the **default** behavior. If the static GTFS contains a
+        /// _wheelchair_accessible_ value, it won't be overwritten.
+        NoValue = 0,
+        /// The trip has no accessibility value present.
+        /// This value will overwrite the value from the GTFS.
+        Unknown = 1,
+        /// The trip is wheelchair accessible.
+        /// This value will overwrite the value from the GTFS.
+        WheelchairAccessible = 2,
+        /// The trip is **not** wheelchair accessible.
+        /// This value will overwrite the value from the GTFS.
+        WheelchairInaccessible = 3,
+    }
+    impl WheelchairAccessible {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                WheelchairAccessible::NoValue => "NO_VALUE",
+                WheelchairAccessible::Unknown => "UNKNOWN",
+                WheelchairAccessible::WheelchairAccessible => "WHEELCHAIR_ACCESSIBLE",
+                WheelchairAccessible::WheelchairInaccessible => "WHEELCHAIR_INACCESSIBLE",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "NO_VALUE" => Some(Self::NoValue),
+                "UNKNOWN" => Some(Self::Unknown),
+                "WHEELCHAIR_ACCESSIBLE" => Some(Self::WheelchairAccessible),
+                "WHEELCHAIR_INACCESSIBLE" => Some(Self::WheelchairInaccessible),
+                _ => None,
+            }
+        }
+    }
 }
 /// A selector for an entity in a GTFS feed.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1353,12 +1240,6 @@ pub struct EntitySelector {
     /// route_id must also be provided.
     #[prost(uint32, optional, tag = "6")]
     pub direction_id: ::core::option::Option<u32>,
-    /// The following extension IDs are reserved for private use by any organization.
-    /// extensions 9000 to 9999;
-    #[prost(message, optional, tag = "9514")]
-    pub transit_entity_selector_extension: ::core::option::Option<
-        TransitInformedEntityExtension,
-    >,
 }
 /// An internationalized message containing per-language versions of a snippet of
 /// text or a URL.
