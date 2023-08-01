@@ -839,12 +839,20 @@ pub struct Alert {
     /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     #[prost(message, optional, tag = "16")]
     pub image_alternative_text: ::core::option::Option<TranslatedString>,
+    /// Description of the cause of the alert that allows for agency-specific language; more specific than the Cause. If cause_detail is included, then Cause must also be included.
+    /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+    #[prost(message, optional, tag = "17")]
+    pub cause_detail: ::core::option::Option<TranslatedString>,
+    /// Description of the effect of the alert that allows for agency-specific language; more specific than the Effect. If effect_detail is included, then Effect must also be included.
+    /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+    #[prost(message, optional, tag = "18")]
+    pub effect_detail: ::core::option::Option<TranslatedString>,
     #[prost(message, optional, tag = "9514")]
     pub transit_alert_extension: ::core::option::Option<TransitAlertExtension>,
 }
 /// Nested message and enum types in `Alert`.
 pub mod alert {
-    /// Cause of this alert.
+    /// Cause of this alert. If cause_detail is included, then Cause must also be included.
     #[derive(
         Clone,
         Copy,
@@ -914,7 +922,7 @@ pub mod alert {
             }
         }
     }
-    /// What is the effect of this problem on the affected entity.
+    /// What is the effect of this problem on the affected entity. If effect_detail is included, then Effect must also be included.
     #[derive(
         Clone,
         Copy,
@@ -1229,8 +1237,8 @@ pub mod trip_descriptor {
         /// (in calendar.txt or calendar_dates.txt) is operating within the next 30 days. The trip to be duplicated is
         /// identified via TripUpdate.TripDescriptor.trip_id. This enumeration does not modify the existing trip referenced by
         /// TripUpdate.TripDescriptor.trip_id - if a producer wants to cancel the original trip, it must publish a separate
-        /// TripUpdate with the value of CANCELED. Trips defined in GTFS frequencies.txt with exact_times that is empty or
-        /// equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
+        /// TripUpdate with the value of CANCELED or DELETED. Trips defined in GTFS frequencies.txt with exact_times that is
+        /// empty or equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
         /// the matching value from TripUpdate.TripProperties.trip_id and VehiclePosition.TripDescriptor.ScheduleRelationship
         /// must also be set to DUPLICATED.
         /// Existing producers and consumers that were using the ADDED enumeration to represent duplicated trips must follow
@@ -1238,6 +1246,15 @@ pub mod trip_descriptor {
         /// to transition to the DUPLICATED enumeration.
         /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
         Duplicated = 6,
+        /// A trip that existed in the schedule but was removed and must not be shown to users.
+        /// DELETED should be used instead of CANCELED to indicate that a transit provider would like to entirely remove
+        /// information about the corresponding trip from consuming applications, so the trip is not shown as cancelled to
+        /// riders, e.g. a trip that is entirely being replaced by another trip.
+        /// This designation becomes particularly important if several trips are cancelled and replaced with substitute service.
+        /// If consumers were to show explicit information about the cancellations it would distract from the more important
+        /// real-time predictions.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+        Deleted = 7,
     }
     impl ScheduleRelationship {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -1252,6 +1269,7 @@ pub mod trip_descriptor {
                 ScheduleRelationship::Canceled => "CANCELED",
                 ScheduleRelationship::Replacement => "REPLACEMENT",
                 ScheduleRelationship::Duplicated => "DUPLICATED",
+                ScheduleRelationship::Deleted => "DELETED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1263,6 +1281,7 @@ pub mod trip_descriptor {
                 "CANCELED" => Some(Self::Canceled),
                 "REPLACEMENT" => Some(Self::Replacement),
                 "DUPLICATED" => Some(Self::Duplicated),
+                "DELETED" => Some(Self::Deleted),
                 _ => None,
             }
         }
@@ -1304,6 +1323,13 @@ pub struct VehicleDescriptor {
     /// The license plate of the vehicle.
     #[prost(string, optional, tag = "3")]
     pub license_plate: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(
+        enumeration = "vehicle_descriptor::WheelchairAccessible",
+        optional,
+        tag = "4",
+        default = "NoValue"
+    )]
+    pub wheelchair_accessible: ::core::option::Option<i32>,
     /// The extensions namespace allows 3rd-party developers to extend the
     /// GTFS Realtime Specification in order to add and evaluate new features and
     /// modifications to the spec.
@@ -1316,6 +1342,60 @@ pub struct VehicleDescriptor {
     pub transit_vehicle_descriptor_extension: ::core::option::Option<
         TransitVehicleDescriptorExtension,
     >,
+}
+/// Nested message and enum types in `VehicleDescriptor`.
+pub mod vehicle_descriptor {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum WheelchairAccessible {
+        /// The trip doesn't have information about wheelchair accessibility.
+        /// This is the **default** behavior. If the static GTFS contains a
+        /// _wheelchair_accessible_ value, it won't be overwritten.
+        NoValue = 0,
+        /// The trip has no accessibility value present.
+        /// This value will overwrite the value from the GTFS.
+        Unknown = 1,
+        /// The trip is wheelchair accessible.
+        /// This value will overwrite the value from the GTFS.
+        WheelchairAccessible = 2,
+        /// The trip is **not** wheelchair accessible.
+        /// This value will overwrite the value from the GTFS.
+        WheelchairInaccessible = 3,
+    }
+    impl WheelchairAccessible {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                WheelchairAccessible::NoValue => "NO_VALUE",
+                WheelchairAccessible::Unknown => "UNKNOWN",
+                WheelchairAccessible::WheelchairAccessible => "WHEELCHAIR_ACCESSIBLE",
+                WheelchairAccessible::WheelchairInaccessible => "WHEELCHAIR_INACCESSIBLE",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "NO_VALUE" => Some(Self::NoValue),
+                "UNKNOWN" => Some(Self::Unknown),
+                "WHEELCHAIR_ACCESSIBLE" => Some(Self::WheelchairAccessible),
+                "WHEELCHAIR_INACCESSIBLE" => Some(Self::WheelchairInaccessible),
+                _ => None,
+            }
+        }
+    }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
