@@ -42,6 +42,12 @@ impl serde::Serialize for Alert {
         if self.image_alternative_text.is_some() {
             len += 1;
         }
+        if self.cause_detail.is_some() {
+            len += 1;
+        }
+        if self.effect_detail.is_some() {
+            len += 1;
+        }
         if self.transit_alert_extension.is_some() {
             len += 1;
         }
@@ -88,6 +94,12 @@ impl serde::Serialize for Alert {
         if let Some(v) = self.image_alternative_text.as_ref() {
             struct_ser.serialize_field("imageAlternativeText", v)?;
         }
+        if let Some(v) = self.cause_detail.as_ref() {
+            struct_ser.serialize_field("causeDetail", v)?;
+        }
+        if let Some(v) = self.effect_detail.as_ref() {
+            struct_ser.serialize_field("effectDetail", v)?;
+        }
         if let Some(v) = self.transit_alert_extension.as_ref() {
             struct_ser.serialize_field("transitAlertExtension", v)?;
         }
@@ -121,6 +133,10 @@ impl<'de> serde::Deserialize<'de> for Alert {
             "image",
             "image_alternative_text",
             "imageAlternativeText",
+            "cause_detail",
+            "causeDetail",
+            "effect_detail",
+            "effectDetail",
             "transit_alert_extension",
             "transitAlertExtension",
         ];
@@ -139,6 +155,8 @@ impl<'de> serde::Deserialize<'de> for Alert {
             SeverityLevel,
             Image,
             ImageAlternativeText,
+            CauseDetail,
+            EffectDetail,
             TransitAlertExtension,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -173,6 +191,8 @@ impl<'de> serde::Deserialize<'de> for Alert {
                             "severityLevel" | "severity_level" => Ok(GeneratedField::SeverityLevel),
                             "image" => Ok(GeneratedField::Image),
                             "imageAlternativeText" | "image_alternative_text" => Ok(GeneratedField::ImageAlternativeText),
+                            "causeDetail" | "cause_detail" => Ok(GeneratedField::CauseDetail),
+                            "effectDetail" | "effect_detail" => Ok(GeneratedField::EffectDetail),
                             "transitAlertExtension" | "transit_alert_extension" => Ok(GeneratedField::TransitAlertExtension),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
@@ -205,6 +225,8 @@ impl<'de> serde::Deserialize<'de> for Alert {
                 let mut severity_level__ = None;
                 let mut image__ = None;
                 let mut image_alternative_text__ = None;
+                let mut cause_detail__ = None;
+                let mut effect_detail__ = None;
                 let mut transit_alert_extension__ = None;
                 while let Some(k) = map.next_key()? {
                     match k {
@@ -280,6 +302,18 @@ impl<'de> serde::Deserialize<'de> for Alert {
                             }
                             image_alternative_text__ = map.next_value()?;
                         }
+                        GeneratedField::CauseDetail => {
+                            if cause_detail__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("causeDetail"));
+                            }
+                            cause_detail__ = map.next_value()?;
+                        }
+                        GeneratedField::EffectDetail => {
+                            if effect_detail__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("effectDetail"));
+                            }
+                            effect_detail__ = map.next_value()?;
+                        }
                         GeneratedField::TransitAlertExtension => {
                             if transit_alert_extension__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("transitAlertExtension"));
@@ -301,6 +335,8 @@ impl<'de> serde::Deserialize<'de> for Alert {
                     severity_level: severity_level__,
                     image: image__,
                     image_alternative_text: image_alternative_text__,
+                    cause_detail: cause_detail__,
+                    effect_detail: effect_detail__,
                     transit_alert_extension: transit_alert_extension__,
                 })
             }
@@ -2935,6 +2971,7 @@ impl serde::Serialize for trip_descriptor::ScheduleRelationship {
             Self::Canceled => "CANCELED",
             Self::Replacement => "REPLACEMENT",
             Self::Duplicated => "DUPLICATED",
+            Self::Deleted => "DELETED",
         };
         serializer.serialize_str(variant)
     }
@@ -2952,6 +2989,7 @@ impl<'de> serde::Deserialize<'de> for trip_descriptor::ScheduleRelationship {
             "CANCELED",
             "REPLACEMENT",
             "DUPLICATED",
+            "DELETED",
         ];
 
         struct GeneratedVisitor;
@@ -3000,6 +3038,7 @@ impl<'de> serde::Deserialize<'de> for trip_descriptor::ScheduleRelationship {
                     "CANCELED" => Ok(trip_descriptor::ScheduleRelationship::Canceled),
                     "REPLACEMENT" => Ok(trip_descriptor::ScheduleRelationship::Replacement),
                     "DUPLICATED" => Ok(trip_descriptor::ScheduleRelationship::Duplicated),
+                    "DELETED" => Ok(trip_descriptor::ScheduleRelationship::Deleted),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
                 }
             }
@@ -4062,6 +4101,9 @@ impl serde::Serialize for VehicleDescriptor {
         if self.license_plate.is_some() {
             len += 1;
         }
+        if self.wheelchair_accessible.is_some() {
+            len += 1;
+        }
         if self.tfnsw_vehicle_descriptor.is_some() {
             len += 1;
         }
@@ -4077,6 +4119,11 @@ impl serde::Serialize for VehicleDescriptor {
         }
         if let Some(v) = self.license_plate.as_ref() {
             struct_ser.serialize_field("licensePlate", v)?;
+        }
+        if let Some(v) = self.wheelchair_accessible.as_ref() {
+            let v = vehicle_descriptor::WheelchairAccessible::from_i32(*v)
+                .ok_or_else(|| serde::ser::Error::custom(format!("Invalid variant {}", *v)))?;
+            struct_ser.serialize_field("wheelchairAccessible", &v)?;
         }
         if let Some(v) = self.tfnsw_vehicle_descriptor.as_ref() {
             struct_ser.serialize_field("tfnswVehicleDescriptor", v)?;
@@ -4098,6 +4145,8 @@ impl<'de> serde::Deserialize<'de> for VehicleDescriptor {
             "label",
             "license_plate",
             "licensePlate",
+            "wheelchair_accessible",
+            "wheelchairAccessible",
             "tfnsw_vehicle_descriptor",
             "tfnswVehicleDescriptor",
             "transit_vehicle_descriptor_extension",
@@ -4109,6 +4158,7 @@ impl<'de> serde::Deserialize<'de> for VehicleDescriptor {
             Id,
             Label,
             LicensePlate,
+            WheelchairAccessible,
             TfnswVehicleDescriptor,
             TransitVehicleDescriptorExtension,
         }
@@ -4135,6 +4185,7 @@ impl<'de> serde::Deserialize<'de> for VehicleDescriptor {
                             "id" => Ok(GeneratedField::Id),
                             "label" => Ok(GeneratedField::Label),
                             "licensePlate" | "license_plate" => Ok(GeneratedField::LicensePlate),
+                            "wheelchairAccessible" | "wheelchair_accessible" => Ok(GeneratedField::WheelchairAccessible),
                             "tfnswVehicleDescriptor" | "tfnsw_vehicle_descriptor" => Ok(GeneratedField::TfnswVehicleDescriptor),
                             "transitVehicleDescriptorExtension" | "transit_vehicle_descriptor_extension" => Ok(GeneratedField::TransitVehicleDescriptorExtension),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
@@ -4159,6 +4210,7 @@ impl<'de> serde::Deserialize<'de> for VehicleDescriptor {
                 let mut id__ = None;
                 let mut label__ = None;
                 let mut license_plate__ = None;
+                let mut wheelchair_accessible__ = None;
                 let mut tfnsw_vehicle_descriptor__ = None;
                 let mut transit_vehicle_descriptor_extension__ = None;
                 while let Some(k) = map.next_key()? {
@@ -4181,6 +4233,12 @@ impl<'de> serde::Deserialize<'de> for VehicleDescriptor {
                             }
                             license_plate__ = map.next_value()?;
                         }
+                        GeneratedField::WheelchairAccessible => {
+                            if wheelchair_accessible__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("wheelchairAccessible"));
+                            }
+                            wheelchair_accessible__ = map.next_value::<::std::option::Option<vehicle_descriptor::WheelchairAccessible>>()?.map(|x| x as i32);
+                        }
                         GeneratedField::TfnswVehicleDescriptor => {
                             if tfnsw_vehicle_descriptor__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("tfnswVehicleDescriptor"));
@@ -4199,12 +4257,92 @@ impl<'de> serde::Deserialize<'de> for VehicleDescriptor {
                     id: id__,
                     label: label__,
                     license_plate: license_plate__,
+                    wheelchair_accessible: wheelchair_accessible__,
                     tfnsw_vehicle_descriptor: tfnsw_vehicle_descriptor__,
                     transit_vehicle_descriptor_extension: transit_vehicle_descriptor_extension__,
                 })
             }
         }
         deserializer.deserialize_struct("transit_realtime.VehicleDescriptor", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for vehicle_descriptor::WheelchairAccessible {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let variant = match self {
+            Self::NoValue => "NO_VALUE",
+            Self::Unknown => "UNKNOWN",
+            Self::WheelchairAccessible => "WHEELCHAIR_ACCESSIBLE",
+            Self::WheelchairInaccessible => "WHEELCHAIR_INACCESSIBLE",
+        };
+        serializer.serialize_str(variant)
+    }
+}
+impl<'de> serde::Deserialize<'de> for vehicle_descriptor::WheelchairAccessible {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "NO_VALUE",
+            "UNKNOWN",
+            "WHEELCHAIR_ACCESSIBLE",
+            "WHEELCHAIR_INACCESSIBLE",
+        ];
+
+        struct GeneratedVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = vehicle_descriptor::WheelchairAccessible;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "expected one of: {:?}", &FIELDS)
+            }
+
+            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                use std::convert::TryFrom;
+                i32::try_from(v)
+                    .ok()
+                    .and_then(vehicle_descriptor::WheelchairAccessible::from_i32)
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
+                    })
+            }
+
+            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                use std::convert::TryFrom;
+                i32::try_from(v)
+                    .ok()
+                    .and_then(vehicle_descriptor::WheelchairAccessible::from_i32)
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
+                    })
+            }
+
+            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                match value {
+                    "NO_VALUE" => Ok(vehicle_descriptor::WheelchairAccessible::NoValue),
+                    "UNKNOWN" => Ok(vehicle_descriptor::WheelchairAccessible::Unknown),
+                    "WHEELCHAIR_ACCESSIBLE" => Ok(vehicle_descriptor::WheelchairAccessible::WheelchairAccessible),
+                    "WHEELCHAIR_INACCESSIBLE" => Ok(vehicle_descriptor::WheelchairAccessible::WheelchairInaccessible),
+                    _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
+                }
+            }
+        }
+        deserializer.deserialize_any(GeneratedVisitor)
     }
 }
 impl serde::Serialize for VehiclePosition {
