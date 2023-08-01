@@ -197,6 +197,30 @@ message TripUpdate {
     extensions 9000 to 9999;
   }
 
+  message TransitStopTimeUpdateExtension {
+    enum PredictionAlgorithm {
+        // Prediction comes from Machine Learning
+        ML = 0;
+
+        // Prediction comes from Recency
+        RECENCY = 1;
+
+        // Prediction comes from Deterministic logic, like first stop of the trip
+        DETERMINISTIC = 2;
+
+        // Prediction comes from Propagating to the next trip
+        PROPAGATION = 3;
+    }
+
+    // If the prediction should be kept in the app until it receives an update from the server saying
+    // that the vehicle is past the stop. Should not assume that the vehicle is past the stop until
+    // the server says so
+    optional bool should_not_assume_vehicle_is_past = 1;
+
+    // What was the algorithm source of the prediction
+    optional PredictionAlgorithm prediction_algorithm = 2;
+}
+
   // Realtime update for arrival and/or departure events for a given stop on a
   // trip. Updates can be supplied for both past and future events.
   // The producer is allowed, although not required, to drop past events.
@@ -289,7 +313,8 @@ message TripUpdate {
     extensions 1000 to 1999;
 
     // The following extension IDs are reserved for private use by any organization.
-    extensions 9000 to 9999;
+    // extensions 9000 to 9999;
+    optional TransitStopTimeUpdateExtension transit_stop_time_update_extension = 9514;
   }
 
   // Updates to StopTimes for the trip (both future, i.e., predictions, and in
@@ -573,6 +598,19 @@ message VehiclePosition {
   extensions 9000 to 9999;
 }
 
+
+message TransitAlertExtension {
+    // Create time of the alerts, in POSIX time
+    required uint64 created_at = 1;
+
+    // Transit's source name for that alert's agency
+    optional string source_name = 2;
+
+    // Flag for automatically generated service change alerts
+    optional bool is_service_change_alert = 3;
+
+}
+
 // An alert, indicating some sort of incident in the public transit network.
 message Alert {
   // Time when the alert should be shown to the user. If missing, the
@@ -583,7 +621,7 @@ message Alert {
   // Entities whose users we should notify of this alert.
   repeated EntitySelector informed_entity = 5;
 
-  // Cause of this alert. If cause_detail is included, then Cause must also be included.
+  // Cause of this alert.
   enum Cause {
     UNKNOWN_CAUSE = 1;
     OTHER_CAUSE = 2;        // Not machine-representable.
@@ -600,7 +638,7 @@ message Alert {
   }
   optional Cause cause = 6 [default = UNKNOWN_CAUSE];
 
-  // What is the effect of this problem on the affected entity. If effect_detail is included, then Effect must also be included.
+  // What is the effect of this problem on the affected entity.
   enum Effect {
     NO_SERVICE = 1;
     REDUCED_SERVICE = 2;
@@ -656,24 +694,20 @@ message Alert {
   // or the user can't see the image for accessibility reasons). See the HTML spec for alt image text - https://html.spec.whatwg.org/#alt.
   // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
   optional TranslatedString image_alternative_text = 16;
-  
-  
-  // Description of the cause of the alert that allows for agency-specific language; more specific than the Cause. If cause_detail is included, then Cause must also be included.
-  // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
-  optional TranslatedString cause_detail = 17;
-  
-  // Description of the effect of the alert that allows for agency-specific language; more specific than the Effect. If effect_detail is included, then Effect must also be included.
-  // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
-  optional TranslatedString effect_detail = 18;
 
   // The extensions namespace allows 3rd-party developers to extend the
   // GTFS Realtime Specification in order to add and evaluate new features
   // and modifications to the spec.
   extensions 1000 to 1999;
 
+
+
+  optional TransitAlertExtension transit_alert_extension = 9514;
+
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
 }
+
 
 //
 // Low level data structures used above.
@@ -728,6 +762,22 @@ message Position {
 
   // The following extension IDs are reserved for private use by any organization.
   extensions 9000 to 9999;
+}
+
+message TransitTripDescriptorExtension {
+    enum OriginPrediction {
+        // Prediction comes from the agency's original feed
+        AGENCY_ORIGINAL_DATA = 0;
+
+        // Prediction comes from Transit's prediction engine
+        TRANSIT_PREDICTION_ENGINE = 1;
+    }
+
+    // Who generated the prediction
+    optional OriginPrediction origin_prediction = 1 [default = AGENCY_ORIGINAL_DATA];
+
+    // Timestamp when the prediction was made, in POSIX time
+    optional uint64 prediction_made_at = 2;
 }
 
 // A descriptor that identifies an instance of a GTFS trip, or all instances of
@@ -817,8 +867,8 @@ message TripDescriptor {
     // (in calendar.txt or calendar_dates.txt) is operating within the next 30 days. The trip to be duplicated is
     // identified via TripUpdate.TripDescriptor.trip_id. This enumeration does not modify the existing trip referenced by
     // TripUpdate.TripDescriptor.trip_id - if a producer wants to cancel the original trip, it must publish a separate
-    // TripUpdate with the value of CANCELED or DELETED. Trips defined in GTFS frequencies.txt with exact_times that is
-    // empty or equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
+    // TripUpdate with the value of CANCELED. Trips defined in GTFS frequencies.txt with exact_times that is empty or
+    // equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
     // the matching value from TripUpdate.TripProperties.trip_id and VehiclePosition.TripDescriptor.ScheduleRelationship
     // must also be set to DUPLICATED.
     // Existing producers and consumers that were using the ADDED enumeration to represent duplicated trips must follow
@@ -826,17 +876,6 @@ message TripDescriptor {
     // to transition to the DUPLICATED enumeration.
     // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     DUPLICATED = 6;
-
-
-    // A trip that existed in the schedule but was removed and must not be shown to users.
-    // DELETED should be used instead of CANCELED to indicate that a transit provider would like to entirely remove
-    // information about the corresponding trip from consuming applications, so the trip is not shown as cancelled to
-    // riders, e.g. a trip that is entirely being replaced by another trip.
-    // This designation becomes particularly important if several trips are cancelled and replaced with substitute service.
-    // If consumers were to show explicit information about the cancellations it would distract from the more important
-    // real-time predictions.
-    // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
-    DELETED = 7;
   }
   optional ScheduleRelationship schedule_relationship = 4;
 
@@ -846,8 +885,27 @@ message TripDescriptor {
   extensions 1000 to 1999;
 
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
+  optional TransitTripDescriptorExtension transit_trip_descriptor_extension = 9514;
 }
+
+message TransitVehicleDescriptorExtension {
+    // If that vehicle information is based on crowd information
+    optional bool based_on_crowdsourcing_data = 1;
+
+    // VehicleId in the transitBackend that generated that prediction
+    optional string transit_vehicle_id = 2;
+}
+
+
+message TfnswVehicleDescriptor {
+  // Indicates the availability of air-conditioning on this vehicle, Default is true because the whole fleet is air-conditioned. 
+  optional bool air_conditioned = 1 [default = true];
+
+  // Indicates whether the vehicle is wheelchair accessible or not. It returns 1 if the vehicle is accessible otherwise returns 0
+  optional int32 wheelchair_accessible = 2 [default = 0];
+}
+
 
 // Identification information for the vehicle performing the trip.
 message VehicleDescriptor {
@@ -863,33 +921,26 @@ message VehicleDescriptor {
   // The license plate of the vehicle.
   optional string license_plate = 3;
 
-  enum WheelchairAccessible {
-    // The trip doesn't have information about wheelchair accessibility.
-    // This is the **default** behavior. If the static GTFS contains a
-    // _wheelchair_accessible_ value, it won't be overwritten.
-    NO_VALUE = 0;
-
-    // The trip has no accessibility value present.
-    // This value will overwrite the value from the GTFS.
-    UNKNOWN = 1;
-
-    // The trip is wheelchair accessible.
-    // This value will overwrite the value from the GTFS.
-    WHEELCHAIR_ACCESSIBLE = 2;
-
-    // The trip is **not** wheelchair accessible.
-    // This value will overwrite the value from the GTFS.
-    WHEELCHAIR_INACCESSIBLE = 3;
-  }
-  optional WheelchairAccessible wheelchair_accessible = 4 [default = NO_VALUE];
-
   // The extensions namespace allows 3rd-party developers to extend the
   // GTFS Realtime Specification in order to add and evaluate new features and
   // modifications to the spec.
-  extensions 1000 to 1999;
+  // extensions 1000 to 1999;
+  optional TfnswVehicleDescriptor tfnsw_vehicle_descriptor = 1999;
 
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
+  optional TransitVehicleDescriptorExtension transit_vehicle_descriptor_extension = 9514;
+}
+
+message TransitInformedEntityExtension {
+    // Transit's feed id for that alert
+    optional int32 feed_id = 1;
+
+    // Transit's global route id related to the routeId
+    optional int32 global_route_id = 2;
+
+    // Transit's stable stop id related to the stopId
+    optional int32 stable_stop_id = 3;
 }
 
 // A selector for an entity in a GTFS feed.
@@ -914,7 +965,8 @@ message EntitySelector {
   extensions 1000 to 1999;
 
   // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  // extensions 9000 to 9999;
+  optional TransitInformedEntityExtension transit_entity_selector_extension = 9514;
 }
 
 // An internationalized message containing per-language versions of a snippet of
