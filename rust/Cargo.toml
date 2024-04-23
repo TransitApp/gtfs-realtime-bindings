@@ -1,16 +1,16 @@
 [package]
 name = "gtfsrt-bindings"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "bindings for gtfs-realtime"
 publish = ["transit"]
 
 [dependencies]
-pbjson = "0.5.1"
-pbjson-types = "0.5.1"
-serde = { version = "1.0.164" }
-prost = "0.11.9"
+pbjson = "0.6.0"
+pbjson-types = "0.6.0"
+serde = { version = "1.0.198" }
+prost = "0.12.4"
 
 [build-dependencies]
-pbjson-build = "0.5.1"
-prost-build = "0.11.9"
+pbjson-build = "0.6.2"
+prost-build = "0.12.4"

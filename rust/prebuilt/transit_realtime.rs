@@ -111,6 +111,10 @@ pub struct FeedEntity {
     /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     #[prost(message, optional, tag = "6")]
     pub shape: ::core::option::Option<Shape>,
+    #[prost(message, optional, tag = "7")]
+    pub stop: ::core::option::Option<Stop>,
+    #[prost(message, optional, tag = "8")]
+    pub trip_modifications: ::core::option::Option<TripModifications>,
 }
 /// Realtime update of the progress of a vehicle along a trip.
 /// Depending on the value of ScheduleRelationship, a TripUpdate can specify:
@@ -1187,6 +1191,8 @@ pub struct TripDescriptor {
     pub start_date: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(enumeration = "trip_descriptor::ScheduleRelationship", optional, tag = "4")]
     pub schedule_relationship: ::core::option::Option<i32>,
+    #[prost(message, optional, tag = "7")]
+    pub modified_trip: ::core::option::Option<trip_descriptor::ModifiedTripSelector>,
     /// The following extension IDs are reserved for private use by any organization.
     /// extensions 9000 to 9999;
     #[prost(message, optional, tag = "9514")]
@@ -1196,6 +1202,16 @@ pub struct TripDescriptor {
 }
 /// Nested message and enum types in `TripDescriptor`.
 pub mod trip_descriptor {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct ModifiedTripSelector {
+        /// The 'id' from the FeedEntity in which the contained TripModifications object affects this trip.
+        #[prost(string, optional, tag = "1")]
+        pub modifications_id: ::core::option::Option<::prost::alloc::string::String>,
+        /// The trip_id from the GTFS feed that is modified by the modifications_id
+        #[prost(string, optional, tag = "2")]
+        pub affected_trip_id: ::core::option::Option<::prost::alloc::string::String>,
+    }
     /// The relation between this trip and the static schedule. If a trip is done
     /// in accordance with temporary schedule, not reflected in GTFS, then it
     /// shouldn't be marked as SCHEDULED, but likely as ADDED.
@@ -1534,4 +1550,172 @@ pub struct Shape {
     /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     #[prost(string, optional, tag = "2")]
     pub encoded_polyline: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// Describes a stop which is served by trips. All fields are as described in the GTFS-Static specification.
+/// NOTE: This message is still experimental, and subject to change. It may be formally adopted in the future.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Stop {
+    #[prost(string, optional, tag = "1")]
+    pub stop_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "2")]
+    pub stop_code: ::core::option::Option<TranslatedString>,
+    #[prost(message, optional, tag = "3")]
+    pub stop_name: ::core::option::Option<TranslatedString>,
+    #[prost(message, optional, tag = "4")]
+    pub tts_stop_name: ::core::option::Option<TranslatedString>,
+    #[prost(message, optional, tag = "5")]
+    pub stop_desc: ::core::option::Option<TranslatedString>,
+    #[prost(float, optional, tag = "6")]
+    pub stop_lat: ::core::option::Option<f32>,
+    #[prost(float, optional, tag = "7")]
+    pub stop_lon: ::core::option::Option<f32>,
+    #[prost(string, optional, tag = "8")]
+    pub zone_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "9")]
+    pub stop_url: ::core::option::Option<TranslatedString>,
+    #[prost(string, optional, tag = "11")]
+    pub parent_station: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, optional, tag = "12")]
+    pub stop_timezone: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(
+        enumeration = "stop::WheelchairBoarding",
+        optional,
+        tag = "13",
+        default = "Unknown"
+    )]
+    pub wheelchair_boarding: ::core::option::Option<i32>,
+    #[prost(string, optional, tag = "14")]
+    pub level_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "15")]
+    pub platform_code: ::core::option::Option<TranslatedString>,
+}
+/// Nested message and enum types in `Stop`.
+pub mod stop {
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum WheelchairBoarding {
+        Unknown = 0,
+        Available = 1,
+        NotAvailable = 2,
+    }
+    impl WheelchairBoarding {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                WheelchairBoarding::Unknown => "UNKNOWN",
+                WheelchairBoarding::Available => "AVAILABLE",
+                WheelchairBoarding::NotAvailable => "NOT_AVAILABLE",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "UNKNOWN" => Some(Self::Unknown),
+                "AVAILABLE" => Some(Self::Available),
+                "NOT_AVAILABLE" => Some(Self::NotAvailable),
+                _ => None,
+            }
+        }
+    }
+}
+/// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TripModifications {
+    /// A list of selected trips affected by this TripModifications.
+    #[prost(message, repeated, tag = "1")]
+    pub selected_trips: ::prost::alloc::vec::Vec<trip_modifications::SelectedTrips>,
+    /// A list of start times in the real-time trip descriptor for the trip_id defined in trip_ids.
+    /// Useful to target multiple departures of a trip_id in a frequency-based trip.
+    #[prost(string, repeated, tag = "2")]
+    pub start_times: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Dates on which the modifications occurs, in the YYYYMMDD format. Producers SHOULD only transmit detours occurring within the next week.
+    /// The dates provided should not be used as user-facing information, if a user-facing start and end date needs to be provided, they can be provided in the linked service alert with `service_alert_id`
+    #[prost(string, repeated, tag = "3")]
+    pub service_dates: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// A list of modifications to apply to the affected trips.
+    #[prost(message, repeated, tag = "4")]
+    pub modifications: ::prost::alloc::vec::Vec<trip_modifications::Modification>,
+}
+/// Nested message and enum types in `TripModifications`.
+pub mod trip_modifications {
+    /// A `Modification` message replaces a span of n stop times from each affected trip starting at `start_stop_selector`.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct Modification {
+        /// The stop selector of the first stop_time of the original trip that is to be affected by this modification.
+        /// Used in conjuction with `end_stop_selector`.
+        /// `start_stop_selector` is required and is used to define the reference stop used with `travel_time_to_stop`.
+        #[prost(message, optional, tag = "1")]
+        pub start_stop_selector: ::core::option::Option<super::StopSelector>,
+        /// The stop selector of the last stop of the original trip that is to be affected by this modification.
+        /// The selection is inclusive, so if only one stop_time is replaced by that modification, `start_stop_selector` and `end_stop_selector` must be equivalent.
+        /// If no stop_time is replaced, `end_stop_selector` must not be provided. It's otherwise required.
+        #[prost(message, optional, tag = "2")]
+        pub end_stop_selector: ::core::option::Option<super::StopSelector>,
+        /// The number of seconds of delay to add to all departure and arrival times following the end of this modification.
+        /// If multiple modifications apply to the same trip, the delays accumulate as the trip advances.
+        #[prost(int32, optional, tag = "3", default = "0")]
+        pub propagated_modification_delay: ::core::option::Option<i32>,
+        /// A list of replacement stops, replacing those of the original trip.
+        /// The length of the new stop times may be less, the same, or greater than the number of replaced stop times.
+        #[prost(message, repeated, tag = "4")]
+        pub replacement_stops: ::prost::alloc::vec::Vec<super::ReplacementStop>,
+        /// An `id` value from the `FeedEntity` message that contains the `Alert` describing this Modification for user-facing communication.
+        #[prost(string, optional, tag = "5")]
+        pub service_alert_id: ::core::option::Option<::prost::alloc::string::String>,
+        /// This timestamp identifies the moment when the modification has last been changed.
+        /// In POSIX time (i.e., number of seconds since January 1st 1970 00:00:00 UTC).
+        #[prost(uint64, optional, tag = "6")]
+        pub last_modified_time: ::core::option::Option<u64>,
+    }
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct SelectedTrips {
+        /// A list of trips affected with this replacement that all have the same new `shape_id`.
+        #[prost(string, repeated, tag = "1")]
+        pub trip_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+        /// The ID of the new shape for the modified trips in this SelectedTrips.
+        /// May refer to a new shape added using a GTFS-RT Shape message, or to an existing shape defined in the GTFS-Static feed’s shapes.txt.
+        #[prost(string, optional, tag = "2")]
+        pub shape_id: ::core::option::Option<::prost::alloc::string::String>,
+    }
+}
+/// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+/// Select a stop by stop sequence or by stop_id. At least one of the two values must be provided.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StopSelector {
+    /// Must be the same as in stop_times.txt in the corresponding GTFS feed.
+    #[prost(uint32, optional, tag = "1")]
+    pub stop_sequence: ::core::option::Option<u32>,
+    /// Must be the same as in stops.txt in the corresponding GTFS feed.
+    #[prost(string, optional, tag = "2")]
+    pub stop_id: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReplacementStop {
+    /// The difference in seconds between the arrival time at this stop and the arrival time at the reference stop. The reference stop is the stop prior to start_stop_selector. If the modification begins at the first stop of the trip, then the first stop of the trip is the reference stop.
+    /// This value MUST be monotonically increasing and may only be a negative number if the first stop of the original trip is the reference stop.
+    #[prost(int32, optional, tag = "1")]
+    pub travel_time_to_stop: ::core::option::Option<i32>,
+    /// The replacement stop ID which will now be visited by the trip. May refer to a new stop added using a GTFS-RT Stop message, or to an existing stop defined in the GTFS-Static feed’s stops.txt. The stop MUST have location_type=0 (routable stops).
+    #[prost(string, optional, tag = "2")]
+    pub stop_id: ::core::option::Option<::prost::alloc::string::String>,
 }
