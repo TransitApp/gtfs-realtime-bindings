@@ -798,6 +798,12 @@ export namespace transit_realtime {
 
         /** FeedEntity shape */
         shape?: (transit_realtime.IShape|null);
+
+        /** FeedEntity stop */
+        stop?: (transit_realtime.IStop|null);
+
+        /** FeedEntity tripModifications */
+        tripModifications?: (transit_realtime.ITripModifications|null);
     }
 
     /** Represents a FeedEntity. */
@@ -826,6 +832,12 @@ export namespace transit_realtime {
 
         /** FeedEntity shape. */
         public shape?: (transit_realtime.IShape|null);
+
+        /** FeedEntity stop. */
+        public stop?: (transit_realtime.IStop|null);
+
+        /** FeedEntity tripModifications. */
+        public tripModifications?: (transit_realtime.ITripModifications|null);
 
         /**
          * Creates a new FeedEntity instance using the specified properties.
@@ -2290,6 +2302,9 @@ export namespace transit_realtime {
         /** TripDescriptor scheduleRelationship */
         scheduleRelationship?: (transit_realtime.TripDescriptor.ScheduleRelationship|null);
 
+        /** TripDescriptor modifiedTrip */
+        modifiedTrip?: (transit_realtime.TripDescriptor.IModifiedTripSelector|null);
+
         /** TripDescriptor .transitTripDescriptorExtension */
         ".transitTripDescriptorExtension"?: (ITransitTripDescriptorExtension|null);
 
@@ -2323,6 +2338,9 @@ export namespace transit_realtime {
 
         /** TripDescriptor scheduleRelationship. */
         public scheduleRelationship: transit_realtime.TripDescriptor.ScheduleRelationship;
+
+        /** TripDescriptor modifiedTrip. */
+        public modifiedTrip?: (transit_realtime.TripDescriptor.IModifiedTripSelector|null);
 
         /** TripDescriptor .transitTripDescriptorExtension. */
         public transitTripDescriptorExtension?: (ITransitTripDescriptorExtension|null);
@@ -2419,6 +2437,109 @@ export namespace transit_realtime {
             REPLACEMENT = 5,
             DUPLICATED = 6,
             DELETED = 7
+        }
+
+        /** Properties of a ModifiedTripSelector. */
+        interface IModifiedTripSelector {
+
+            /** ModifiedTripSelector modificationsId */
+            modificationsId?: (string|null);
+
+            /** ModifiedTripSelector affectedTripId */
+            affectedTripId?: (string|null);
+        }
+
+        /** Represents a ModifiedTripSelector. */
+        class ModifiedTripSelector implements IModifiedTripSelector {
+
+            /**
+             * Constructs a new ModifiedTripSelector.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: transit_realtime.TripDescriptor.IModifiedTripSelector);
+
+            /** ModifiedTripSelector modificationsId. */
+            public modificationsId: string;
+
+            /** ModifiedTripSelector affectedTripId. */
+            public affectedTripId: string;
+
+            /**
+             * Creates a new ModifiedTripSelector instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns ModifiedTripSelector instance
+             */
+            public static create(properties?: transit_realtime.TripDescriptor.IModifiedTripSelector): transit_realtime.TripDescriptor.ModifiedTripSelector;
+
+            /**
+             * Encodes the specified ModifiedTripSelector message. Does not implicitly {@link transit_realtime.TripDescriptor.ModifiedTripSelector.verify|verify} messages.
+             * @param message ModifiedTripSelector message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: transit_realtime.TripDescriptor.IModifiedTripSelector, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified ModifiedTripSelector message, length delimited. Does not implicitly {@link transit_realtime.TripDescriptor.ModifiedTripSelector.verify|verify} messages.
+             * @param message ModifiedTripSelector message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: transit_realtime.TripDescriptor.IModifiedTripSelector, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a ModifiedTripSelector message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns ModifiedTripSelector
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.TripDescriptor.ModifiedTripSelector;
+
+            /**
+             * Decodes a ModifiedTripSelector message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns ModifiedTripSelector
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.TripDescriptor.ModifiedTripSelector;
+
+            /**
+             * Verifies a ModifiedTripSelector message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a ModifiedTripSelector message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns ModifiedTripSelector
+             */
+            public static fromObject(object: { [k: string]: any }): transit_realtime.TripDescriptor.ModifiedTripSelector;
+
+            /**
+             * Creates a plain object from a ModifiedTripSelector message. Also converts values to other types if specified.
+             * @param message ModifiedTripSelector
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: transit_realtime.TripDescriptor.ModifiedTripSelector, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ModifiedTripSelector to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+
+            /**
+             * Gets the default type url for ModifiedTripSelector
+             * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns The default type url
+             */
+            public static getTypeUrl(typeUrlPrefix?: string): string;
         }
     }
 
@@ -3202,6 +3323,745 @@ export namespace transit_realtime {
 
         /**
          * Gets the default type url for Shape
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a Stop. */
+    interface IStop {
+
+        /** Stop stopId */
+        stopId?: (string|null);
+
+        /** Stop stopCode */
+        stopCode?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop stopName */
+        stopName?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop ttsStopName */
+        ttsStopName?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop stopDesc */
+        stopDesc?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop stopLat */
+        stopLat?: (number|null);
+
+        /** Stop stopLon */
+        stopLon?: (number|null);
+
+        /** Stop zoneId */
+        zoneId?: (string|null);
+
+        /** Stop stopUrl */
+        stopUrl?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop parentStation */
+        parentStation?: (string|null);
+
+        /** Stop stopTimezone */
+        stopTimezone?: (string|null);
+
+        /** Stop wheelchairBoarding */
+        wheelchairBoarding?: (transit_realtime.Stop.WheelchairBoarding|null);
+
+        /** Stop levelId */
+        levelId?: (string|null);
+
+        /** Stop platformCode */
+        platformCode?: (transit_realtime.ITranslatedString|null);
+    }
+
+    /** Represents a Stop. */
+    class Stop implements IStop {
+
+        /**
+         * Constructs a new Stop.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: transit_realtime.IStop);
+
+        /** Stop stopId. */
+        public stopId: string;
+
+        /** Stop stopCode. */
+        public stopCode?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop stopName. */
+        public stopName?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop ttsStopName. */
+        public ttsStopName?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop stopDesc. */
+        public stopDesc?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop stopLat. */
+        public stopLat: number;
+
+        /** Stop stopLon. */
+        public stopLon: number;
+
+        /** Stop zoneId. */
+        public zoneId: string;
+
+        /** Stop stopUrl. */
+        public stopUrl?: (transit_realtime.ITranslatedString|null);
+
+        /** Stop parentStation. */
+        public parentStation: string;
+
+        /** Stop stopTimezone. */
+        public stopTimezone: string;
+
+        /** Stop wheelchairBoarding. */
+        public wheelchairBoarding: transit_realtime.Stop.WheelchairBoarding;
+
+        /** Stop levelId. */
+        public levelId: string;
+
+        /** Stop platformCode. */
+        public platformCode?: (transit_realtime.ITranslatedString|null);
+
+        /**
+         * Creates a new Stop instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Stop instance
+         */
+        public static create(properties?: transit_realtime.IStop): transit_realtime.Stop;
+
+        /**
+         * Encodes the specified Stop message. Does not implicitly {@link transit_realtime.Stop.verify|verify} messages.
+         * @param message Stop message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: transit_realtime.IStop, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Stop message, length delimited. Does not implicitly {@link transit_realtime.Stop.verify|verify} messages.
+         * @param message Stop message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: transit_realtime.IStop, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Stop message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Stop
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.Stop;
+
+        /**
+         * Decodes a Stop message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Stop
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.Stop;
+
+        /**
+         * Verifies a Stop message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Stop message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Stop
+         */
+        public static fromObject(object: { [k: string]: any }): transit_realtime.Stop;
+
+        /**
+         * Creates a plain object from a Stop message. Also converts values to other types if specified.
+         * @param message Stop
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: transit_realtime.Stop, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Stop to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Stop
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    namespace Stop {
+
+        /** WheelchairBoarding enum. */
+        enum WheelchairBoarding {
+            UNKNOWN = 0,
+            AVAILABLE = 1,
+            NOT_AVAILABLE = 2
+        }
+    }
+
+    /** Properties of a TripModifications. */
+    interface ITripModifications {
+
+        /** TripModifications selectedTrips */
+        selectedTrips?: (transit_realtime.TripModifications.ISelectedTrips[]|null);
+
+        /** TripModifications startTimes */
+        startTimes?: (string[]|null);
+
+        /** TripModifications serviceDates */
+        serviceDates?: (string[]|null);
+
+        /** TripModifications modifications */
+        modifications?: (transit_realtime.TripModifications.IModification[]|null);
+    }
+
+    /** Represents a TripModifications. */
+    class TripModifications implements ITripModifications {
+
+        /**
+         * Constructs a new TripModifications.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: transit_realtime.ITripModifications);
+
+        /** TripModifications selectedTrips. */
+        public selectedTrips: transit_realtime.TripModifications.ISelectedTrips[];
+
+        /** TripModifications startTimes. */
+        public startTimes: string[];
+
+        /** TripModifications serviceDates. */
+        public serviceDates: string[];
+
+        /** TripModifications modifications. */
+        public modifications: transit_realtime.TripModifications.IModification[];
+
+        /**
+         * Creates a new TripModifications instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns TripModifications instance
+         */
+        public static create(properties?: transit_realtime.ITripModifications): transit_realtime.TripModifications;
+
+        /**
+         * Encodes the specified TripModifications message. Does not implicitly {@link transit_realtime.TripModifications.verify|verify} messages.
+         * @param message TripModifications message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: transit_realtime.ITripModifications, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified TripModifications message, length delimited. Does not implicitly {@link transit_realtime.TripModifications.verify|verify} messages.
+         * @param message TripModifications message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: transit_realtime.ITripModifications, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a TripModifications message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns TripModifications
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.TripModifications;
+
+        /**
+         * Decodes a TripModifications message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns TripModifications
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.TripModifications;
+
+        /**
+         * Verifies a TripModifications message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a TripModifications message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns TripModifications
+         */
+        public static fromObject(object: { [k: string]: any }): transit_realtime.TripModifications;
+
+        /**
+         * Creates a plain object from a TripModifications message. Also converts values to other types if specified.
+         * @param message TripModifications
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: transit_realtime.TripModifications, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this TripModifications to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for TripModifications
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    namespace TripModifications {
+
+        /** Properties of a Modification. */
+        interface IModification {
+
+            /** Modification startStopSelector */
+            startStopSelector?: (transit_realtime.IStopSelector|null);
+
+            /** Modification endStopSelector */
+            endStopSelector?: (transit_realtime.IStopSelector|null);
+
+            /** Modification propagatedModificationDelay */
+            propagatedModificationDelay?: (number|null);
+
+            /** Modification replacementStops */
+            replacementStops?: (transit_realtime.IReplacementStop[]|null);
+
+            /** Modification serviceAlertId */
+            serviceAlertId?: (string|null);
+
+            /** Modification lastModifiedTime */
+            lastModifiedTime?: (number|Long|null);
+        }
+
+        /** Represents a Modification. */
+        class Modification implements IModification {
+
+            /**
+             * Constructs a new Modification.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: transit_realtime.TripModifications.IModification);
+
+            /** Modification startStopSelector. */
+            public startStopSelector?: (transit_realtime.IStopSelector|null);
+
+            /** Modification endStopSelector. */
+            public endStopSelector?: (transit_realtime.IStopSelector|null);
+
+            /** Modification propagatedModificationDelay. */
+            public propagatedModificationDelay: number;
+
+            /** Modification replacementStops. */
+            public replacementStops: transit_realtime.IReplacementStop[];
+
+            /** Modification serviceAlertId. */
+            public serviceAlertId: string;
+
+            /** Modification lastModifiedTime. */
+            public lastModifiedTime: (number|Long);
+
+            /**
+             * Creates a new Modification instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns Modification instance
+             */
+            public static create(properties?: transit_realtime.TripModifications.IModification): transit_realtime.TripModifications.Modification;
+
+            /**
+             * Encodes the specified Modification message. Does not implicitly {@link transit_realtime.TripModifications.Modification.verify|verify} messages.
+             * @param message Modification message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: transit_realtime.TripModifications.IModification, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified Modification message, length delimited. Does not implicitly {@link transit_realtime.TripModifications.Modification.verify|verify} messages.
+             * @param message Modification message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: transit_realtime.TripModifications.IModification, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a Modification message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns Modification
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.TripModifications.Modification;
+
+            /**
+             * Decodes a Modification message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns Modification
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.TripModifications.Modification;
+
+            /**
+             * Verifies a Modification message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a Modification message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns Modification
+             */
+            public static fromObject(object: { [k: string]: any }): transit_realtime.TripModifications.Modification;
+
+            /**
+             * Creates a plain object from a Modification message. Also converts values to other types if specified.
+             * @param message Modification
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: transit_realtime.TripModifications.Modification, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this Modification to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+
+            /**
+             * Gets the default type url for Modification
+             * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns The default type url
+             */
+            public static getTypeUrl(typeUrlPrefix?: string): string;
+        }
+
+        /** Properties of a SelectedTrips. */
+        interface ISelectedTrips {
+
+            /** SelectedTrips tripIds */
+            tripIds?: (string[]|null);
+
+            /** SelectedTrips shapeId */
+            shapeId?: (string|null);
+        }
+
+        /** Represents a SelectedTrips. */
+        class SelectedTrips implements ISelectedTrips {
+
+            /**
+             * Constructs a new SelectedTrips.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: transit_realtime.TripModifications.ISelectedTrips);
+
+            /** SelectedTrips tripIds. */
+            public tripIds: string[];
+
+            /** SelectedTrips shapeId. */
+            public shapeId: string;
+
+            /**
+             * Creates a new SelectedTrips instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns SelectedTrips instance
+             */
+            public static create(properties?: transit_realtime.TripModifications.ISelectedTrips): transit_realtime.TripModifications.SelectedTrips;
+
+            /**
+             * Encodes the specified SelectedTrips message. Does not implicitly {@link transit_realtime.TripModifications.SelectedTrips.verify|verify} messages.
+             * @param message SelectedTrips message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: transit_realtime.TripModifications.ISelectedTrips, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified SelectedTrips message, length delimited. Does not implicitly {@link transit_realtime.TripModifications.SelectedTrips.verify|verify} messages.
+             * @param message SelectedTrips message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: transit_realtime.TripModifications.ISelectedTrips, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a SelectedTrips message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns SelectedTrips
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.TripModifications.SelectedTrips;
+
+            /**
+             * Decodes a SelectedTrips message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns SelectedTrips
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.TripModifications.SelectedTrips;
+
+            /**
+             * Verifies a SelectedTrips message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a SelectedTrips message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns SelectedTrips
+             */
+            public static fromObject(object: { [k: string]: any }): transit_realtime.TripModifications.SelectedTrips;
+
+            /**
+             * Creates a plain object from a SelectedTrips message. Also converts values to other types if specified.
+             * @param message SelectedTrips
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: transit_realtime.TripModifications.SelectedTrips, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this SelectedTrips to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+
+            /**
+             * Gets the default type url for SelectedTrips
+             * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+             * @returns The default type url
+             */
+            public static getTypeUrl(typeUrlPrefix?: string): string;
+        }
+    }
+
+    /** Properties of a StopSelector. */
+    interface IStopSelector {
+
+        /** StopSelector stopSequence */
+        stopSequence?: (number|null);
+
+        /** StopSelector stopId */
+        stopId?: (string|null);
+    }
+
+    /** Represents a StopSelector. */
+    class StopSelector implements IStopSelector {
+
+        /**
+         * Constructs a new StopSelector.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: transit_realtime.IStopSelector);
+
+        /** StopSelector stopSequence. */
+        public stopSequence: number;
+
+        /** StopSelector stopId. */
+        public stopId: string;
+
+        /**
+         * Creates a new StopSelector instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns StopSelector instance
+         */
+        public static create(properties?: transit_realtime.IStopSelector): transit_realtime.StopSelector;
+
+        /**
+         * Encodes the specified StopSelector message. Does not implicitly {@link transit_realtime.StopSelector.verify|verify} messages.
+         * @param message StopSelector message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: transit_realtime.IStopSelector, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified StopSelector message, length delimited. Does not implicitly {@link transit_realtime.StopSelector.verify|verify} messages.
+         * @param message StopSelector message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: transit_realtime.IStopSelector, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a StopSelector message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns StopSelector
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.StopSelector;
+
+        /**
+         * Decodes a StopSelector message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns StopSelector
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.StopSelector;
+
+        /**
+         * Verifies a StopSelector message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a StopSelector message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns StopSelector
+         */
+        public static fromObject(object: { [k: string]: any }): transit_realtime.StopSelector;
+
+        /**
+         * Creates a plain object from a StopSelector message. Also converts values to other types if specified.
+         * @param message StopSelector
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: transit_realtime.StopSelector, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this StopSelector to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for StopSelector
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a ReplacementStop. */
+    interface IReplacementStop {
+
+        /** ReplacementStop travelTimeToStop */
+        travelTimeToStop?: (number|null);
+
+        /** ReplacementStop stopId */
+        stopId?: (string|null);
+    }
+
+    /** Represents a ReplacementStop. */
+    class ReplacementStop implements IReplacementStop {
+
+        /**
+         * Constructs a new ReplacementStop.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: transit_realtime.IReplacementStop);
+
+        /** ReplacementStop travelTimeToStop. */
+        public travelTimeToStop: number;
+
+        /** ReplacementStop stopId. */
+        public stopId: string;
+
+        /**
+         * Creates a new ReplacementStop instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ReplacementStop instance
+         */
+        public static create(properties?: transit_realtime.IReplacementStop): transit_realtime.ReplacementStop;
+
+        /**
+         * Encodes the specified ReplacementStop message. Does not implicitly {@link transit_realtime.ReplacementStop.verify|verify} messages.
+         * @param message ReplacementStop message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: transit_realtime.IReplacementStop, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ReplacementStop message, length delimited. Does not implicitly {@link transit_realtime.ReplacementStop.verify|verify} messages.
+         * @param message ReplacementStop message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: transit_realtime.IReplacementStop, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ReplacementStop message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ReplacementStop
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.ReplacementStop;
+
+        /**
+         * Decodes a ReplacementStop message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ReplacementStop
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.ReplacementStop;
+
+        /**
+         * Verifies a ReplacementStop message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ReplacementStop message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ReplacementStop
+         */
+        public static fromObject(object: { [k: string]: any }): transit_realtime.ReplacementStop;
+
+        /**
+         * Creates a plain object from a ReplacementStop message. Also converts values to other types if specified.
+         * @param message ReplacementStop
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: transit_realtime.ReplacementStop, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ReplacementStop to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for ReplacementStop
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */

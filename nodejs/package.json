@@ -5,10 +5,10 @@
     "tags": [
         "gtfs-realtime"
     ],
-    "version": "1.8.4",
+    "version": "1.8.5",
     "repository": {
         "type": "git",
-        "url": "https://github.com/google/gtfs-realtime-bindings.git"
+        "url": "https://github.com/TransitApp/gtfs-realtime-bindings.git"
     },
     "bugs": {
         "url": "https://github.com/google/gtfs-realtime-bindings/issues"
@@ -28,7 +28,7 @@
         "node": ">=8.0.0"
     },
     "dependencies": {
-        "protobufjs": "^7.1.2"
+        "protobufjs": "=7.2.5"
     },
     "devDependencies": {
         "mocha": "1.19.0",
