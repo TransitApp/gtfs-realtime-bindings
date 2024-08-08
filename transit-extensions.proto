@@ -8,115 +8,124 @@ syntax = "proto2";
 import "gtfs-spec/gtfs-realtime/proto/gtfs-realtime.proto";
 import "agency-extensions/tfnsw-vehicle.proto";
 import "agency-extensions/mtas-realtime.proto";
+import "agency-extensions/oba-alerts.proto";
 
 message TransitAlertExtension {
-    // Create time of the alerts, in POSIX time
-    required uint64 created_at = 1;
+  // Create time of the alerts, in POSIX time
+  required uint64 created_at = 1;
 
-    // Transit's source name for that alert's agency
-    optional string source_name = 2;
+  // Transit's source name for that alert's agency
+  optional string source_name = 2;
 
-    // Flag for automatically generated service change alerts
-    optional bool is_service_change_alert = 3;
-
+  // Flag for automatically generated service change alerts
+  optional bool is_service_change_alert = 3;
 }
 
 extend transit_realtime.Alert {
-    optional TransitAlertExtension transit_alert_extension = 9514;
+  optional TransitAlertExtension transit_alert_extension = 9514;
+  optional MercuryAlert mercury_alert = 1001;
 }
 
 message TransitInformedEntityExtension {
-    // Transit's feed id for that alert
-    optional int32 feed_id = 1;
+  // Transit's feed id for that alert
+  optional int32 feed_id = 1;
 
-    // Transit's global route id related to the routeId
-    optional int32 global_route_id = 2;
+  // Transit's global route id related to the routeId
+  optional int32 global_route_id = 2;
 
-    // Transit's stable stop id related to the stopId
-    optional int32 stable_stop_id = 3;
+  // Transit's stable stop id related to the stopId
+  optional int32 stable_stop_id = 3;
 }
 
 extend transit_realtime.EntitySelector {
-    optional TransitInformedEntityExtension transit_entity_selector_extension = 9514;
+  optional TransitInformedEntityExtension transit_entity_selector_extension =
+      9514;
+  optional MercuryEntitySelector mercury_entity_selector = 1001;
 }
 
 message TransitVehicleDescriptorExtension {
-    // If that vehicle information is based on crowd information
-    optional bool based_on_crowdsourcing_data = 1;
+  // If that vehicle information is based on crowd information
+  optional bool based_on_crowdsourcing_data = 1;
 
-    // VehicleId in the transitBackend that generated that prediction
-    optional string transit_vehicle_id = 2;
+  // VehicleId in the transitBackend that generated that prediction
+  optional string transit_vehicle_id = 2;
 }
 
 extend transit_realtime.VehicleDescriptor {
-    optional TransitVehicleDescriptorExtension transit_vehicle_descriptor_extension = 9514;
+  optional TransitVehicleDescriptorExtension
+      transit_vehicle_descriptor_extension = 9514;
 }
 
 message TransitTripDescriptorExtension {
-    enum OriginPrediction {
-        // Prediction comes from the agency's original feed
-        AGENCY_ORIGINAL_DATA = 0;
+  enum OriginPrediction {
+    // Prediction comes from the agency's original feed
+    AGENCY_ORIGINAL_DATA = 0;
 
-        // Prediction comes from Transit's prediction engine
-        TRANSIT_PREDICTION_ENGINE = 1;
-    }
+    // Prediction comes from Transit's prediction engine
+    TRANSIT_PREDICTION_ENGINE = 1;
+  }
 
-    // Who generated the prediction
-    optional OriginPrediction origin_prediction = 1 [default = AGENCY_ORIGINAL_DATA];
+  // Who generated the prediction
+  optional OriginPrediction origin_prediction = 1
+      [ default = AGENCY_ORIGINAL_DATA ];
 
-    // Timestamp when the prediction was made, in POSIX time
-    optional uint64 prediction_made_at = 2;
+  // Timestamp when the prediction was made, in POSIX time
+  optional uint64 prediction_made_at = 2;
 }
 
 extend transit_realtime.TripDescriptor {
-    optional TransitTripDescriptorExtension transit_trip_descriptor_extension = 9514;
+  optional TransitTripDescriptorExtension transit_trip_descriptor_extension =
+      9514;
 }
 
 message TransitStopTimeUpdateExtension {
-    enum PredictionAlgorithm {
-        // Prediction comes from Machine Learning
-        ML = 0;
+  enum PredictionAlgorithm {
+    // Prediction comes from Machine Learning
+    ML = 0;
 
-        // Prediction comes from Recency
-        RECENCY = 1;
+    // Prediction comes from Recency
+    RECENCY = 1;
 
-        // Prediction comes from Deterministic logic, like first stop of the trip
-        DETERMINISTIC = 2;
+    // Prediction comes from Deterministic logic, like first stop of the trip
+    DETERMINISTIC = 2;
 
-        // Prediction comes from Propagating to the next trip
-        PROPAGATION = 3;
-    }
+    // Prediction comes from Propagating to the next trip
+    PROPAGATION = 3;
+  }
 
-    // If the prediction should be kept in the app until it receives an update from the server saying
-    // that the vehicle is past the stop. Should not assume that the vehicle is past the stop until
-    // the server says so
-    optional bool should_not_assume_vehicle_is_past = 1;
+  // If the prediction should be kept in the app until it receives an update
+  // from the server saying that the vehicle is past the stop. Should not assume
+  // that the vehicle is past the stop until the server says so
+  optional bool should_not_assume_vehicle_is_past = 1;
 
-    // What was the algorithm source of the prediction
-    optional PredictionAlgorithm prediction_algorithm = 2;
+  // What was the algorithm source of the prediction
+  optional PredictionAlgorithm prediction_algorithm = 2;
 }
 
 extend transit_realtime.TripUpdate.StopTimeUpdate {
-    optional TransitStopTimeUpdateExtension transit_stop_time_update_extension = 9514;
+  optional TransitStopTimeUpdateExtension transit_stop_time_update_extension =
+      9514;
 }
 
 // Include Transport for New South Wales' extension for Air Conditioning
 // and accessibility info.
 
 extend transit_realtime.VehicleDescriptor {
-    optional TfnswVehicleDescriptor tfnsw_vehicle_descriptor = 1999;
+  optional TfnswVehicleDescriptor tfnsw_vehicle_descriptor = 1999;
 }
 
 // Include MTAS for more detail on the real time feeds
 
 extend transit_realtime.FeedHeader {
-    optional NyctFeedHeader nyct_feed_header = 1001;
+  optional NyctFeedHeader nyct_feed_header = 1001;
 }
 
 extend transit_realtime.TripDescriptor {
-    optional NyctTripDescriptor nyct_trip_descriptor = 1001;
+  optional NyctTripDescriptor nyct_trip_descriptor = 1001;
 }
 
 extend transit_realtime.TripUpdate.StopTimeUpdate {
-    optional NyctStopTimeUpdate nyct_stop_time_update = 1001;
+  optional NyctStopTimeUpdate nyct_stop_time_update = 1001;
 }
+
+extend transit_realtime.EntitySelector {}

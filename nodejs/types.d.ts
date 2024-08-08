@@ -1881,6 +1881,9 @@ export namespace transit_realtime {
 
         /** Alert .transitAlertExtension */
         ".transitAlertExtension"?: (ITransitAlertExtension|null);
+
+        /** Alert .mercuryAlert */
+        ".mercuryAlert"?: (IMercuryAlert|null);
     }
 
     /** Represents an Alert. */
@@ -1936,6 +1939,9 @@ export namespace transit_realtime {
 
         /** Alert .transitAlertExtension. */
         public transitAlertExtension?: (ITransitAlertExtension|null);
+
+        /** Alert .mercuryAlert. */
+        public mercuryAlert?: (IMercuryAlert|null);
 
         /**
          * Creates a new Alert instance using the specified properties.
@@ -2704,6 +2710,9 @@ export namespace transit_realtime {
 
         /** EntitySelector .transitEntitySelectorExtension */
         ".transitEntitySelectorExtension"?: (ITransitInformedEntityExtension|null);
+
+        /** EntitySelector .mercuryEntitySelector */
+        ".mercuryEntitySelector"?: (IMercuryEntitySelector|null);
     }
 
     /** Represents an EntitySelector. */
@@ -2735,6 +2744,9 @@ export namespace transit_realtime {
 
         /** EntitySelector .transitEntitySelectorExtension. */
         public transitEntitySelectorExtension?: (ITransitInformedEntityExtension|null);
+
+        /** EntitySelector .mercuryEntitySelector. */
+        public mercuryEntitySelector?: (IMercuryEntitySelector|null);
 
         /**
          * Creates a new EntitySelector instance using the specified properties.
@@ -4599,4 +4611,512 @@ export class NyctStopTimeUpdate implements INyctStopTimeUpdate {
      * @returns The default type url
      */
     public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a MercuryFeedHeader. */
+export interface IMercuryFeedHeader {
+
+    /** MercuryFeedHeader mercuryVersion */
+    mercuryVersion: string;
+}
+
+/** Represents a MercuryFeedHeader. */
+export class MercuryFeedHeader implements IMercuryFeedHeader {
+
+    /**
+     * Constructs a new MercuryFeedHeader.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IMercuryFeedHeader);
+
+    /** MercuryFeedHeader mercuryVersion. */
+    public mercuryVersion: string;
+
+    /**
+     * Creates a new MercuryFeedHeader instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns MercuryFeedHeader instance
+     */
+    public static create(properties?: IMercuryFeedHeader): MercuryFeedHeader;
+
+    /**
+     * Encodes the specified MercuryFeedHeader message. Does not implicitly {@link MercuryFeedHeader.verify|verify} messages.
+     * @param message MercuryFeedHeader message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IMercuryFeedHeader, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified MercuryFeedHeader message, length delimited. Does not implicitly {@link MercuryFeedHeader.verify|verify} messages.
+     * @param message MercuryFeedHeader message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IMercuryFeedHeader, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a MercuryFeedHeader message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns MercuryFeedHeader
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MercuryFeedHeader;
+
+    /**
+     * Decodes a MercuryFeedHeader message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns MercuryFeedHeader
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MercuryFeedHeader;
+
+    /**
+     * Verifies a MercuryFeedHeader message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a MercuryFeedHeader message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns MercuryFeedHeader
+     */
+    public static fromObject(object: { [k: string]: any }): MercuryFeedHeader;
+
+    /**
+     * Creates a plain object from a MercuryFeedHeader message. Also converts values to other types if specified.
+     * @param message MercuryFeedHeader
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: MercuryFeedHeader, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this MercuryFeedHeader to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for MercuryFeedHeader
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a MercuryStationAlternative. */
+export interface IMercuryStationAlternative {
+
+    /** MercuryStationAlternative affectedEntity */
+    affectedEntity: transit_realtime.IEntitySelector;
+
+    /** MercuryStationAlternative notes */
+    notes: transit_realtime.ITranslatedString;
+}
+
+/** Represents a MercuryStationAlternative. */
+export class MercuryStationAlternative implements IMercuryStationAlternative {
+
+    /**
+     * Constructs a new MercuryStationAlternative.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IMercuryStationAlternative);
+
+    /** MercuryStationAlternative affectedEntity. */
+    public affectedEntity: transit_realtime.IEntitySelector;
+
+    /** MercuryStationAlternative notes. */
+    public notes: transit_realtime.ITranslatedString;
+
+    /**
+     * Creates a new MercuryStationAlternative instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns MercuryStationAlternative instance
+     */
+    public static create(properties?: IMercuryStationAlternative): MercuryStationAlternative;
+
+    /**
+     * Encodes the specified MercuryStationAlternative message. Does not implicitly {@link MercuryStationAlternative.verify|verify} messages.
+     * @param message MercuryStationAlternative message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IMercuryStationAlternative, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified MercuryStationAlternative message, length delimited. Does not implicitly {@link MercuryStationAlternative.verify|verify} messages.
+     * @param message MercuryStationAlternative message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IMercuryStationAlternative, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a MercuryStationAlternative message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns MercuryStationAlternative
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MercuryStationAlternative;
+
+    /**
+     * Decodes a MercuryStationAlternative message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns MercuryStationAlternative
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MercuryStationAlternative;
+
+    /**
+     * Verifies a MercuryStationAlternative message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a MercuryStationAlternative message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns MercuryStationAlternative
+     */
+    public static fromObject(object: { [k: string]: any }): MercuryStationAlternative;
+
+    /**
+     * Creates a plain object from a MercuryStationAlternative message. Also converts values to other types if specified.
+     * @param message MercuryStationAlternative
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: MercuryStationAlternative, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this MercuryStationAlternative to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for MercuryStationAlternative
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a MercuryAlert. */
+export interface IMercuryAlert {
+
+    /** MercuryAlert createdAt */
+    createdAt: (number|Long);
+
+    /** MercuryAlert updatedAt */
+    updatedAt: (number|Long);
+
+    /** MercuryAlert alertType */
+    alertType: string;
+
+    /** MercuryAlert stationAlternative */
+    stationAlternative?: (IMercuryStationAlternative[]|null);
+
+    /** MercuryAlert servicePlanNumber */
+    servicePlanNumber?: (string[]|null);
+
+    /** MercuryAlert generalOrderNumber */
+    generalOrderNumber?: (string[]|null);
+
+    /** MercuryAlert displayBeforeActive */
+    displayBeforeActive?: (number|Long|null);
+
+    /** MercuryAlert humanReadableActivePeriod */
+    humanReadableActivePeriod?: (transit_realtime.ITranslatedString|null);
+
+    /** MercuryAlert directionality */
+    directionality?: (number|Long|null);
+
+    /** MercuryAlert affectedStations */
+    affectedStations?: (transit_realtime.IEntitySelector[]|null);
+
+    /** MercuryAlert screensSummary */
+    screensSummary?: (transit_realtime.ITranslatedString|null);
+
+    /** MercuryAlert noAffectedStations */
+    noAffectedStations?: (boolean|null);
+
+    /** MercuryAlert cloneId */
+    cloneId?: (string|null);
+}
+
+/** Represents a MercuryAlert. */
+export class MercuryAlert implements IMercuryAlert {
+
+    /**
+     * Constructs a new MercuryAlert.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IMercuryAlert);
+
+    /** MercuryAlert createdAt. */
+    public createdAt: (number|Long);
+
+    /** MercuryAlert updatedAt. */
+    public updatedAt: (number|Long);
+
+    /** MercuryAlert alertType. */
+    public alertType: string;
+
+    /** MercuryAlert stationAlternative. */
+    public stationAlternative: IMercuryStationAlternative[];
+
+    /** MercuryAlert servicePlanNumber. */
+    public servicePlanNumber: string[];
+
+    /** MercuryAlert generalOrderNumber. */
+    public generalOrderNumber: string[];
+
+    /** MercuryAlert displayBeforeActive. */
+    public displayBeforeActive: (number|Long);
+
+    /** MercuryAlert humanReadableActivePeriod. */
+    public humanReadableActivePeriod?: (transit_realtime.ITranslatedString|null);
+
+    /** MercuryAlert directionality. */
+    public directionality: (number|Long);
+
+    /** MercuryAlert affectedStations. */
+    public affectedStations: transit_realtime.IEntitySelector[];
+
+    /** MercuryAlert screensSummary. */
+    public screensSummary?: (transit_realtime.ITranslatedString|null);
+
+    /** MercuryAlert noAffectedStations. */
+    public noAffectedStations: boolean;
+
+    /** MercuryAlert cloneId. */
+    public cloneId: string;
+
+    /**
+     * Creates a new MercuryAlert instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns MercuryAlert instance
+     */
+    public static create(properties?: IMercuryAlert): MercuryAlert;
+
+    /**
+     * Encodes the specified MercuryAlert message. Does not implicitly {@link MercuryAlert.verify|verify} messages.
+     * @param message MercuryAlert message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IMercuryAlert, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified MercuryAlert message, length delimited. Does not implicitly {@link MercuryAlert.verify|verify} messages.
+     * @param message MercuryAlert message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IMercuryAlert, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a MercuryAlert message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns MercuryAlert
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MercuryAlert;
+
+    /**
+     * Decodes a MercuryAlert message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns MercuryAlert
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MercuryAlert;
+
+    /**
+     * Verifies a MercuryAlert message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a MercuryAlert message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns MercuryAlert
+     */
+    public static fromObject(object: { [k: string]: any }): MercuryAlert;
+
+    /**
+     * Creates a plain object from a MercuryAlert message. Also converts values to other types if specified.
+     * @param message MercuryAlert
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: MercuryAlert, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this MercuryAlert to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for MercuryAlert
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a MercuryEntitySelector. */
+export interface IMercuryEntitySelector {
+
+    /** MercuryEntitySelector sortOrder */
+    sortOrder: string;
+}
+
+/** Represents a MercuryEntitySelector. */
+export class MercuryEntitySelector implements IMercuryEntitySelector {
+
+    /**
+     * Constructs a new MercuryEntitySelector.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IMercuryEntitySelector);
+
+    /** MercuryEntitySelector sortOrder. */
+    public sortOrder: string;
+
+    /**
+     * Creates a new MercuryEntitySelector instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns MercuryEntitySelector instance
+     */
+    public static create(properties?: IMercuryEntitySelector): MercuryEntitySelector;
+
+    /**
+     * Encodes the specified MercuryEntitySelector message. Does not implicitly {@link MercuryEntitySelector.verify|verify} messages.
+     * @param message MercuryEntitySelector message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IMercuryEntitySelector, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified MercuryEntitySelector message, length delimited. Does not implicitly {@link MercuryEntitySelector.verify|verify} messages.
+     * @param message MercuryEntitySelector message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IMercuryEntitySelector, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a MercuryEntitySelector message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns MercuryEntitySelector
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MercuryEntitySelector;
+
+    /**
+     * Decodes a MercuryEntitySelector message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns MercuryEntitySelector
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MercuryEntitySelector;
+
+    /**
+     * Verifies a MercuryEntitySelector message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a MercuryEntitySelector message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns MercuryEntitySelector
+     */
+    public static fromObject(object: { [k: string]: any }): MercuryEntitySelector;
+
+    /**
+     * Creates a plain object from a MercuryEntitySelector message. Also converts values to other types if specified.
+     * @param message MercuryEntitySelector
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: MercuryEntitySelector, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this MercuryEntitySelector to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for MercuryEntitySelector
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+export namespace MercuryEntitySelector {
+
+    /** Priority enum. */
+    enum Priority {
+        PRIORITY_NO_SCHEDULED_SERVICE = 1,
+        PRIORITY_INFORMATION_OUTAGE = 2,
+        PRIORITY_STATION_NOTICE = 3,
+        PRIORITY_SPECIAL_NOTICE = 4,
+        PRIORITY_WEEKDAY_SCHEDULE = 5,
+        PRIORITY_WEEKEND_SCHEDULE = 6,
+        PRIORITY_SATURDAY_SCHEDULE = 7,
+        PRIORITY_SUNDAY_SCHEDULE = 8,
+        PRIORITY_EXTRA_SERVICE = 9,
+        PRIORITY_BOARDING_CHANGE = 10,
+        PRIORITY_SPECIAL_SCHEDULE = 11,
+        PRIORITY_EXPECT_DELAYS = 12,
+        PRIORITY_REDUCED_SERVICE = 13,
+        PRIORITY_PLANNED_EXPRESS_TO_LOCAL = 14,
+        PRIORITY_PLANNED_EXTRA_TRANSFER = 15,
+        PRIORITY_PLANNED_STOPS_SKIPPED = 16,
+        PRIORITY_PLANNED_DETOUR = 17,
+        PRIORITY_PLANNED_REROUTE = 18,
+        PRIORITY_PLANNED_SUBSTITUTE_BUSES = 19,
+        PRIORITY_PLANNED_PART_SUSPENDED = 20,
+        PRIORITY_PLANNED_SUSPENDED = 21,
+        PRIORITY_SERVICE_CHANGE = 22,
+        PRIORITY_PLANNED_WORK = 23,
+        PRIORITY_SOME_DELAYS = 24,
+        PRIORITY_EXPRESS_TO_LOCAL = 25,
+        PRIORITY_DELAYS = 26,
+        PRIORITY_CANCELLATIONS = 27,
+        PRIORITY_DELAYS_AND_CANCELLATIONS = 28,
+        PRIORITY_STOPS_SKIPPED = 29,
+        PRIORITY_SEVERE_DELAYS = 30,
+        PRIORITY_DETOUR = 31,
+        PRIORITY_REROUTE = 32,
+        PRIORITY_SUBSTITUTE_BUSES = 33,
+        PRIORITY_PART_SUSPENDED = 34,
+        PRIORITY_SUSPENDED = 35
+    }
 }

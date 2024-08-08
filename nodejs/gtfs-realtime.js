@@ -4938,6 +4938,7 @@ $root.transit_realtime = (function() {
          * @property {transit_realtime.ITranslatedString|null} [causeDetail] Alert causeDetail
          * @property {transit_realtime.ITranslatedString|null} [effectDetail] Alert effectDetail
          * @property {ITransitAlertExtension|null} [".transitAlertExtension"] Alert .transitAlertExtension
+         * @property {IMercuryAlert|null} [".mercuryAlert"] Alert .mercuryAlert
          */
 
         /**
@@ -5078,6 +5079,14 @@ $root.transit_realtime = (function() {
         Alert.prototype[".transitAlertExtension"] = null;
 
         /**
+         * Alert .mercuryAlert.
+         * @member {IMercuryAlert|null|undefined} .mercuryAlert
+         * @memberof transit_realtime.Alert
+         * @instance
+         */
+        Alert.prototype[".mercuryAlert"] = null;
+
+        /**
          * Creates a new Alert instance using the specified properties.
          * @function create
          * @memberof transit_realtime.Alert
@@ -5131,6 +5140,8 @@ $root.transit_realtime = (function() {
                 $root.transit_realtime.TranslatedString.encode(message.causeDetail, writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
             if (message.effectDetail != null && Object.hasOwnProperty.call(message, "effectDetail"))
                 $root.transit_realtime.TranslatedString.encode(message.effectDetail, writer.uint32(/* id 18, wireType 2 =*/146).fork()).ldelim();
+            if (message[".mercuryAlert"] != null && Object.hasOwnProperty.call(message, ".mercuryAlert"))
+                $root.MercuryAlert.encode(message[".mercuryAlert"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
             if (message[".transitAlertExtension"] != null && Object.hasOwnProperty.call(message, ".transitAlertExtension"))
                 $root.TransitAlertExtension.encode(message[".transitAlertExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
@@ -5229,6 +5240,10 @@ $root.transit_realtime = (function() {
                     }
                 case 9514: {
                         message[".transitAlertExtension"] = $root.TransitAlertExtension.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 1001: {
+                        message[".mercuryAlert"] = $root.MercuryAlert.decode(reader, reader.uint32());
                         break;
                     }
                 default:
@@ -5378,6 +5393,11 @@ $root.transit_realtime = (function() {
                 var error = $root.TransitAlertExtension.verify(message[".transitAlertExtension"]);
                 if (error)
                     return ".transitAlertExtension." + error;
+            }
+            if (message[".mercuryAlert"] != null && message.hasOwnProperty(".mercuryAlert")) {
+                var error = $root.MercuryAlert.verify(message[".mercuryAlert"]);
+                if (error)
+                    return ".mercuryAlert." + error;
             }
             return null;
         };
@@ -5596,6 +5616,11 @@ $root.transit_realtime = (function() {
                     throw TypeError(".transit_realtime.Alert..transitAlertExtension: object expected");
                 message[".transitAlertExtension"] = $root.TransitAlertExtension.fromObject(object[".transitAlertExtension"]);
             }
+            if (object[".mercuryAlert"] != null) {
+                if (typeof object[".mercuryAlert"] !== "object")
+                    throw TypeError(".transit_realtime.Alert..mercuryAlert: object expected");
+                message[".mercuryAlert"] = $root.MercuryAlert.fromObject(object[".mercuryAlert"]);
+            }
             return message;
         };
 
@@ -5629,6 +5654,7 @@ $root.transit_realtime = (function() {
                 object.imageAlternativeText = null;
                 object.causeDetail = null;
                 object.effectDetail = null;
+                object[".mercuryAlert"] = null;
                 object[".transitAlertExtension"] = null;
             }
             if (message.activePeriod && message.activePeriod.length) {
@@ -5665,6 +5691,8 @@ $root.transit_realtime = (function() {
                 object.causeDetail = $root.transit_realtime.TranslatedString.toObject(message.causeDetail, options);
             if (message.effectDetail != null && message.hasOwnProperty("effectDetail"))
                 object.effectDetail = $root.transit_realtime.TranslatedString.toObject(message.effectDetail, options);
+            if (message[".mercuryAlert"] != null && message.hasOwnProperty(".mercuryAlert"))
+                object[".mercuryAlert"] = $root.MercuryAlert.toObject(message[".mercuryAlert"], options);
             if (message[".transitAlertExtension"] != null && message.hasOwnProperty(".transitAlertExtension"))
                 object[".transitAlertExtension"] = $root.TransitAlertExtension.toObject(message[".transitAlertExtension"], options);
             return object;
@@ -7421,6 +7449,7 @@ $root.transit_realtime = (function() {
          * @property {string|null} [stopId] EntitySelector stopId
          * @property {number|null} [directionId] EntitySelector directionId
          * @property {ITransitInformedEntityExtension|null} [".transitEntitySelectorExtension"] EntitySelector .transitEntitySelectorExtension
+         * @property {IMercuryEntitySelector|null} [".mercuryEntitySelector"] EntitySelector .mercuryEntitySelector
          */
 
         /**
@@ -7495,6 +7524,14 @@ $root.transit_realtime = (function() {
         EntitySelector.prototype[".transitEntitySelectorExtension"] = null;
 
         /**
+         * EntitySelector .mercuryEntitySelector.
+         * @member {IMercuryEntitySelector|null|undefined} .mercuryEntitySelector
+         * @memberof transit_realtime.EntitySelector
+         * @instance
+         */
+        EntitySelector.prototype[".mercuryEntitySelector"] = null;
+
+        /**
          * Creates a new EntitySelector instance using the specified properties.
          * @function create
          * @memberof transit_realtime.EntitySelector
@@ -7530,6 +7567,8 @@ $root.transit_realtime = (function() {
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.stopId);
             if (message.directionId != null && Object.hasOwnProperty.call(message, "directionId"))
                 writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.directionId);
+            if (message[".mercuryEntitySelector"] != null && Object.hasOwnProperty.call(message, ".mercuryEntitySelector"))
+                $root.MercuryEntitySelector.encode(message[".mercuryEntitySelector"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
             if (message[".transitEntitySelectorExtension"] != null && Object.hasOwnProperty.call(message, ".transitEntitySelectorExtension"))
                 $root.TransitInformedEntityExtension.encode(message[".transitEntitySelectorExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
@@ -7594,6 +7633,10 @@ $root.transit_realtime = (function() {
                         message[".transitEntitySelectorExtension"] = $root.TransitInformedEntityExtension.decode(reader, reader.uint32());
                         break;
                     }
+                case 1001: {
+                        message[".mercuryEntitySelector"] = $root.MercuryEntitySelector.decode(reader, reader.uint32());
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -7654,6 +7697,11 @@ $root.transit_realtime = (function() {
                 if (error)
                     return ".transitEntitySelectorExtension." + error;
             }
+            if (message[".mercuryEntitySelector"] != null && message.hasOwnProperty(".mercuryEntitySelector")) {
+                var error = $root.MercuryEntitySelector.verify(message[".mercuryEntitySelector"]);
+                if (error)
+                    return ".mercuryEntitySelector." + error;
+            }
             return null;
         };
 
@@ -7689,6 +7737,11 @@ $root.transit_realtime = (function() {
                     throw TypeError(".transit_realtime.EntitySelector..transitEntitySelectorExtension: object expected");
                 message[".transitEntitySelectorExtension"] = $root.TransitInformedEntityExtension.fromObject(object[".transitEntitySelectorExtension"]);
             }
+            if (object[".mercuryEntitySelector"] != null) {
+                if (typeof object[".mercuryEntitySelector"] !== "object")
+                    throw TypeError(".transit_realtime.EntitySelector..mercuryEntitySelector: object expected");
+                message[".mercuryEntitySelector"] = $root.MercuryEntitySelector.fromObject(object[".mercuryEntitySelector"]);
+            }
             return message;
         };
 
@@ -7712,6 +7765,7 @@ $root.transit_realtime = (function() {
                 object.trip = null;
                 object.stopId = "";
                 object.directionId = 0;
+                object[".mercuryEntitySelector"] = null;
                 object[".transitEntitySelectorExtension"] = null;
             }
             if (message.agencyId != null && message.hasOwnProperty("agencyId"))
@@ -7726,6 +7780,8 @@ $root.transit_realtime = (function() {
                 object.stopId = message.stopId;
             if (message.directionId != null && message.hasOwnProperty("directionId"))
                 object.directionId = message.directionId;
+            if (message[".mercuryEntitySelector"] != null && message.hasOwnProperty(".mercuryEntitySelector"))
+                object[".mercuryEntitySelector"] = $root.MercuryEntitySelector.toObject(message[".mercuryEntitySelector"], options);
             if (message[".transitEntitySelectorExtension"] != null && message.hasOwnProperty(".transitEntitySelectorExtension"))
                 object[".transitEntitySelectorExtension"] = $root.TransitInformedEntityExtension.toObject(message[".transitEntitySelectorExtension"], options);
             return object;
@@ -12126,6 +12182,1353 @@ $root.NyctStopTimeUpdate = (function() {
     };
 
     return NyctStopTimeUpdate;
+})();
+
+$root.MercuryFeedHeader = (function() {
+
+    /**
+     * Properties of a MercuryFeedHeader.
+     * @exports IMercuryFeedHeader
+     * @interface IMercuryFeedHeader
+     * @property {string} mercuryVersion MercuryFeedHeader mercuryVersion
+     */
+
+    /**
+     * Constructs a new MercuryFeedHeader.
+     * @exports MercuryFeedHeader
+     * @classdesc Represents a MercuryFeedHeader.
+     * @implements IMercuryFeedHeader
+     * @constructor
+     * @param {IMercuryFeedHeader=} [properties] Properties to set
+     */
+    function MercuryFeedHeader(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * MercuryFeedHeader mercuryVersion.
+     * @member {string} mercuryVersion
+     * @memberof MercuryFeedHeader
+     * @instance
+     */
+    MercuryFeedHeader.prototype.mercuryVersion = "";
+
+    /**
+     * Creates a new MercuryFeedHeader instance using the specified properties.
+     * @function create
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {IMercuryFeedHeader=} [properties] Properties to set
+     * @returns {MercuryFeedHeader} MercuryFeedHeader instance
+     */
+    MercuryFeedHeader.create = function create(properties) {
+        return new MercuryFeedHeader(properties);
+    };
+
+    /**
+     * Encodes the specified MercuryFeedHeader message. Does not implicitly {@link MercuryFeedHeader.verify|verify} messages.
+     * @function encode
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {IMercuryFeedHeader} message MercuryFeedHeader message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryFeedHeader.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        writer.uint32(/* id 1, wireType 2 =*/10).string(message.mercuryVersion);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified MercuryFeedHeader message, length delimited. Does not implicitly {@link MercuryFeedHeader.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {IMercuryFeedHeader} message MercuryFeedHeader message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryFeedHeader.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a MercuryFeedHeader message from the specified reader or buffer.
+     * @function decode
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {MercuryFeedHeader} MercuryFeedHeader
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryFeedHeader.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.MercuryFeedHeader();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.mercuryVersion = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        if (!message.hasOwnProperty("mercuryVersion"))
+            throw $util.ProtocolError("missing required 'mercuryVersion'", { instance: message });
+        return message;
+    };
+
+    /**
+     * Decodes a MercuryFeedHeader message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {MercuryFeedHeader} MercuryFeedHeader
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryFeedHeader.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a MercuryFeedHeader message.
+     * @function verify
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    MercuryFeedHeader.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (!$util.isString(message.mercuryVersion))
+            return "mercuryVersion: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a MercuryFeedHeader message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MercuryFeedHeader} MercuryFeedHeader
+     */
+    MercuryFeedHeader.fromObject = function fromObject(object) {
+        if (object instanceof $root.MercuryFeedHeader)
+            return object;
+        var message = new $root.MercuryFeedHeader();
+        if (object.mercuryVersion != null)
+            message.mercuryVersion = String(object.mercuryVersion);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MercuryFeedHeader message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {MercuryFeedHeader} message MercuryFeedHeader
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MercuryFeedHeader.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.mercuryVersion = "";
+        if (message.mercuryVersion != null && message.hasOwnProperty("mercuryVersion"))
+            object.mercuryVersion = message.mercuryVersion;
+        return object;
+    };
+
+    /**
+     * Converts this MercuryFeedHeader to JSON.
+     * @function toJSON
+     * @memberof MercuryFeedHeader
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MercuryFeedHeader.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for MercuryFeedHeader
+     * @function getTypeUrl
+     * @memberof MercuryFeedHeader
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    MercuryFeedHeader.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/MercuryFeedHeader";
+    };
+
+    return MercuryFeedHeader;
+})();
+
+$root.MercuryStationAlternative = (function() {
+
+    /**
+     * Properties of a MercuryStationAlternative.
+     * @exports IMercuryStationAlternative
+     * @interface IMercuryStationAlternative
+     * @property {transit_realtime.IEntitySelector} affectedEntity MercuryStationAlternative affectedEntity
+     * @property {transit_realtime.ITranslatedString} notes MercuryStationAlternative notes
+     */
+
+    /**
+     * Constructs a new MercuryStationAlternative.
+     * @exports MercuryStationAlternative
+     * @classdesc Represents a MercuryStationAlternative.
+     * @implements IMercuryStationAlternative
+     * @constructor
+     * @param {IMercuryStationAlternative=} [properties] Properties to set
+     */
+    function MercuryStationAlternative(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * MercuryStationAlternative affectedEntity.
+     * @member {transit_realtime.IEntitySelector} affectedEntity
+     * @memberof MercuryStationAlternative
+     * @instance
+     */
+    MercuryStationAlternative.prototype.affectedEntity = null;
+
+    /**
+     * MercuryStationAlternative notes.
+     * @member {transit_realtime.ITranslatedString} notes
+     * @memberof MercuryStationAlternative
+     * @instance
+     */
+    MercuryStationAlternative.prototype.notes = null;
+
+    /**
+     * Creates a new MercuryStationAlternative instance using the specified properties.
+     * @function create
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {IMercuryStationAlternative=} [properties] Properties to set
+     * @returns {MercuryStationAlternative} MercuryStationAlternative instance
+     */
+    MercuryStationAlternative.create = function create(properties) {
+        return new MercuryStationAlternative(properties);
+    };
+
+    /**
+     * Encodes the specified MercuryStationAlternative message. Does not implicitly {@link MercuryStationAlternative.verify|verify} messages.
+     * @function encode
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {IMercuryStationAlternative} message MercuryStationAlternative message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryStationAlternative.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        $root.transit_realtime.EntitySelector.encode(message.affectedEntity, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        $root.transit_realtime.TranslatedString.encode(message.notes, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+        return writer;
+    };
+
+    /**
+     * Encodes the specified MercuryStationAlternative message, length delimited. Does not implicitly {@link MercuryStationAlternative.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {IMercuryStationAlternative} message MercuryStationAlternative message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryStationAlternative.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a MercuryStationAlternative message from the specified reader or buffer.
+     * @function decode
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {MercuryStationAlternative} MercuryStationAlternative
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryStationAlternative.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.MercuryStationAlternative();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.affectedEntity = $root.transit_realtime.EntitySelector.decode(reader, reader.uint32());
+                    break;
+                }
+            case 2: {
+                    message.notes = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        if (!message.hasOwnProperty("affectedEntity"))
+            throw $util.ProtocolError("missing required 'affectedEntity'", { instance: message });
+        if (!message.hasOwnProperty("notes"))
+            throw $util.ProtocolError("missing required 'notes'", { instance: message });
+        return message;
+    };
+
+    /**
+     * Decodes a MercuryStationAlternative message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {MercuryStationAlternative} MercuryStationAlternative
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryStationAlternative.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a MercuryStationAlternative message.
+     * @function verify
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    MercuryStationAlternative.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        {
+            var error = $root.transit_realtime.EntitySelector.verify(message.affectedEntity);
+            if (error)
+                return "affectedEntity." + error;
+        }
+        {
+            var error = $root.transit_realtime.TranslatedString.verify(message.notes);
+            if (error)
+                return "notes." + error;
+        }
+        return null;
+    };
+
+    /**
+     * Creates a MercuryStationAlternative message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MercuryStationAlternative} MercuryStationAlternative
+     */
+    MercuryStationAlternative.fromObject = function fromObject(object) {
+        if (object instanceof $root.MercuryStationAlternative)
+            return object;
+        var message = new $root.MercuryStationAlternative();
+        if (object.affectedEntity != null) {
+            if (typeof object.affectedEntity !== "object")
+                throw TypeError(".MercuryStationAlternative.affectedEntity: object expected");
+            message.affectedEntity = $root.transit_realtime.EntitySelector.fromObject(object.affectedEntity);
+        }
+        if (object.notes != null) {
+            if (typeof object.notes !== "object")
+                throw TypeError(".MercuryStationAlternative.notes: object expected");
+            message.notes = $root.transit_realtime.TranslatedString.fromObject(object.notes);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MercuryStationAlternative message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {MercuryStationAlternative} message MercuryStationAlternative
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MercuryStationAlternative.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.affectedEntity = null;
+            object.notes = null;
+        }
+        if (message.affectedEntity != null && message.hasOwnProperty("affectedEntity"))
+            object.affectedEntity = $root.transit_realtime.EntitySelector.toObject(message.affectedEntity, options);
+        if (message.notes != null && message.hasOwnProperty("notes"))
+            object.notes = $root.transit_realtime.TranslatedString.toObject(message.notes, options);
+        return object;
+    };
+
+    /**
+     * Converts this MercuryStationAlternative to JSON.
+     * @function toJSON
+     * @memberof MercuryStationAlternative
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MercuryStationAlternative.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for MercuryStationAlternative
+     * @function getTypeUrl
+     * @memberof MercuryStationAlternative
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    MercuryStationAlternative.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/MercuryStationAlternative";
+    };
+
+    return MercuryStationAlternative;
+})();
+
+$root.MercuryAlert = (function() {
+
+    /**
+     * Properties of a MercuryAlert.
+     * @exports IMercuryAlert
+     * @interface IMercuryAlert
+     * @property {number|Long} createdAt MercuryAlert createdAt
+     * @property {number|Long} updatedAt MercuryAlert updatedAt
+     * @property {string} alertType MercuryAlert alertType
+     * @property {Array.<IMercuryStationAlternative>|null} [stationAlternative] MercuryAlert stationAlternative
+     * @property {Array.<string>|null} [servicePlanNumber] MercuryAlert servicePlanNumber
+     * @property {Array.<string>|null} [generalOrderNumber] MercuryAlert generalOrderNumber
+     * @property {number|Long|null} [displayBeforeActive] MercuryAlert displayBeforeActive
+     * @property {transit_realtime.ITranslatedString|null} [humanReadableActivePeriod] MercuryAlert humanReadableActivePeriod
+     * @property {number|Long|null} [directionality] MercuryAlert directionality
+     * @property {Array.<transit_realtime.IEntitySelector>|null} [affectedStations] MercuryAlert affectedStations
+     * @property {transit_realtime.ITranslatedString|null} [screensSummary] MercuryAlert screensSummary
+     * @property {boolean|null} [noAffectedStations] MercuryAlert noAffectedStations
+     * @property {string|null} [cloneId] MercuryAlert cloneId
+     */
+
+    /**
+     * Constructs a new MercuryAlert.
+     * @exports MercuryAlert
+     * @classdesc Represents a MercuryAlert.
+     * @implements IMercuryAlert
+     * @constructor
+     * @param {IMercuryAlert=} [properties] Properties to set
+     */
+    function MercuryAlert(properties) {
+        this.stationAlternative = [];
+        this.servicePlanNumber = [];
+        this.generalOrderNumber = [];
+        this.affectedStations = [];
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * MercuryAlert createdAt.
+     * @member {number|Long} createdAt
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.createdAt = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+    /**
+     * MercuryAlert updatedAt.
+     * @member {number|Long} updatedAt
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.updatedAt = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+    /**
+     * MercuryAlert alertType.
+     * @member {string} alertType
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.alertType = "";
+
+    /**
+     * MercuryAlert stationAlternative.
+     * @member {Array.<IMercuryStationAlternative>} stationAlternative
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.stationAlternative = $util.emptyArray;
+
+    /**
+     * MercuryAlert servicePlanNumber.
+     * @member {Array.<string>} servicePlanNumber
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.servicePlanNumber = $util.emptyArray;
+
+    /**
+     * MercuryAlert generalOrderNumber.
+     * @member {Array.<string>} generalOrderNumber
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.generalOrderNumber = $util.emptyArray;
+
+    /**
+     * MercuryAlert displayBeforeActive.
+     * @member {number|Long} displayBeforeActive
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.displayBeforeActive = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+    /**
+     * MercuryAlert humanReadableActivePeriod.
+     * @member {transit_realtime.ITranslatedString|null|undefined} humanReadableActivePeriod
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.humanReadableActivePeriod = null;
+
+    /**
+     * MercuryAlert directionality.
+     * @member {number|Long} directionality
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.directionality = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+    /**
+     * MercuryAlert affectedStations.
+     * @member {Array.<transit_realtime.IEntitySelector>} affectedStations
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.affectedStations = $util.emptyArray;
+
+    /**
+     * MercuryAlert screensSummary.
+     * @member {transit_realtime.ITranslatedString|null|undefined} screensSummary
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.screensSummary = null;
+
+    /**
+     * MercuryAlert noAffectedStations.
+     * @member {boolean} noAffectedStations
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.noAffectedStations = false;
+
+    /**
+     * MercuryAlert cloneId.
+     * @member {string} cloneId
+     * @memberof MercuryAlert
+     * @instance
+     */
+    MercuryAlert.prototype.cloneId = "";
+
+    /**
+     * Creates a new MercuryAlert instance using the specified properties.
+     * @function create
+     * @memberof MercuryAlert
+     * @static
+     * @param {IMercuryAlert=} [properties] Properties to set
+     * @returns {MercuryAlert} MercuryAlert instance
+     */
+    MercuryAlert.create = function create(properties) {
+        return new MercuryAlert(properties);
+    };
+
+    /**
+     * Encodes the specified MercuryAlert message. Does not implicitly {@link MercuryAlert.verify|verify} messages.
+     * @function encode
+     * @memberof MercuryAlert
+     * @static
+     * @param {IMercuryAlert} message MercuryAlert message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryAlert.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.createdAt);
+        writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.updatedAt);
+        writer.uint32(/* id 3, wireType 2 =*/26).string(message.alertType);
+        if (message.stationAlternative != null && message.stationAlternative.length)
+            for (var i = 0; i < message.stationAlternative.length; ++i)
+                $root.MercuryStationAlternative.encode(message.stationAlternative[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+        if (message.servicePlanNumber != null && message.servicePlanNumber.length)
+            for (var i = 0; i < message.servicePlanNumber.length; ++i)
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.servicePlanNumber[i]);
+        if (message.generalOrderNumber != null && message.generalOrderNumber.length)
+            for (var i = 0; i < message.generalOrderNumber.length; ++i)
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.generalOrderNumber[i]);
+        if (message.displayBeforeActive != null && Object.hasOwnProperty.call(message, "displayBeforeActive"))
+            writer.uint32(/* id 7, wireType 0 =*/56).uint64(message.displayBeforeActive);
+        if (message.humanReadableActivePeriod != null && Object.hasOwnProperty.call(message, "humanReadableActivePeriod"))
+            $root.transit_realtime.TranslatedString.encode(message.humanReadableActivePeriod, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+        if (message.directionality != null && Object.hasOwnProperty.call(message, "directionality"))
+            writer.uint32(/* id 9, wireType 0 =*/72).uint64(message.directionality);
+        if (message.affectedStations != null && message.affectedStations.length)
+            for (var i = 0; i < message.affectedStations.length; ++i)
+                $root.transit_realtime.EntitySelector.encode(message.affectedStations[i], writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
+        if (message.screensSummary != null && Object.hasOwnProperty.call(message, "screensSummary"))
+            $root.transit_realtime.TranslatedString.encode(message.screensSummary, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
+        if (message.noAffectedStations != null && Object.hasOwnProperty.call(message, "noAffectedStations"))
+            writer.uint32(/* id 12, wireType 0 =*/96).bool(message.noAffectedStations);
+        if (message.cloneId != null && Object.hasOwnProperty.call(message, "cloneId"))
+            writer.uint32(/* id 13, wireType 2 =*/106).string(message.cloneId);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified MercuryAlert message, length delimited. Does not implicitly {@link MercuryAlert.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof MercuryAlert
+     * @static
+     * @param {IMercuryAlert} message MercuryAlert message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryAlert.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a MercuryAlert message from the specified reader or buffer.
+     * @function decode
+     * @memberof MercuryAlert
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {MercuryAlert} MercuryAlert
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryAlert.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.MercuryAlert();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.createdAt = reader.uint64();
+                    break;
+                }
+            case 2: {
+                    message.updatedAt = reader.uint64();
+                    break;
+                }
+            case 3: {
+                    message.alertType = reader.string();
+                    break;
+                }
+            case 4: {
+                    if (!(message.stationAlternative && message.stationAlternative.length))
+                        message.stationAlternative = [];
+                    message.stationAlternative.push($root.MercuryStationAlternative.decode(reader, reader.uint32()));
+                    break;
+                }
+            case 5: {
+                    if (!(message.servicePlanNumber && message.servicePlanNumber.length))
+                        message.servicePlanNumber = [];
+                    message.servicePlanNumber.push(reader.string());
+                    break;
+                }
+            case 6: {
+                    if (!(message.generalOrderNumber && message.generalOrderNumber.length))
+                        message.generalOrderNumber = [];
+                    message.generalOrderNumber.push(reader.string());
+                    break;
+                }
+            case 7: {
+                    message.displayBeforeActive = reader.uint64();
+                    break;
+                }
+            case 8: {
+                    message.humanReadableActivePeriod = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                    break;
+                }
+            case 9: {
+                    message.directionality = reader.uint64();
+                    break;
+                }
+            case 10: {
+                    if (!(message.affectedStations && message.affectedStations.length))
+                        message.affectedStations = [];
+                    message.affectedStations.push($root.transit_realtime.EntitySelector.decode(reader, reader.uint32()));
+                    break;
+                }
+            case 11: {
+                    message.screensSummary = $root.transit_realtime.TranslatedString.decode(reader, reader.uint32());
+                    break;
+                }
+            case 12: {
+                    message.noAffectedStations = reader.bool();
+                    break;
+                }
+            case 13: {
+                    message.cloneId = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        if (!message.hasOwnProperty("createdAt"))
+            throw $util.ProtocolError("missing required 'createdAt'", { instance: message });
+        if (!message.hasOwnProperty("updatedAt"))
+            throw $util.ProtocolError("missing required 'updatedAt'", { instance: message });
+        if (!message.hasOwnProperty("alertType"))
+            throw $util.ProtocolError("missing required 'alertType'", { instance: message });
+        return message;
+    };
+
+    /**
+     * Decodes a MercuryAlert message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof MercuryAlert
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {MercuryAlert} MercuryAlert
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryAlert.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a MercuryAlert message.
+     * @function verify
+     * @memberof MercuryAlert
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    MercuryAlert.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (!$util.isInteger(message.createdAt) && !(message.createdAt && $util.isInteger(message.createdAt.low) && $util.isInteger(message.createdAt.high)))
+            return "createdAt: integer|Long expected";
+        if (!$util.isInteger(message.updatedAt) && !(message.updatedAt && $util.isInteger(message.updatedAt.low) && $util.isInteger(message.updatedAt.high)))
+            return "updatedAt: integer|Long expected";
+        if (!$util.isString(message.alertType))
+            return "alertType: string expected";
+        if (message.stationAlternative != null && message.hasOwnProperty("stationAlternative")) {
+            if (!Array.isArray(message.stationAlternative))
+                return "stationAlternative: array expected";
+            for (var i = 0; i < message.stationAlternative.length; ++i) {
+                var error = $root.MercuryStationAlternative.verify(message.stationAlternative[i]);
+                if (error)
+                    return "stationAlternative." + error;
+            }
+        }
+        if (message.servicePlanNumber != null && message.hasOwnProperty("servicePlanNumber")) {
+            if (!Array.isArray(message.servicePlanNumber))
+                return "servicePlanNumber: array expected";
+            for (var i = 0; i < message.servicePlanNumber.length; ++i)
+                if (!$util.isString(message.servicePlanNumber[i]))
+                    return "servicePlanNumber: string[] expected";
+        }
+        if (message.generalOrderNumber != null && message.hasOwnProperty("generalOrderNumber")) {
+            if (!Array.isArray(message.generalOrderNumber))
+                return "generalOrderNumber: array expected";
+            for (var i = 0; i < message.generalOrderNumber.length; ++i)
+                if (!$util.isString(message.generalOrderNumber[i]))
+                    return "generalOrderNumber: string[] expected";
+        }
+        if (message.displayBeforeActive != null && message.hasOwnProperty("displayBeforeActive"))
+            if (!$util.isInteger(message.displayBeforeActive) && !(message.displayBeforeActive && $util.isInteger(message.displayBeforeActive.low) && $util.isInteger(message.displayBeforeActive.high)))
+                return "displayBeforeActive: integer|Long expected";
+        if (message.humanReadableActivePeriod != null && message.hasOwnProperty("humanReadableActivePeriod")) {
+            var error = $root.transit_realtime.TranslatedString.verify(message.humanReadableActivePeriod);
+            if (error)
+                return "humanReadableActivePeriod." + error;
+        }
+        if (message.directionality != null && message.hasOwnProperty("directionality"))
+            if (!$util.isInteger(message.directionality) && !(message.directionality && $util.isInteger(message.directionality.low) && $util.isInteger(message.directionality.high)))
+                return "directionality: integer|Long expected";
+        if (message.affectedStations != null && message.hasOwnProperty("affectedStations")) {
+            if (!Array.isArray(message.affectedStations))
+                return "affectedStations: array expected";
+            for (var i = 0; i < message.affectedStations.length; ++i) {
+                var error = $root.transit_realtime.EntitySelector.verify(message.affectedStations[i]);
+                if (error)
+                    return "affectedStations." + error;
+            }
+        }
+        if (message.screensSummary != null && message.hasOwnProperty("screensSummary")) {
+            var error = $root.transit_realtime.TranslatedString.verify(message.screensSummary);
+            if (error)
+                return "screensSummary." + error;
+        }
+        if (message.noAffectedStations != null && message.hasOwnProperty("noAffectedStations"))
+            if (typeof message.noAffectedStations !== "boolean")
+                return "noAffectedStations: boolean expected";
+        if (message.cloneId != null && message.hasOwnProperty("cloneId"))
+            if (!$util.isString(message.cloneId))
+                return "cloneId: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a MercuryAlert message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MercuryAlert
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MercuryAlert} MercuryAlert
+     */
+    MercuryAlert.fromObject = function fromObject(object) {
+        if (object instanceof $root.MercuryAlert)
+            return object;
+        var message = new $root.MercuryAlert();
+        if (object.createdAt != null)
+            if ($util.Long)
+                (message.createdAt = $util.Long.fromValue(object.createdAt)).unsigned = true;
+            else if (typeof object.createdAt === "string")
+                message.createdAt = parseInt(object.createdAt, 10);
+            else if (typeof object.createdAt === "number")
+                message.createdAt = object.createdAt;
+            else if (typeof object.createdAt === "object")
+                message.createdAt = new $util.LongBits(object.createdAt.low >>> 0, object.createdAt.high >>> 0).toNumber(true);
+        if (object.updatedAt != null)
+            if ($util.Long)
+                (message.updatedAt = $util.Long.fromValue(object.updatedAt)).unsigned = true;
+            else if (typeof object.updatedAt === "string")
+                message.updatedAt = parseInt(object.updatedAt, 10);
+            else if (typeof object.updatedAt === "number")
+                message.updatedAt = object.updatedAt;
+            else if (typeof object.updatedAt === "object")
+                message.updatedAt = new $util.LongBits(object.updatedAt.low >>> 0, object.updatedAt.high >>> 0).toNumber(true);
+        if (object.alertType != null)
+            message.alertType = String(object.alertType);
+        if (object.stationAlternative) {
+            if (!Array.isArray(object.stationAlternative))
+                throw TypeError(".MercuryAlert.stationAlternative: array expected");
+            message.stationAlternative = [];
+            for (var i = 0; i < object.stationAlternative.length; ++i) {
+                if (typeof object.stationAlternative[i] !== "object")
+                    throw TypeError(".MercuryAlert.stationAlternative: object expected");
+                message.stationAlternative[i] = $root.MercuryStationAlternative.fromObject(object.stationAlternative[i]);
+            }
+        }
+        if (object.servicePlanNumber) {
+            if (!Array.isArray(object.servicePlanNumber))
+                throw TypeError(".MercuryAlert.servicePlanNumber: array expected");
+            message.servicePlanNumber = [];
+            for (var i = 0; i < object.servicePlanNumber.length; ++i)
+                message.servicePlanNumber[i] = String(object.servicePlanNumber[i]);
+        }
+        if (object.generalOrderNumber) {
+            if (!Array.isArray(object.generalOrderNumber))
+                throw TypeError(".MercuryAlert.generalOrderNumber: array expected");
+            message.generalOrderNumber = [];
+            for (var i = 0; i < object.generalOrderNumber.length; ++i)
+                message.generalOrderNumber[i] = String(object.generalOrderNumber[i]);
+        }
+        if (object.displayBeforeActive != null)
+            if ($util.Long)
+                (message.displayBeforeActive = $util.Long.fromValue(object.displayBeforeActive)).unsigned = true;
+            else if (typeof object.displayBeforeActive === "string")
+                message.displayBeforeActive = parseInt(object.displayBeforeActive, 10);
+            else if (typeof object.displayBeforeActive === "number")
+                message.displayBeforeActive = object.displayBeforeActive;
+            else if (typeof object.displayBeforeActive === "object")
+                message.displayBeforeActive = new $util.LongBits(object.displayBeforeActive.low >>> 0, object.displayBeforeActive.high >>> 0).toNumber(true);
+        if (object.humanReadableActivePeriod != null) {
+            if (typeof object.humanReadableActivePeriod !== "object")
+                throw TypeError(".MercuryAlert.humanReadableActivePeriod: object expected");
+            message.humanReadableActivePeriod = $root.transit_realtime.TranslatedString.fromObject(object.humanReadableActivePeriod);
+        }
+        if (object.directionality != null)
+            if ($util.Long)
+                (message.directionality = $util.Long.fromValue(object.directionality)).unsigned = true;
+            else if (typeof object.directionality === "string")
+                message.directionality = parseInt(object.directionality, 10);
+            else if (typeof object.directionality === "number")
+                message.directionality = object.directionality;
+            else if (typeof object.directionality === "object")
+                message.directionality = new $util.LongBits(object.directionality.low >>> 0, object.directionality.high >>> 0).toNumber(true);
+        if (object.affectedStations) {
+            if (!Array.isArray(object.affectedStations))
+                throw TypeError(".MercuryAlert.affectedStations: array expected");
+            message.affectedStations = [];
+            for (var i = 0; i < object.affectedStations.length; ++i) {
+                if (typeof object.affectedStations[i] !== "object")
+                    throw TypeError(".MercuryAlert.affectedStations: object expected");
+                message.affectedStations[i] = $root.transit_realtime.EntitySelector.fromObject(object.affectedStations[i]);
+            }
+        }
+        if (object.screensSummary != null) {
+            if (typeof object.screensSummary !== "object")
+                throw TypeError(".MercuryAlert.screensSummary: object expected");
+            message.screensSummary = $root.transit_realtime.TranslatedString.fromObject(object.screensSummary);
+        }
+        if (object.noAffectedStations != null)
+            message.noAffectedStations = Boolean(object.noAffectedStations);
+        if (object.cloneId != null)
+            message.cloneId = String(object.cloneId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MercuryAlert message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MercuryAlert
+     * @static
+     * @param {MercuryAlert} message MercuryAlert
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MercuryAlert.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults) {
+            object.stationAlternative = [];
+            object.servicePlanNumber = [];
+            object.generalOrderNumber = [];
+            object.affectedStations = [];
+        }
+        if (options.defaults) {
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.createdAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.createdAt = options.longs === String ? "0" : 0;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.updatedAt = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.updatedAt = options.longs === String ? "0" : 0;
+            object.alertType = "";
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.displayBeforeActive = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.displayBeforeActive = options.longs === String ? "0" : 0;
+            object.humanReadableActivePeriod = null;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.directionality = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.directionality = options.longs === String ? "0" : 0;
+            object.screensSummary = null;
+            object.noAffectedStations = false;
+            object.cloneId = "";
+        }
+        if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+            if (typeof message.createdAt === "number")
+                object.createdAt = options.longs === String ? String(message.createdAt) : message.createdAt;
+            else
+                object.createdAt = options.longs === String ? $util.Long.prototype.toString.call(message.createdAt) : options.longs === Number ? new $util.LongBits(message.createdAt.low >>> 0, message.createdAt.high >>> 0).toNumber(true) : message.createdAt;
+        if (message.updatedAt != null && message.hasOwnProperty("updatedAt"))
+            if (typeof message.updatedAt === "number")
+                object.updatedAt = options.longs === String ? String(message.updatedAt) : message.updatedAt;
+            else
+                object.updatedAt = options.longs === String ? $util.Long.prototype.toString.call(message.updatedAt) : options.longs === Number ? new $util.LongBits(message.updatedAt.low >>> 0, message.updatedAt.high >>> 0).toNumber(true) : message.updatedAt;
+        if (message.alertType != null && message.hasOwnProperty("alertType"))
+            object.alertType = message.alertType;
+        if (message.stationAlternative && message.stationAlternative.length) {
+            object.stationAlternative = [];
+            for (var j = 0; j < message.stationAlternative.length; ++j)
+                object.stationAlternative[j] = $root.MercuryStationAlternative.toObject(message.stationAlternative[j], options);
+        }
+        if (message.servicePlanNumber && message.servicePlanNumber.length) {
+            object.servicePlanNumber = [];
+            for (var j = 0; j < message.servicePlanNumber.length; ++j)
+                object.servicePlanNumber[j] = message.servicePlanNumber[j];
+        }
+        if (message.generalOrderNumber && message.generalOrderNumber.length) {
+            object.generalOrderNumber = [];
+            for (var j = 0; j < message.generalOrderNumber.length; ++j)
+                object.generalOrderNumber[j] = message.generalOrderNumber[j];
+        }
+        if (message.displayBeforeActive != null && message.hasOwnProperty("displayBeforeActive"))
+            if (typeof message.displayBeforeActive === "number")
+                object.displayBeforeActive = options.longs === String ? String(message.displayBeforeActive) : message.displayBeforeActive;
+            else
+                object.displayBeforeActive = options.longs === String ? $util.Long.prototype.toString.call(message.displayBeforeActive) : options.longs === Number ? new $util.LongBits(message.displayBeforeActive.low >>> 0, message.displayBeforeActive.high >>> 0).toNumber(true) : message.displayBeforeActive;
+        if (message.humanReadableActivePeriod != null && message.hasOwnProperty("humanReadableActivePeriod"))
+            object.humanReadableActivePeriod = $root.transit_realtime.TranslatedString.toObject(message.humanReadableActivePeriod, options);
+        if (message.directionality != null && message.hasOwnProperty("directionality"))
+            if (typeof message.directionality === "number")
+                object.directionality = options.longs === String ? String(message.directionality) : message.directionality;
+            else
+                object.directionality = options.longs === String ? $util.Long.prototype.toString.call(message.directionality) : options.longs === Number ? new $util.LongBits(message.directionality.low >>> 0, message.directionality.high >>> 0).toNumber(true) : message.directionality;
+        if (message.affectedStations && message.affectedStations.length) {
+            object.affectedStations = [];
+            for (var j = 0; j < message.affectedStations.length; ++j)
+                object.affectedStations[j] = $root.transit_realtime.EntitySelector.toObject(message.affectedStations[j], options);
+        }
+        if (message.screensSummary != null && message.hasOwnProperty("screensSummary"))
+            object.screensSummary = $root.transit_realtime.TranslatedString.toObject(message.screensSummary, options);
+        if (message.noAffectedStations != null && message.hasOwnProperty("noAffectedStations"))
+            object.noAffectedStations = message.noAffectedStations;
+        if (message.cloneId != null && message.hasOwnProperty("cloneId"))
+            object.cloneId = message.cloneId;
+        return object;
+    };
+
+    /**
+     * Converts this MercuryAlert to JSON.
+     * @function toJSON
+     * @memberof MercuryAlert
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MercuryAlert.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for MercuryAlert
+     * @function getTypeUrl
+     * @memberof MercuryAlert
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    MercuryAlert.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/MercuryAlert";
+    };
+
+    return MercuryAlert;
+})();
+
+$root.MercuryEntitySelector = (function() {
+
+    /**
+     * Properties of a MercuryEntitySelector.
+     * @exports IMercuryEntitySelector
+     * @interface IMercuryEntitySelector
+     * @property {string} sortOrder MercuryEntitySelector sortOrder
+     */
+
+    /**
+     * Constructs a new MercuryEntitySelector.
+     * @exports MercuryEntitySelector
+     * @classdesc Represents a MercuryEntitySelector.
+     * @implements IMercuryEntitySelector
+     * @constructor
+     * @param {IMercuryEntitySelector=} [properties] Properties to set
+     */
+    function MercuryEntitySelector(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * MercuryEntitySelector sortOrder.
+     * @member {string} sortOrder
+     * @memberof MercuryEntitySelector
+     * @instance
+     */
+    MercuryEntitySelector.prototype.sortOrder = "";
+
+    /**
+     * Creates a new MercuryEntitySelector instance using the specified properties.
+     * @function create
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {IMercuryEntitySelector=} [properties] Properties to set
+     * @returns {MercuryEntitySelector} MercuryEntitySelector instance
+     */
+    MercuryEntitySelector.create = function create(properties) {
+        return new MercuryEntitySelector(properties);
+    };
+
+    /**
+     * Encodes the specified MercuryEntitySelector message. Does not implicitly {@link MercuryEntitySelector.verify|verify} messages.
+     * @function encode
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {IMercuryEntitySelector} message MercuryEntitySelector message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryEntitySelector.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        writer.uint32(/* id 1, wireType 2 =*/10).string(message.sortOrder);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified MercuryEntitySelector message, length delimited. Does not implicitly {@link MercuryEntitySelector.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {IMercuryEntitySelector} message MercuryEntitySelector message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MercuryEntitySelector.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a MercuryEntitySelector message from the specified reader or buffer.
+     * @function decode
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {MercuryEntitySelector} MercuryEntitySelector
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryEntitySelector.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.MercuryEntitySelector();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.sortOrder = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        if (!message.hasOwnProperty("sortOrder"))
+            throw $util.ProtocolError("missing required 'sortOrder'", { instance: message });
+        return message;
+    };
+
+    /**
+     * Decodes a MercuryEntitySelector message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {MercuryEntitySelector} MercuryEntitySelector
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MercuryEntitySelector.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a MercuryEntitySelector message.
+     * @function verify
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    MercuryEntitySelector.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (!$util.isString(message.sortOrder))
+            return "sortOrder: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a MercuryEntitySelector message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MercuryEntitySelector} MercuryEntitySelector
+     */
+    MercuryEntitySelector.fromObject = function fromObject(object) {
+        if (object instanceof $root.MercuryEntitySelector)
+            return object;
+        var message = new $root.MercuryEntitySelector();
+        if (object.sortOrder != null)
+            message.sortOrder = String(object.sortOrder);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MercuryEntitySelector message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {MercuryEntitySelector} message MercuryEntitySelector
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MercuryEntitySelector.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.sortOrder = "";
+        if (message.sortOrder != null && message.hasOwnProperty("sortOrder"))
+            object.sortOrder = message.sortOrder;
+        return object;
+    };
+
+    /**
+     * Converts this MercuryEntitySelector to JSON.
+     * @function toJSON
+     * @memberof MercuryEntitySelector
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MercuryEntitySelector.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for MercuryEntitySelector
+     * @function getTypeUrl
+     * @memberof MercuryEntitySelector
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    MercuryEntitySelector.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/MercuryEntitySelector";
+    };
+
+    /**
+     * Priority enum.
+     * @name MercuryEntitySelector.Priority
+     * @enum {number}
+     * @property {number} PRIORITY_NO_SCHEDULED_SERVICE=1 PRIORITY_NO_SCHEDULED_SERVICE value
+     * @property {number} PRIORITY_INFORMATION_OUTAGE=2 PRIORITY_INFORMATION_OUTAGE value
+     * @property {number} PRIORITY_STATION_NOTICE=3 PRIORITY_STATION_NOTICE value
+     * @property {number} PRIORITY_SPECIAL_NOTICE=4 PRIORITY_SPECIAL_NOTICE value
+     * @property {number} PRIORITY_WEEKDAY_SCHEDULE=5 PRIORITY_WEEKDAY_SCHEDULE value
+     * @property {number} PRIORITY_WEEKEND_SCHEDULE=6 PRIORITY_WEEKEND_SCHEDULE value
+     * @property {number} PRIORITY_SATURDAY_SCHEDULE=7 PRIORITY_SATURDAY_SCHEDULE value
+     * @property {number} PRIORITY_SUNDAY_SCHEDULE=8 PRIORITY_SUNDAY_SCHEDULE value
+     * @property {number} PRIORITY_EXTRA_SERVICE=9 PRIORITY_EXTRA_SERVICE value
+     * @property {number} PRIORITY_BOARDING_CHANGE=10 PRIORITY_BOARDING_CHANGE value
+     * @property {number} PRIORITY_SPECIAL_SCHEDULE=11 PRIORITY_SPECIAL_SCHEDULE value
+     * @property {number} PRIORITY_EXPECT_DELAYS=12 PRIORITY_EXPECT_DELAYS value
+     * @property {number} PRIORITY_REDUCED_SERVICE=13 PRIORITY_REDUCED_SERVICE value
+     * @property {number} PRIORITY_PLANNED_EXPRESS_TO_LOCAL=14 PRIORITY_PLANNED_EXPRESS_TO_LOCAL value
+     * @property {number} PRIORITY_PLANNED_EXTRA_TRANSFER=15 PRIORITY_PLANNED_EXTRA_TRANSFER value
+     * @property {number} PRIORITY_PLANNED_STOPS_SKIPPED=16 PRIORITY_PLANNED_STOPS_SKIPPED value
+     * @property {number} PRIORITY_PLANNED_DETOUR=17 PRIORITY_PLANNED_DETOUR value
+     * @property {number} PRIORITY_PLANNED_REROUTE=18 PRIORITY_PLANNED_REROUTE value
+     * @property {number} PRIORITY_PLANNED_SUBSTITUTE_BUSES=19 PRIORITY_PLANNED_SUBSTITUTE_BUSES value
+     * @property {number} PRIORITY_PLANNED_PART_SUSPENDED=20 PRIORITY_PLANNED_PART_SUSPENDED value
+     * @property {number} PRIORITY_PLANNED_SUSPENDED=21 PRIORITY_PLANNED_SUSPENDED value
+     * @property {number} PRIORITY_SERVICE_CHANGE=22 PRIORITY_SERVICE_CHANGE value
+     * @property {number} PRIORITY_PLANNED_WORK=23 PRIORITY_PLANNED_WORK value
+     * @property {number} PRIORITY_SOME_DELAYS=24 PRIORITY_SOME_DELAYS value
+     * @property {number} PRIORITY_EXPRESS_TO_LOCAL=25 PRIORITY_EXPRESS_TO_LOCAL value
+     * @property {number} PRIORITY_DELAYS=26 PRIORITY_DELAYS value
+     * @property {number} PRIORITY_CANCELLATIONS=27 PRIORITY_CANCELLATIONS value
+     * @property {number} PRIORITY_DELAYS_AND_CANCELLATIONS=28 PRIORITY_DELAYS_AND_CANCELLATIONS value
+     * @property {number} PRIORITY_STOPS_SKIPPED=29 PRIORITY_STOPS_SKIPPED value
+     * @property {number} PRIORITY_SEVERE_DELAYS=30 PRIORITY_SEVERE_DELAYS value
+     * @property {number} PRIORITY_DETOUR=31 PRIORITY_DETOUR value
+     * @property {number} PRIORITY_REROUTE=32 PRIORITY_REROUTE value
+     * @property {number} PRIORITY_SUBSTITUTE_BUSES=33 PRIORITY_SUBSTITUTE_BUSES value
+     * @property {number} PRIORITY_PART_SUSPENDED=34 PRIORITY_PART_SUSPENDED value
+     * @property {number} PRIORITY_SUSPENDED=35 PRIORITY_SUSPENDED value
+     */
+    MercuryEntitySelector.Priority = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[1] = "PRIORITY_NO_SCHEDULED_SERVICE"] = 1;
+        values[valuesById[2] = "PRIORITY_INFORMATION_OUTAGE"] = 2;
+        values[valuesById[3] = "PRIORITY_STATION_NOTICE"] = 3;
+        values[valuesById[4] = "PRIORITY_SPECIAL_NOTICE"] = 4;
+        values[valuesById[5] = "PRIORITY_WEEKDAY_SCHEDULE"] = 5;
+        values[valuesById[6] = "PRIORITY_WEEKEND_SCHEDULE"] = 6;
+        values[valuesById[7] = "PRIORITY_SATURDAY_SCHEDULE"] = 7;
+        values[valuesById[8] = "PRIORITY_SUNDAY_SCHEDULE"] = 8;
+        values[valuesById[9] = "PRIORITY_EXTRA_SERVICE"] = 9;
+        values[valuesById[10] = "PRIORITY_BOARDING_CHANGE"] = 10;
+        values[valuesById[11] = "PRIORITY_SPECIAL_SCHEDULE"] = 11;
+        values[valuesById[12] = "PRIORITY_EXPECT_DELAYS"] = 12;
+        values[valuesById[13] = "PRIORITY_REDUCED_SERVICE"] = 13;
+        values[valuesById[14] = "PRIORITY_PLANNED_EXPRESS_TO_LOCAL"] = 14;
+        values[valuesById[15] = "PRIORITY_PLANNED_EXTRA_TRANSFER"] = 15;
+        values[valuesById[16] = "PRIORITY_PLANNED_STOPS_SKIPPED"] = 16;
+        values[valuesById[17] = "PRIORITY_PLANNED_DETOUR"] = 17;
+        values[valuesById[18] = "PRIORITY_PLANNED_REROUTE"] = 18;
+        values[valuesById[19] = "PRIORITY_PLANNED_SUBSTITUTE_BUSES"] = 19;
+        values[valuesById[20] = "PRIORITY_PLANNED_PART_SUSPENDED"] = 20;
+        values[valuesById[21] = "PRIORITY_PLANNED_SUSPENDED"] = 21;
+        values[valuesById[22] = "PRIORITY_SERVICE_CHANGE"] = 22;
+        values[valuesById[23] = "PRIORITY_PLANNED_WORK"] = 23;
+        values[valuesById[24] = "PRIORITY_SOME_DELAYS"] = 24;
+        values[valuesById[25] = "PRIORITY_EXPRESS_TO_LOCAL"] = 25;
+        values[valuesById[26] = "PRIORITY_DELAYS"] = 26;
+        values[valuesById[27] = "PRIORITY_CANCELLATIONS"] = 27;
+        values[valuesById[28] = "PRIORITY_DELAYS_AND_CANCELLATIONS"] = 28;
+        values[valuesById[29] = "PRIORITY_STOPS_SKIPPED"] = 29;
+        values[valuesById[30] = "PRIORITY_SEVERE_DELAYS"] = 30;
+        values[valuesById[31] = "PRIORITY_DETOUR"] = 31;
+        values[valuesById[32] = "PRIORITY_REROUTE"] = 32;
+        values[valuesById[33] = "PRIORITY_SUBSTITUTE_BUSES"] = 33;
+        values[valuesById[34] = "PRIORITY_PART_SUSPENDED"] = 34;
+        values[valuesById[35] = "PRIORITY_SUSPENDED"] = 35;
+        return values;
+    })();
+
+    return MercuryEntitySelector;
 })();
 
 module.exports = $root;
