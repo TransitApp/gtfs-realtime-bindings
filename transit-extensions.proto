@@ -128,9 +128,7 @@ extend transit_realtime.TripUpdate.StopTimeUpdate {
   optional NyctStopTimeUpdate nyct_stop_time_update = 1001;
 }
 
-extend transit_realtime.EntitySelector {}
-
-message TransitModificationsExtension {
+message TransitModificationExtension {
   // List of trip_ids that created the modification
   repeated string trip_ids = 1;
 
@@ -138,6 +136,6 @@ message TransitModificationsExtension {
   optional uint64 detection_time = 2;
 }
 
-extend transit_realtime.Modification {
-  optional TransitModificationsExtension transit_trip_modifications_extension = 9514;
+extend transit_realtime.TripModifications.Modification {
+  optional TransitModificationExtension transit_modification_extension = 9514;
 }
