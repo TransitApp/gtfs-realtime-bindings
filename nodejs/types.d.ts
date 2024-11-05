@@ -548,6 +548,109 @@ export namespace TransitStopTimeUpdateExtension {
     }
 }
 
+/** Properties of a TransitModificationExtension. */
+export interface ITransitModificationExtension {
+
+    /** TransitModificationExtension tripIds */
+    tripIds?: (string[]|null);
+
+    /** TransitModificationExtension detectionTime */
+    detectionTime?: (number|Long|null);
+}
+
+/** Represents a TransitModificationExtension. */
+export class TransitModificationExtension implements ITransitModificationExtension {
+
+    /**
+     * Constructs a new TransitModificationExtension.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: ITransitModificationExtension);
+
+    /** TransitModificationExtension tripIds. */
+    public tripIds: string[];
+
+    /** TransitModificationExtension detectionTime. */
+    public detectionTime: (number|Long);
+
+    /**
+     * Creates a new TransitModificationExtension instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns TransitModificationExtension instance
+     */
+    public static create(properties?: ITransitModificationExtension): TransitModificationExtension;
+
+    /**
+     * Encodes the specified TransitModificationExtension message. Does not implicitly {@link TransitModificationExtension.verify|verify} messages.
+     * @param message TransitModificationExtension message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: ITransitModificationExtension, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified TransitModificationExtension message, length delimited. Does not implicitly {@link TransitModificationExtension.verify|verify} messages.
+     * @param message TransitModificationExtension message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: ITransitModificationExtension, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a TransitModificationExtension message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns TransitModificationExtension
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): TransitModificationExtension;
+
+    /**
+     * Decodes a TransitModificationExtension message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns TransitModificationExtension
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): TransitModificationExtension;
+
+    /**
+     * Verifies a TransitModificationExtension message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a TransitModificationExtension message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns TransitModificationExtension
+     */
+    public static fromObject(object: { [k: string]: any }): TransitModificationExtension;
+
+    /**
+     * Creates a plain object from a TransitModificationExtension message. Also converts values to other types if specified.
+     * @param message TransitModificationExtension
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: TransitModificationExtension, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this TransitModificationExtension to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for TransitModificationExtension
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
 /** Namespace transit_realtime. */
 export namespace transit_realtime {
 
@@ -3663,6 +3766,9 @@ export namespace transit_realtime {
 
             /** Modification lastModifiedTime */
             lastModifiedTime?: (number|Long|null);
+
+            /** Modification .transitModificationExtension */
+            ".transitModificationExtension"?: (ITransitModificationExtension|null);
         }
 
         /** Represents a Modification. */
@@ -3691,6 +3797,9 @@ export namespace transit_realtime {
 
             /** Modification lastModifiedTime. */
             public lastModifiedTime: (number|Long);
+
+            /** Modification .transitModificationExtension. */
+            public transitModificationExtension?: (ITransitModificationExtension|null);
 
             /**
              * Creates a new Modification instance using the specified properties.
