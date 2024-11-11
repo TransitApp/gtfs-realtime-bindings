@@ -134,6 +134,9 @@ message TransitModificationExtension {
 
   // Detection time of the modification, in POSIX time
   optional uint64 detection_time = 2;
+
+  // Modification to identify that whole modification
+  optional string modification_id = 3;
 }
 
 extend transit_realtime.TripModifications.Modification {
