@@ -1306,6 +1306,7 @@ $root.TransitModificationExtension = (function() {
      * @interface ITransitModificationExtension
      * @property {Array.<string>|null} [tripIds] TransitModificationExtension tripIds
      * @property {number|Long|null} [detectionTime] TransitModificationExtension detectionTime
+     * @property {string|null} [modificationId] TransitModificationExtension modificationId
      */
 
     /**
@@ -1341,6 +1342,14 @@ $root.TransitModificationExtension = (function() {
     TransitModificationExtension.prototype.detectionTime = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
     /**
+     * TransitModificationExtension modificationId.
+     * @member {string} modificationId
+     * @memberof TransitModificationExtension
+     * @instance
+     */
+    TransitModificationExtension.prototype.modificationId = "";
+
+    /**
      * Creates a new TransitModificationExtension instance using the specified properties.
      * @function create
      * @memberof TransitModificationExtension
@@ -1369,6 +1378,8 @@ $root.TransitModificationExtension = (function() {
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.tripIds[i]);
         if (message.detectionTime != null && Object.hasOwnProperty.call(message, "detectionTime"))
             writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.detectionTime);
+        if (message.modificationId != null && Object.hasOwnProperty.call(message, "modificationId"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.modificationId);
         return writer;
     };
 
@@ -1411,6 +1422,10 @@ $root.TransitModificationExtension = (function() {
                 }
             case 2: {
                     message.detectionTime = reader.uint64();
+                    break;
+                }
+            case 3: {
+                    message.modificationId = reader.string();
                     break;
                 }
             default:
@@ -1458,6 +1473,9 @@ $root.TransitModificationExtension = (function() {
         if (message.detectionTime != null && message.hasOwnProperty("detectionTime"))
             if (!$util.isInteger(message.detectionTime) && !(message.detectionTime && $util.isInteger(message.detectionTime.low) && $util.isInteger(message.detectionTime.high)))
                 return "detectionTime: integer|Long expected";
+        if (message.modificationId != null && message.hasOwnProperty("modificationId"))
+            if (!$util.isString(message.modificationId))
+                return "modificationId: string expected";
         return null;
     };
 
@@ -1489,6 +1507,8 @@ $root.TransitModificationExtension = (function() {
                 message.detectionTime = object.detectionTime;
             else if (typeof object.detectionTime === "object")
                 message.detectionTime = new $util.LongBits(object.detectionTime.low >>> 0, object.detectionTime.high >>> 0).toNumber(true);
+        if (object.modificationId != null)
+            message.modificationId = String(object.modificationId);
         return message;
     };
 
@@ -1507,12 +1527,14 @@ $root.TransitModificationExtension = (function() {
         var object = {};
         if (options.arrays || options.defaults)
             object.tripIds = [];
-        if (options.defaults)
+        if (options.defaults) {
             if ($util.Long) {
                 var long = new $util.Long(0, 0, true);
                 object.detectionTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
             } else
                 object.detectionTime = options.longs === String ? "0" : 0;
+            object.modificationId = "";
+        }
         if (message.tripIds && message.tripIds.length) {
             object.tripIds = [];
             for (var j = 0; j < message.tripIds.length; ++j)
@@ -1523,6 +1545,8 @@ $root.TransitModificationExtension = (function() {
                 object.detectionTime = options.longs === String ? String(message.detectionTime) : message.detectionTime;
             else
                 object.detectionTime = options.longs === String ? $util.Long.prototype.toString.call(message.detectionTime) : options.longs === Number ? new $util.LongBits(message.detectionTime.low >>> 0, message.detectionTime.high >>> 0).toNumber(true) : message.detectionTime;
+        if (message.modificationId != null && message.hasOwnProperty("modificationId"))
+            object.modificationId = message.modificationId;
         return object;
     };
 

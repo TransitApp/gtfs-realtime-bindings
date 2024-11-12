@@ -556,6 +556,9 @@ export interface ITransitModificationExtension {
 
     /** TransitModificationExtension detectionTime */
     detectionTime?: (number|Long|null);
+
+    /** TransitModificationExtension modificationId */
+    modificationId?: (string|null);
 }
 
 /** Represents a TransitModificationExtension. */
@@ -572,6 +575,9 @@ export class TransitModificationExtension implements ITransitModificationExtensi
 
     /** TransitModificationExtension detectionTime. */
     public detectionTime: (number|Long);
+
+    /** TransitModificationExtension modificationId. */
+    public modificationId: string;
 
     /**
      * Creates a new TransitModificationExtension instance using the specified properties.
