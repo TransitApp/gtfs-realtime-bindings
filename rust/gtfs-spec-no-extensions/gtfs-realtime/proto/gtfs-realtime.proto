@@ -1205,7 +1205,8 @@ message TripModifications {
     extensions 1000 to 1999;
 
     // The following extension IDs are reserved for private use by any organization.
-    extensions 9000 to 9999;
+    // extensions 9000 to 9999;
+    optional TransitModificationExtension transit_modification_extension = 9514;
   }
 
   message SelectedTrips {
@@ -1280,4 +1281,15 @@ message ReplacementStop {
 
   // The following extension IDs are reserved for private use by any organization.
   extensions 9000 to 9999;
+}
+
+message TransitModificationExtension {
+  // List of trip_ids that created the modification
+  repeated string trip_ids = 1;
+
+  // Detection time of the modification, in POSIX time
+  optional uint64 detection_time = 2;
+
+  // Modification to identify that whole modification
+  optional string modification_id = 3;
 }

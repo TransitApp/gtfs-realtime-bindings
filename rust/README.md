@@ -20,3 +20,5 @@ Then check-in the new generated code.
 Until https://github.com/tokio-rs/prost/pull/591 is merged which gives support for proto2 extensions, we include a subtree of the spec with extensions with modifications (https://github.com/tokio-rs/prost/issues/100#issuecomment-390266699)
 
 We now check-in the generated code. This avoids downstream consumers having to have "protoc" installed on their system. Another option is to compile protoc from source everytime, using the protobuf-src crate. This works but adds unnecessary compile time.
+
+As a consequence, when adding Transit extensions, they must be committed manually to the `gtfs-spec-no-extensions/gtfs-realtime/proto/gtfs-realtime.proto`. Add the message, and include the new message type as an *optional* in the target parent message. This is because prost doesn not yet support the `extend` syntax.
