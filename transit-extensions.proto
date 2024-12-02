@@ -137,8 +137,22 @@ message TransitModificationExtension {
 
   // Modification to identify that whole modification
   optional string modification_id = 3;
+
+  // Is that modification splitting the service in two, instead of just having a detour
+  // If true, a `secondary_shape_id` should be provided in TransitSelectedTripsExtension
+  optional bool is_splitting_service = 4;
 }
 
 extend transit_realtime.TripModifications.Modification {
   optional TransitModificationExtension transit_modification_extension = 9514;
+}
+
+message TransitSelectedTripsExtension {
+  // Same as shape_id, but should be provided if the shape is different from the original trip
+  // In that case, shape_id is the first part of the trip, and secondary_shape_id is the second part
+  optional string secondary_shape_id = 1;
+}
+
+extend transit_realtime.TripModifications.SelectedTrips {
+  optional TransitSelectedTripsExtension transit_selected_trips_extension = 9514;
 }
