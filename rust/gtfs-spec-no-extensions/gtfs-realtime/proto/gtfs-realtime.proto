@@ -1279,8 +1279,7 @@ message ReplacementStop {
   // modifications to the spec.
   extensions 1000 to 1999;
 
-  // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  optional TransitReplacementStopExtension transit_replacement_stop_extension = 9514;
 }
 
 message TransitModificationExtension {
@@ -1292,15 +1291,16 @@ message TransitModificationExtension {
 
   // Modification to identify that whole modification
   optional string modification_id = 3;
-
-  // This indicates that through travel is prohibited. Riders will be instructed by consuming apps to disembark from the vehicle.
-  // [If replacement_stops are empty] Through travel is prohibited between the start stop selector and end stop selecter
-  // [If replacement_stops are defined] Travel prohibited between the last replacement stop and the end stop selector.
-  optional bool no_through_travel = 4;
-
-  // Because these trips are effectively operating in two or more segments, we need to indicate the shape_id for the next segment of stops.
-  // This shape is asociated with the followig stops:
-  //   - [If this is the only modification with shape_id_after_end_stop defined]: From the stop after the end_stop_selector until the last stop on the scheduled trip
-  //   - [If there are multiple modifications with shape_id_after_end_stop defined]: From the stop after the end_stop_selector until the next modification with shape_id_after_end_stop defined. The shape be associated with all stops until the start_stop_selector, or the last replacement_stop (if defined) in that next modification.  
-  optional string shape_id_after_end_stop = 5;
 }
+
+message TransitReplacementStopExtension {
+  // Indicates that vehicles will not continue travelling. Riders must disembark
+  // from the vehicle.
+  optional bool no_through_travel = 1;
+
+  // If the vehicle is not operating in revenue service beyond this stop, this field
+  // must be populated with a new shape ID for the next segment of stops.bool
+  // Additionally, when populated, this 
+  optional string next_shape_id = 2;
+}
+
