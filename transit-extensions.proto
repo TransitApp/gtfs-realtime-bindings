@@ -149,6 +149,10 @@ message TransitReplacementStopExtension {
   optional string next_shape_id = 2;
 }
 
+message TransitModifiedTripSelector {
+  optional int32 split_service_segment_index = 1;
+}
+
 extend transit_realtime.TripModifications.Modification {
   optional TransitModificationExtension transit_modification_extension = 9514;
 }
@@ -156,3 +160,8 @@ extend transit_realtime.TripModifications.Modification {
 extend transit_realtime.ReplacementStop {
   optional TransitReplacementStopExtension transit_replacement_stop_extension = 9514;
 }
+
+extend transit_realtime.TripDescriptor.ModifiedTripSelector {
+  optional TransitModifiedTripSelector transit_modified_trip_selector_extension = 9514;
+}
+
