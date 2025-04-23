@@ -142,11 +142,11 @@ message TransitModificationExtension {
 message TransitReplacementStopExtension {
   // Indicates that vehicles will not continue travelling. Riders must disembark
   // from the vehicle.
-  optional bool no_through_travel = 1;
+  required bool no_through_travel = 1;
 
   // If the vehicle is not operating in revenue service beyond this stop, this field
   // must be populated with a new shape ID for the next segment of stops.
-  optional string next_shape_id = 2;
+  required string next_shape_id = 2;
 }
 
 message TransitModifiedTripSelector {
