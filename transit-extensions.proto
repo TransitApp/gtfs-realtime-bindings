@@ -137,22 +137,31 @@ message TransitModificationExtension {
 
   // Modification to identify that whole modification
   optional string modification_id = 3;
+}
 
-  // Is that modification splitting the service in two, instead of just having a detour
-  // If true, a `secondary_shape_id` should be provided in TransitSelectedTripsExtension
-  optional bool is_splitting_service = 4;
+message TransitReplacementStopExtension {
+  // Indicates that vehicles will not continue travelling. Riders must disembark
+  // from the vehicle.
+  required bool no_through_travel = 1;
+
+  // If the vehicle is not operating in revenue service beyond this stop, this field
+  // must be populated with a new shape ID for the next segment of stops.
+  required string next_shape_id = 2;
+}
+
+message TransitModifiedTripSelector {
+  optional int32 split_service_segment_index = 1;
 }
 
 extend transit_realtime.TripModifications.Modification {
   optional TransitModificationExtension transit_modification_extension = 9514;
 }
 
-message TransitSelectedTripsExtension {
-  // Same as shape_id, but should be provided if the shape is different from the original trip
-  // In that case, shape_id is the first part of the trip, and secondary_shape_id is the second part
-  optional string secondary_shape_id = 1;
+extend transit_realtime.ReplacementStop {
+  optional TransitReplacementStopExtension transit_replacement_stop_extension = 9514;
 }
 
-extend transit_realtime.TripModifications.SelectedTrips {
-  optional TransitSelectedTripsExtension transit_selected_trips_extension = 9514;
+extend transit_realtime.TripDescriptor.ModifiedTripSelector {
+  optional TransitModifiedTripSelector transit_modified_trip_selector_extension = 9514;
 }
+
