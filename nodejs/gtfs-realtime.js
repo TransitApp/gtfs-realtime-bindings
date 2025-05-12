@@ -1579,6 +1579,436 @@ $root.TransitModificationExtension = (function() {
     return TransitModificationExtension;
 })();
 
+$root.TransitReplacementStopExtension = (function() {
+
+    /**
+     * Properties of a TransitReplacementStopExtension.
+     * @exports ITransitReplacementStopExtension
+     * @interface ITransitReplacementStopExtension
+     * @property {boolean} noThroughTravel TransitReplacementStopExtension noThroughTravel
+     * @property {string} nextShapeId TransitReplacementStopExtension nextShapeId
+     */
+
+    /**
+     * Constructs a new TransitReplacementStopExtension.
+     * @exports TransitReplacementStopExtension
+     * @classdesc Represents a TransitReplacementStopExtension.
+     * @implements ITransitReplacementStopExtension
+     * @constructor
+     * @param {ITransitReplacementStopExtension=} [properties] Properties to set
+     */
+    function TransitReplacementStopExtension(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * TransitReplacementStopExtension noThroughTravel.
+     * @member {boolean} noThroughTravel
+     * @memberof TransitReplacementStopExtension
+     * @instance
+     */
+    TransitReplacementStopExtension.prototype.noThroughTravel = false;
+
+    /**
+     * TransitReplacementStopExtension nextShapeId.
+     * @member {string} nextShapeId
+     * @memberof TransitReplacementStopExtension
+     * @instance
+     */
+    TransitReplacementStopExtension.prototype.nextShapeId = "";
+
+    /**
+     * Creates a new TransitReplacementStopExtension instance using the specified properties.
+     * @function create
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {ITransitReplacementStopExtension=} [properties] Properties to set
+     * @returns {TransitReplacementStopExtension} TransitReplacementStopExtension instance
+     */
+    TransitReplacementStopExtension.create = function create(properties) {
+        return new TransitReplacementStopExtension(properties);
+    };
+
+    /**
+     * Encodes the specified TransitReplacementStopExtension message. Does not implicitly {@link TransitReplacementStopExtension.verify|verify} messages.
+     * @function encode
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {ITransitReplacementStopExtension} message TransitReplacementStopExtension message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    TransitReplacementStopExtension.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        writer.uint32(/* id 1, wireType 0 =*/8).bool(message.noThroughTravel);
+        writer.uint32(/* id 2, wireType 2 =*/18).string(message.nextShapeId);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified TransitReplacementStopExtension message, length delimited. Does not implicitly {@link TransitReplacementStopExtension.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {ITransitReplacementStopExtension} message TransitReplacementStopExtension message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    TransitReplacementStopExtension.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a TransitReplacementStopExtension message from the specified reader or buffer.
+     * @function decode
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {TransitReplacementStopExtension} TransitReplacementStopExtension
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    TransitReplacementStopExtension.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.TransitReplacementStopExtension();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.noThroughTravel = reader.bool();
+                    break;
+                }
+            case 2: {
+                    message.nextShapeId = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        if (!message.hasOwnProperty("noThroughTravel"))
+            throw $util.ProtocolError("missing required 'noThroughTravel'", { instance: message });
+        if (!message.hasOwnProperty("nextShapeId"))
+            throw $util.ProtocolError("missing required 'nextShapeId'", { instance: message });
+        return message;
+    };
+
+    /**
+     * Decodes a TransitReplacementStopExtension message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {TransitReplacementStopExtension} TransitReplacementStopExtension
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    TransitReplacementStopExtension.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a TransitReplacementStopExtension message.
+     * @function verify
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    TransitReplacementStopExtension.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (typeof message.noThroughTravel !== "boolean")
+            return "noThroughTravel: boolean expected";
+        if (!$util.isString(message.nextShapeId))
+            return "nextShapeId: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a TransitReplacementStopExtension message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {TransitReplacementStopExtension} TransitReplacementStopExtension
+     */
+    TransitReplacementStopExtension.fromObject = function fromObject(object) {
+        if (object instanceof $root.TransitReplacementStopExtension)
+            return object;
+        var message = new $root.TransitReplacementStopExtension();
+        if (object.noThroughTravel != null)
+            message.noThroughTravel = Boolean(object.noThroughTravel);
+        if (object.nextShapeId != null)
+            message.nextShapeId = String(object.nextShapeId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a TransitReplacementStopExtension message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {TransitReplacementStopExtension} message TransitReplacementStopExtension
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    TransitReplacementStopExtension.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.noThroughTravel = false;
+            object.nextShapeId = "";
+        }
+        if (message.noThroughTravel != null && message.hasOwnProperty("noThroughTravel"))
+            object.noThroughTravel = message.noThroughTravel;
+        if (message.nextShapeId != null && message.hasOwnProperty("nextShapeId"))
+            object.nextShapeId = message.nextShapeId;
+        return object;
+    };
+
+    /**
+     * Converts this TransitReplacementStopExtension to JSON.
+     * @function toJSON
+     * @memberof TransitReplacementStopExtension
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    TransitReplacementStopExtension.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for TransitReplacementStopExtension
+     * @function getTypeUrl
+     * @memberof TransitReplacementStopExtension
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitReplacementStopExtension.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitReplacementStopExtension";
+    };
+
+    return TransitReplacementStopExtension;
+})();
+
+$root.TransitModifiedTripSelector = (function() {
+
+    /**
+     * Properties of a TransitModifiedTripSelector.
+     * @exports ITransitModifiedTripSelector
+     * @interface ITransitModifiedTripSelector
+     * @property {number|null} [splitServiceSegmentIndex] TransitModifiedTripSelector splitServiceSegmentIndex
+     */
+
+    /**
+     * Constructs a new TransitModifiedTripSelector.
+     * @exports TransitModifiedTripSelector
+     * @classdesc Represents a TransitModifiedTripSelector.
+     * @implements ITransitModifiedTripSelector
+     * @constructor
+     * @param {ITransitModifiedTripSelector=} [properties] Properties to set
+     */
+    function TransitModifiedTripSelector(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * TransitModifiedTripSelector splitServiceSegmentIndex.
+     * @member {number} splitServiceSegmentIndex
+     * @memberof TransitModifiedTripSelector
+     * @instance
+     */
+    TransitModifiedTripSelector.prototype.splitServiceSegmentIndex = 0;
+
+    /**
+     * Creates a new TransitModifiedTripSelector instance using the specified properties.
+     * @function create
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {ITransitModifiedTripSelector=} [properties] Properties to set
+     * @returns {TransitModifiedTripSelector} TransitModifiedTripSelector instance
+     */
+    TransitModifiedTripSelector.create = function create(properties) {
+        return new TransitModifiedTripSelector(properties);
+    };
+
+    /**
+     * Encodes the specified TransitModifiedTripSelector message. Does not implicitly {@link TransitModifiedTripSelector.verify|verify} messages.
+     * @function encode
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {ITransitModifiedTripSelector} message TransitModifiedTripSelector message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    TransitModifiedTripSelector.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.splitServiceSegmentIndex != null && Object.hasOwnProperty.call(message, "splitServiceSegmentIndex"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.splitServiceSegmentIndex);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified TransitModifiedTripSelector message, length delimited. Does not implicitly {@link TransitModifiedTripSelector.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {ITransitModifiedTripSelector} message TransitModifiedTripSelector message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    TransitModifiedTripSelector.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a TransitModifiedTripSelector message from the specified reader or buffer.
+     * @function decode
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {TransitModifiedTripSelector} TransitModifiedTripSelector
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    TransitModifiedTripSelector.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.TransitModifiedTripSelector();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.splitServiceSegmentIndex = reader.int32();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a TransitModifiedTripSelector message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {TransitModifiedTripSelector} TransitModifiedTripSelector
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    TransitModifiedTripSelector.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a TransitModifiedTripSelector message.
+     * @function verify
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    TransitModifiedTripSelector.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.splitServiceSegmentIndex != null && message.hasOwnProperty("splitServiceSegmentIndex"))
+            if (!$util.isInteger(message.splitServiceSegmentIndex))
+                return "splitServiceSegmentIndex: integer expected";
+        return null;
+    };
+
+    /**
+     * Creates a TransitModifiedTripSelector message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {TransitModifiedTripSelector} TransitModifiedTripSelector
+     */
+    TransitModifiedTripSelector.fromObject = function fromObject(object) {
+        if (object instanceof $root.TransitModifiedTripSelector)
+            return object;
+        var message = new $root.TransitModifiedTripSelector();
+        if (object.splitServiceSegmentIndex != null)
+            message.splitServiceSegmentIndex = object.splitServiceSegmentIndex | 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a TransitModifiedTripSelector message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {TransitModifiedTripSelector} message TransitModifiedTripSelector
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    TransitModifiedTripSelector.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.splitServiceSegmentIndex = 0;
+        if (message.splitServiceSegmentIndex != null && message.hasOwnProperty("splitServiceSegmentIndex"))
+            object.splitServiceSegmentIndex = message.splitServiceSegmentIndex;
+        return object;
+    };
+
+    /**
+     * Converts this TransitModifiedTripSelector to JSON.
+     * @function toJSON
+     * @memberof TransitModifiedTripSelector
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    TransitModifiedTripSelector.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for TransitModifiedTripSelector
+     * @function getTypeUrl
+     * @memberof TransitModifiedTripSelector
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    TransitModifiedTripSelector.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/TransitModifiedTripSelector";
+    };
+
+    return TransitModifiedTripSelector;
+})();
+
 $root.transit_realtime = (function() {
 
     /**
@@ -1851,6 +2281,7 @@ $root.transit_realtime = (function() {
          * @property {string} gtfsRealtimeVersion FeedHeader gtfsRealtimeVersion
          * @property {transit_realtime.FeedHeader.Incrementality|null} [incrementality] FeedHeader incrementality
          * @property {number|Long|null} [timestamp] FeedHeader timestamp
+         * @property {string|null} [feedVersion] FeedHeader feedVersion
          * @property {INyctFeedHeader|null} [".nyctFeedHeader"] FeedHeader .nyctFeedHeader
          */
 
@@ -1894,6 +2325,14 @@ $root.transit_realtime = (function() {
         FeedHeader.prototype.timestamp = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
+         * FeedHeader feedVersion.
+         * @member {string} feedVersion
+         * @memberof transit_realtime.FeedHeader
+         * @instance
+         */
+        FeedHeader.prototype.feedVersion = "";
+
+        /**
          * FeedHeader .nyctFeedHeader.
          * @member {INyctFeedHeader|null|undefined} .nyctFeedHeader
          * @memberof transit_realtime.FeedHeader
@@ -1930,6 +2369,8 @@ $root.transit_realtime = (function() {
                 writer.uint32(/* id 2, wireType 0 =*/16).int32(message.incrementality);
             if (message.timestamp != null && Object.hasOwnProperty.call(message, "timestamp"))
                 writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.timestamp);
+            if (message.feedVersion != null && Object.hasOwnProperty.call(message, "feedVersion"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.feedVersion);
             if (message[".nyctFeedHeader"] != null && Object.hasOwnProperty.call(message, ".nyctFeedHeader"))
                 $root.NyctFeedHeader.encode(message[".nyctFeedHeader"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
             return writer;
@@ -1976,6 +2417,10 @@ $root.transit_realtime = (function() {
                     }
                 case 3: {
                         message.timestamp = reader.uint64();
+                        break;
+                    }
+                case 4: {
+                        message.feedVersion = reader.string();
                         break;
                     }
                 case 1001: {
@@ -2032,6 +2477,9 @@ $root.transit_realtime = (function() {
             if (message.timestamp != null && message.hasOwnProperty("timestamp"))
                 if (!$util.isInteger(message.timestamp) && !(message.timestamp && $util.isInteger(message.timestamp.low) && $util.isInteger(message.timestamp.high)))
                     return "timestamp: integer|Long expected";
+            if (message.feedVersion != null && message.hasOwnProperty("feedVersion"))
+                if (!$util.isString(message.feedVersion))
+                    return "feedVersion: string expected";
             if (message[".nyctFeedHeader"] != null && message.hasOwnProperty(".nyctFeedHeader")) {
                 var error = $root.NyctFeedHeader.verify(message[".nyctFeedHeader"]);
                 if (error)
@@ -2079,6 +2527,8 @@ $root.transit_realtime = (function() {
                     message.timestamp = object.timestamp;
                 else if (typeof object.timestamp === "object")
                     message.timestamp = new $util.LongBits(object.timestamp.low >>> 0, object.timestamp.high >>> 0).toNumber(true);
+            if (object.feedVersion != null)
+                message.feedVersion = String(object.feedVersion);
             if (object[".nyctFeedHeader"] != null) {
                 if (typeof object[".nyctFeedHeader"] !== "object")
                     throw TypeError(".transit_realtime.FeedHeader..nyctFeedHeader: object expected");
@@ -2108,6 +2558,7 @@ $root.transit_realtime = (function() {
                     object.timestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.timestamp = options.longs === String ? "0" : 0;
+                object.feedVersion = "";
                 object[".nyctFeedHeader"] = null;
             }
             if (message.gtfsRealtimeVersion != null && message.hasOwnProperty("gtfsRealtimeVersion"))
@@ -2119,6 +2570,8 @@ $root.transit_realtime = (function() {
                     object.timestamp = options.longs === String ? String(message.timestamp) : message.timestamp;
                 else
                     object.timestamp = options.longs === String ? $util.Long.prototype.toString.call(message.timestamp) : options.longs === Number ? new $util.LongBits(message.timestamp.low >>> 0, message.timestamp.high >>> 0).toNumber(true) : message.timestamp;
+            if (message.feedVersion != null && message.hasOwnProperty("feedVersion"))
+                object.feedVersion = message.feedVersion;
             if (message[".nyctFeedHeader"] != null && message.hasOwnProperty(".nyctFeedHeader"))
                 object[".nyctFeedHeader"] = $root.NyctFeedHeader.toObject(message[".nyctFeedHeader"], options);
             return object;
@@ -7119,6 +7572,9 @@ $root.transit_realtime = (function() {
              * @interface IModifiedTripSelector
              * @property {string|null} [modificationsId] ModifiedTripSelector modificationsId
              * @property {string|null} [affectedTripId] ModifiedTripSelector affectedTripId
+             * @property {string|null} [startTime] ModifiedTripSelector startTime
+             * @property {string|null} [startDate] ModifiedTripSelector startDate
+             * @property {ITransitModifiedTripSelector|null} [".transitModifiedTripSelectorExtension"] ModifiedTripSelector .transitModifiedTripSelectorExtension
              */
 
             /**
@@ -7153,6 +7609,30 @@ $root.transit_realtime = (function() {
             ModifiedTripSelector.prototype.affectedTripId = "";
 
             /**
+             * ModifiedTripSelector startTime.
+             * @member {string} startTime
+             * @memberof transit_realtime.TripDescriptor.ModifiedTripSelector
+             * @instance
+             */
+            ModifiedTripSelector.prototype.startTime = "";
+
+            /**
+             * ModifiedTripSelector startDate.
+             * @member {string} startDate
+             * @memberof transit_realtime.TripDescriptor.ModifiedTripSelector
+             * @instance
+             */
+            ModifiedTripSelector.prototype.startDate = "";
+
+            /**
+             * ModifiedTripSelector .transitModifiedTripSelectorExtension.
+             * @member {ITransitModifiedTripSelector|null|undefined} .transitModifiedTripSelectorExtension
+             * @memberof transit_realtime.TripDescriptor.ModifiedTripSelector
+             * @instance
+             */
+            ModifiedTripSelector.prototype[".transitModifiedTripSelectorExtension"] = null;
+
+            /**
              * Creates a new ModifiedTripSelector instance using the specified properties.
              * @function create
              * @memberof transit_realtime.TripDescriptor.ModifiedTripSelector
@@ -7180,6 +7660,12 @@ $root.transit_realtime = (function() {
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.modificationsId);
                 if (message.affectedTripId != null && Object.hasOwnProperty.call(message, "affectedTripId"))
                     writer.uint32(/* id 2, wireType 2 =*/18).string(message.affectedTripId);
+                if (message.startTime != null && Object.hasOwnProperty.call(message, "startTime"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.startTime);
+                if (message.startDate != null && Object.hasOwnProperty.call(message, "startDate"))
+                    writer.uint32(/* id 4, wireType 2 =*/34).string(message.startDate);
+                if (message[".transitModifiedTripSelectorExtension"] != null && Object.hasOwnProperty.call(message, ".transitModifiedTripSelectorExtension"))
+                    $root.TransitModifiedTripSelector.encode(message[".transitModifiedTripSelectorExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
                 return writer;
             };
 
@@ -7220,6 +7706,18 @@ $root.transit_realtime = (function() {
                         }
                     case 2: {
                             message.affectedTripId = reader.string();
+                            break;
+                        }
+                    case 3: {
+                            message.startTime = reader.string();
+                            break;
+                        }
+                    case 4: {
+                            message.startDate = reader.string();
+                            break;
+                        }
+                    case 9514: {
+                            message[".transitModifiedTripSelectorExtension"] = $root.TransitModifiedTripSelector.decode(reader, reader.uint32());
                             break;
                         }
                     default:
@@ -7263,6 +7761,17 @@ $root.transit_realtime = (function() {
                 if (message.affectedTripId != null && message.hasOwnProperty("affectedTripId"))
                     if (!$util.isString(message.affectedTripId))
                         return "affectedTripId: string expected";
+                if (message.startTime != null && message.hasOwnProperty("startTime"))
+                    if (!$util.isString(message.startTime))
+                        return "startTime: string expected";
+                if (message.startDate != null && message.hasOwnProperty("startDate"))
+                    if (!$util.isString(message.startDate))
+                        return "startDate: string expected";
+                if (message[".transitModifiedTripSelectorExtension"] != null && message.hasOwnProperty(".transitModifiedTripSelectorExtension")) {
+                    var error = $root.TransitModifiedTripSelector.verify(message[".transitModifiedTripSelectorExtension"]);
+                    if (error)
+                        return ".transitModifiedTripSelectorExtension." + error;
+                }
                 return null;
             };
 
@@ -7282,6 +7791,15 @@ $root.transit_realtime = (function() {
                     message.modificationsId = String(object.modificationsId);
                 if (object.affectedTripId != null)
                     message.affectedTripId = String(object.affectedTripId);
+                if (object.startTime != null)
+                    message.startTime = String(object.startTime);
+                if (object.startDate != null)
+                    message.startDate = String(object.startDate);
+                if (object[".transitModifiedTripSelectorExtension"] != null) {
+                    if (typeof object[".transitModifiedTripSelectorExtension"] !== "object")
+                        throw TypeError(".transit_realtime.TripDescriptor.ModifiedTripSelector..transitModifiedTripSelectorExtension: object expected");
+                    message[".transitModifiedTripSelectorExtension"] = $root.TransitModifiedTripSelector.fromObject(object[".transitModifiedTripSelectorExtension"]);
+                }
                 return message;
             };
 
@@ -7301,11 +7819,20 @@ $root.transit_realtime = (function() {
                 if (options.defaults) {
                     object.modificationsId = "";
                     object.affectedTripId = "";
+                    object.startTime = "";
+                    object.startDate = "";
+                    object[".transitModifiedTripSelectorExtension"] = null;
                 }
                 if (message.modificationsId != null && message.hasOwnProperty("modificationsId"))
                     object.modificationsId = message.modificationsId;
                 if (message.affectedTripId != null && message.hasOwnProperty("affectedTripId"))
                     object.affectedTripId = message.affectedTripId;
+                if (message.startTime != null && message.hasOwnProperty("startTime"))
+                    object.startTime = message.startTime;
+                if (message.startDate != null && message.hasOwnProperty("startDate"))
+                    object.startDate = message.startDate;
+                if (message[".transitModifiedTripSelectorExtension"] != null && message.hasOwnProperty(".transitModifiedTripSelectorExtension"))
+                    object[".transitModifiedTripSelectorExtension"] = $root.TransitModifiedTripSelector.toObject(message[".transitModifiedTripSelectorExtension"], options);
                 return object;
             };
 
@@ -11040,6 +11567,7 @@ $root.transit_realtime = (function() {
          * @interface IReplacementStop
          * @property {number|null} [travelTimeToStop] ReplacementStop travelTimeToStop
          * @property {string|null} [stopId] ReplacementStop stopId
+         * @property {ITransitReplacementStopExtension|null} [".transitReplacementStopExtension"] ReplacementStop .transitReplacementStopExtension
          */
 
         /**
@@ -11074,6 +11602,14 @@ $root.transit_realtime = (function() {
         ReplacementStop.prototype.stopId = "";
 
         /**
+         * ReplacementStop .transitReplacementStopExtension.
+         * @member {ITransitReplacementStopExtension|null|undefined} .transitReplacementStopExtension
+         * @memberof transit_realtime.ReplacementStop
+         * @instance
+         */
+        ReplacementStop.prototype[".transitReplacementStopExtension"] = null;
+
+        /**
          * Creates a new ReplacementStop instance using the specified properties.
          * @function create
          * @memberof transit_realtime.ReplacementStop
@@ -11101,6 +11637,8 @@ $root.transit_realtime = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.travelTimeToStop);
             if (message.stopId != null && Object.hasOwnProperty.call(message, "stopId"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.stopId);
+            if (message[".transitReplacementStopExtension"] != null && Object.hasOwnProperty.call(message, ".transitReplacementStopExtension"))
+                $root.TransitReplacementStopExtension.encode(message[".transitReplacementStopExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
             return writer;
         };
 
@@ -11141,6 +11679,10 @@ $root.transit_realtime = (function() {
                     }
                 case 2: {
                         message.stopId = reader.string();
+                        break;
+                    }
+                case 9514: {
+                        message[".transitReplacementStopExtension"] = $root.TransitReplacementStopExtension.decode(reader, reader.uint32());
                         break;
                     }
                 default:
@@ -11184,6 +11726,11 @@ $root.transit_realtime = (function() {
             if (message.stopId != null && message.hasOwnProperty("stopId"))
                 if (!$util.isString(message.stopId))
                     return "stopId: string expected";
+            if (message[".transitReplacementStopExtension"] != null && message.hasOwnProperty(".transitReplacementStopExtension")) {
+                var error = $root.TransitReplacementStopExtension.verify(message[".transitReplacementStopExtension"]);
+                if (error)
+                    return ".transitReplacementStopExtension." + error;
+            }
             return null;
         };
 
@@ -11203,6 +11750,11 @@ $root.transit_realtime = (function() {
                 message.travelTimeToStop = object.travelTimeToStop | 0;
             if (object.stopId != null)
                 message.stopId = String(object.stopId);
+            if (object[".transitReplacementStopExtension"] != null) {
+                if (typeof object[".transitReplacementStopExtension"] !== "object")
+                    throw TypeError(".transit_realtime.ReplacementStop..transitReplacementStopExtension: object expected");
+                message[".transitReplacementStopExtension"] = $root.TransitReplacementStopExtension.fromObject(object[".transitReplacementStopExtension"]);
+            }
             return message;
         };
 
@@ -11222,11 +11774,14 @@ $root.transit_realtime = (function() {
             if (options.defaults) {
                 object.travelTimeToStop = 0;
                 object.stopId = "";
+                object[".transitReplacementStopExtension"] = null;
             }
             if (message.travelTimeToStop != null && message.hasOwnProperty("travelTimeToStop"))
                 object.travelTimeToStop = message.travelTimeToStop;
             if (message.stopId != null && message.hasOwnProperty("stopId"))
                 object.stopId = message.stopId;
+            if (message[".transitReplacementStopExtension"] != null && message.hasOwnProperty(".transitReplacementStopExtension"))
+                object[".transitReplacementStopExtension"] = $root.TransitReplacementStopExtension.toObject(message[".transitReplacementStopExtension"], options);
             return object;
         };
 
