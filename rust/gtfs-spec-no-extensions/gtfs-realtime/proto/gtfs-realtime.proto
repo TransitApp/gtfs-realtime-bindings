@@ -1279,8 +1279,7 @@ message ReplacementStop {
   // modifications to the spec.
   extensions 1000 to 1999;
 
-  // The following extension IDs are reserved for private use by any organization.
-  extensions 9000 to 9999;
+  optional TransitReplacementStopExtension transit_replacement_stop_extension = 9514;
 }
 
 message TransitModificationExtension {
@@ -1293,3 +1292,10 @@ message TransitModificationExtension {
   // Modification to identify that whole modification
   optional string modification_id = 3;
 }
+
+message TransitReplacementStopExtension {
+  // See `transit-extensions.proto`
+  optional bool no_through_travel = 1;
+  optional string next_shape_id = 2;
+}
+
