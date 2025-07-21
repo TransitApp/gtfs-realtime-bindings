@@ -1045,6 +1045,9 @@ impl serde::Serialize for FeedHeader {
         if self.timestamp.is_some() {
             len += 1;
         }
+        if self.nyct_feed_header.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("transit_realtime.FeedHeader", len)?;
         struct_ser.serialize_field("gtfsRealtimeVersion", &self.gtfs_realtime_version)?;
         if let Some(v) = self.incrementality.as_ref() {
@@ -1055,6 +1058,9 @@ impl serde::Serialize for FeedHeader {
         if let Some(v) = self.timestamp.as_ref() {
             #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("timestamp", ToString::to_string(&v).as_str())?;
+        }
+        if let Some(v) = self.nyct_feed_header.as_ref() {
+            struct_ser.serialize_field("nyctFeedHeader", v)?;
         }
         struct_ser.end()
     }
@@ -1070,6 +1076,8 @@ impl<'de> serde::Deserialize<'de> for FeedHeader {
             "gtfsRealtimeVersion",
             "incrementality",
             "timestamp",
+            "nyct_feed_header",
+            "nyctFeedHeader",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1077,6 +1085,7 @@ impl<'de> serde::Deserialize<'de> for FeedHeader {
             GtfsRealtimeVersion,
             Incrementality,
             Timestamp,
+            NyctFeedHeader,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -1101,6 +1110,7 @@ impl<'de> serde::Deserialize<'de> for FeedHeader {
                             "gtfsRealtimeVersion" | "gtfs_realtime_version" => Ok(GeneratedField::GtfsRealtimeVersion),
                             "incrementality" => Ok(GeneratedField::Incrementality),
                             "timestamp" => Ok(GeneratedField::Timestamp),
+                            "nyctFeedHeader" | "nyct_feed_header" => Ok(GeneratedField::NyctFeedHeader),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1123,6 +1133,7 @@ impl<'de> serde::Deserialize<'de> for FeedHeader {
                 let mut gtfs_realtime_version__ = None;
                 let mut incrementality__ = None;
                 let mut timestamp__ = None;
+                let mut nyct_feed_header__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GtfsRealtimeVersion => {
@@ -1145,12 +1156,19 @@ impl<'de> serde::Deserialize<'de> for FeedHeader {
                                 map_.next_value::<::std::option::Option<::pbjson::private::NumberDeserialize<_>>>()?.map(|x| x.0)
                             ;
                         }
+                        GeneratedField::NyctFeedHeader => {
+                            if nyct_feed_header__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nyctFeedHeader"));
+                            }
+                            nyct_feed_header__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(FeedHeader {
                     gtfs_realtime_version: gtfs_realtime_version__.ok_or_else(|| serde::de::Error::missing_field("gtfsRealtimeVersion"))?,
                     incrementality: incrementality__,
                     timestamp: timestamp__,
+                    nyct_feed_header: nyct_feed_header__,
                 })
             }
         }
@@ -1331,6 +1349,427 @@ impl<'de> serde::Deserialize<'de> for FeedMessage {
         deserializer.deserialize_struct("transit_realtime.FeedMessage", FIELDS, GeneratedVisitor)
     }
 }
+impl serde::Serialize for NyctFeedHeader {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 1;
+        if !self.trip_replacement_period.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("transit_realtime.NyctFeedHeader", len)?;
+        struct_ser.serialize_field("nyctSubwayVersion", &self.nyct_subway_version)?;
+        if !self.trip_replacement_period.is_empty() {
+            struct_ser.serialize_field("tripReplacementPeriod", &self.trip_replacement_period)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for NyctFeedHeader {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "nyct_subway_version",
+            "nyctSubwayVersion",
+            "trip_replacement_period",
+            "tripReplacementPeriod",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            NyctSubwayVersion,
+            TripReplacementPeriod,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "nyctSubwayVersion" | "nyct_subway_version" => Ok(GeneratedField::NyctSubwayVersion),
+                            "tripReplacementPeriod" | "trip_replacement_period" => Ok(GeneratedField::TripReplacementPeriod),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = NyctFeedHeader;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct transit_realtime.NyctFeedHeader")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<NyctFeedHeader, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut nyct_subway_version__ = None;
+                let mut trip_replacement_period__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::NyctSubwayVersion => {
+                            if nyct_subway_version__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nyctSubwayVersion"));
+                            }
+                            nyct_subway_version__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::TripReplacementPeriod => {
+                            if trip_replacement_period__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("tripReplacementPeriod"));
+                            }
+                            trip_replacement_period__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(NyctFeedHeader {
+                    nyct_subway_version: nyct_subway_version__.ok_or_else(|| serde::de::Error::missing_field("nyctSubwayVersion"))?,
+                    trip_replacement_period: trip_replacement_period__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("transit_realtime.NyctFeedHeader", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for NyctStopTimeUpdate {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.scheduled_track.is_some() {
+            len += 1;
+        }
+        if self.actual_track.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("transit_realtime.NyctStopTimeUpdate", len)?;
+        if let Some(v) = self.scheduled_track.as_ref() {
+            struct_ser.serialize_field("scheduledTrack", v)?;
+        }
+        if let Some(v) = self.actual_track.as_ref() {
+            struct_ser.serialize_field("actualTrack", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for NyctStopTimeUpdate {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "scheduled_track",
+            "scheduledTrack",
+            "actual_track",
+            "actualTrack",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            ScheduledTrack,
+            ActualTrack,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "scheduledTrack" | "scheduled_track" => Ok(GeneratedField::ScheduledTrack),
+                            "actualTrack" | "actual_track" => Ok(GeneratedField::ActualTrack),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = NyctStopTimeUpdate;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct transit_realtime.NyctStopTimeUpdate")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<NyctStopTimeUpdate, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut scheduled_track__ = None;
+                let mut actual_track__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::ScheduledTrack => {
+                            if scheduled_track__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("scheduledTrack"));
+                            }
+                            scheduled_track__ = map_.next_value()?;
+                        }
+                        GeneratedField::ActualTrack => {
+                            if actual_track__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("actualTrack"));
+                            }
+                            actual_track__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(NyctStopTimeUpdate {
+                    scheduled_track: scheduled_track__,
+                    actual_track: actual_track__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("transit_realtime.NyctStopTimeUpdate", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for NyctTripDescriptor {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.train_id.is_some() {
+            len += 1;
+        }
+        if self.is_assigned.is_some() {
+            len += 1;
+        }
+        if self.direction.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("transit_realtime.NyctTripDescriptor", len)?;
+        if let Some(v) = self.train_id.as_ref() {
+            struct_ser.serialize_field("trainId", v)?;
+        }
+        if let Some(v) = self.is_assigned.as_ref() {
+            struct_ser.serialize_field("isAssigned", v)?;
+        }
+        if let Some(v) = self.direction.as_ref() {
+            let v = nyct_trip_descriptor::Direction::try_from(*v)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", *v)))?;
+            struct_ser.serialize_field("direction", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for NyctTripDescriptor {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "train_id",
+            "trainId",
+            "is_assigned",
+            "isAssigned",
+            "direction",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            TrainId,
+            IsAssigned,
+            Direction,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "trainId" | "train_id" => Ok(GeneratedField::TrainId),
+                            "isAssigned" | "is_assigned" => Ok(GeneratedField::IsAssigned),
+                            "direction" => Ok(GeneratedField::Direction),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = NyctTripDescriptor;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct transit_realtime.NyctTripDescriptor")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<NyctTripDescriptor, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut train_id__ = None;
+                let mut is_assigned__ = None;
+                let mut direction__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::TrainId => {
+                            if train_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("trainId"));
+                            }
+                            train_id__ = map_.next_value()?;
+                        }
+                        GeneratedField::IsAssigned => {
+                            if is_assigned__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("isAssigned"));
+                            }
+                            is_assigned__ = map_.next_value()?;
+                        }
+                        GeneratedField::Direction => {
+                            if direction__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("direction"));
+                            }
+                            direction__ = map_.next_value::<::std::option::Option<nyct_trip_descriptor::Direction>>()?.map(|x| x as i32);
+                        }
+                    }
+                }
+                Ok(NyctTripDescriptor {
+                    train_id: train_id__,
+                    is_assigned: is_assigned__,
+                    direction: direction__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("transit_realtime.NyctTripDescriptor", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for nyct_trip_descriptor::Direction {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let variant = match self {
+            Self::North => "NORTH",
+            Self::East => "EAST",
+            Self::South => "SOUTH",
+            Self::West => "WEST",
+        };
+        serializer.serialize_str(variant)
+    }
+}
+impl<'de> serde::Deserialize<'de> for nyct_trip_descriptor::Direction {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "NORTH",
+            "EAST",
+            "SOUTH",
+            "WEST",
+        ];
+
+        struct GeneratedVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = nyct_trip_descriptor::Direction;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "expected one of: {:?}", &FIELDS)
+            }
+
+            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
+                    })
+            }
+
+            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
+                    })
+            }
+
+            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                match value {
+                    "NORTH" => Ok(nyct_trip_descriptor::Direction::North),
+                    "EAST" => Ok(nyct_trip_descriptor::Direction::East),
+                    "SOUTH" => Ok(nyct_trip_descriptor::Direction::South),
+                    "WEST" => Ok(nyct_trip_descriptor::Direction::West),
+                    _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
+                }
+            }
+        }
+        deserializer.deserialize_any(GeneratedVisitor)
+    }
+}
 impl serde::Serialize for Position {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1504,12 +1943,18 @@ impl serde::Serialize for ReplacementStop {
         if self.stop_id.is_some() {
             len += 1;
         }
+        if self.transit_replacement_stop_extension.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("transit_realtime.ReplacementStop", len)?;
         if let Some(v) = self.travel_time_to_stop.as_ref() {
             struct_ser.serialize_field("travelTimeToStop", v)?;
         }
         if let Some(v) = self.stop_id.as_ref() {
             struct_ser.serialize_field("stopId", v)?;
+        }
+        if let Some(v) = self.transit_replacement_stop_extension.as_ref() {
+            struct_ser.serialize_field("transitReplacementStopExtension", v)?;
         }
         struct_ser.end()
     }
@@ -1525,12 +1970,15 @@ impl<'de> serde::Deserialize<'de> for ReplacementStop {
             "travelTimeToStop",
             "stop_id",
             "stopId",
+            "transit_replacement_stop_extension",
+            "transitReplacementStopExtension",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             TravelTimeToStop,
             StopId,
+            TransitReplacementStopExtension,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -1554,6 +2002,7 @@ impl<'de> serde::Deserialize<'de> for ReplacementStop {
                         match value {
                             "travelTimeToStop" | "travel_time_to_stop" => Ok(GeneratedField::TravelTimeToStop),
                             "stopId" | "stop_id" => Ok(GeneratedField::StopId),
+                            "transitReplacementStopExtension" | "transit_replacement_stop_extension" => Ok(GeneratedField::TransitReplacementStopExtension),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1575,6 +2024,7 @@ impl<'de> serde::Deserialize<'de> for ReplacementStop {
             {
                 let mut travel_time_to_stop__ = None;
                 let mut stop_id__ = None;
+                let mut transit_replacement_stop_extension__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::TravelTimeToStop => {
@@ -1591,11 +2041,18 @@ impl<'de> serde::Deserialize<'de> for ReplacementStop {
                             }
                             stop_id__ = map_.next_value()?;
                         }
+                        GeneratedField::TransitReplacementStopExtension => {
+                            if transit_replacement_stop_extension__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("transitReplacementStopExtension"));
+                            }
+                            transit_replacement_stop_extension__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(ReplacementStop {
                     travel_time_to_stop: travel_time_to_stop__,
                     stop_id: stop_id__,
+                    transit_replacement_stop_extension: transit_replacement_stop_extension__,
                 })
             }
         }
@@ -2847,6 +3304,116 @@ impl<'de> serde::Deserialize<'de> for TransitModificationExtension {
         deserializer.deserialize_struct("transit_realtime.TransitModificationExtension", FIELDS, GeneratedVisitor)
     }
 }
+impl serde::Serialize for TransitReplacementStopExtension {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.no_through_travel.is_some() {
+            len += 1;
+        }
+        if self.next_shape_id.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("transit_realtime.TransitReplacementStopExtension", len)?;
+        if let Some(v) = self.no_through_travel.as_ref() {
+            struct_ser.serialize_field("noThroughTravel", v)?;
+        }
+        if let Some(v) = self.next_shape_id.as_ref() {
+            struct_ser.serialize_field("nextShapeId", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for TransitReplacementStopExtension {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "no_through_travel",
+            "noThroughTravel",
+            "next_shape_id",
+            "nextShapeId",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            NoThroughTravel,
+            NextShapeId,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "noThroughTravel" | "no_through_travel" => Ok(GeneratedField::NoThroughTravel),
+                            "nextShapeId" | "next_shape_id" => Ok(GeneratedField::NextShapeId),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = TransitReplacementStopExtension;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct transit_realtime.TransitReplacementStopExtension")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<TransitReplacementStopExtension, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut no_through_travel__ = None;
+                let mut next_shape_id__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::NoThroughTravel => {
+                            if no_through_travel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("noThroughTravel"));
+                            }
+                            no_through_travel__ = map_.next_value()?;
+                        }
+                        GeneratedField::NextShapeId => {
+                            if next_shape_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nextShapeId"));
+                            }
+                            next_shape_id__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(TransitReplacementStopExtension {
+                    no_through_travel: no_through_travel__,
+                    next_shape_id: next_shape_id__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("transit_realtime.TransitReplacementStopExtension", FIELDS, GeneratedVisitor)
+    }
+}
 impl serde::Serialize for TransitTripDescriptorExtension {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -3577,6 +4144,9 @@ impl serde::Serialize for TripDescriptor {
         if self.transit_trip_descriptor_extension.is_some() {
             len += 1;
         }
+        if self.nyct_trip_descriptor.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("transit_realtime.TripDescriptor", len)?;
         if let Some(v) = self.trip_id.as_ref() {
             struct_ser.serialize_field("tripId", v)?;
@@ -3604,6 +4174,9 @@ impl serde::Serialize for TripDescriptor {
         if let Some(v) = self.transit_trip_descriptor_extension.as_ref() {
             struct_ser.serialize_field("transitTripDescriptorExtension", v)?;
         }
+        if let Some(v) = self.nyct_trip_descriptor.as_ref() {
+            struct_ser.serialize_field("nyctTripDescriptor", v)?;
+        }
         struct_ser.end()
     }
 }
@@ -3630,6 +4203,8 @@ impl<'de> serde::Deserialize<'de> for TripDescriptor {
             "modifiedTrip",
             "transit_trip_descriptor_extension",
             "transitTripDescriptorExtension",
+            "nyct_trip_descriptor",
+            "nyctTripDescriptor",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -3642,6 +4217,7 @@ impl<'de> serde::Deserialize<'de> for TripDescriptor {
             ScheduleRelationship,
             ModifiedTrip,
             TransitTripDescriptorExtension,
+            NyctTripDescriptor,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -3671,6 +4247,7 @@ impl<'de> serde::Deserialize<'de> for TripDescriptor {
                             "scheduleRelationship" | "schedule_relationship" => Ok(GeneratedField::ScheduleRelationship),
                             "modifiedTrip" | "modified_trip" => Ok(GeneratedField::ModifiedTrip),
                             "transitTripDescriptorExtension" | "transit_trip_descriptor_extension" => Ok(GeneratedField::TransitTripDescriptorExtension),
+                            "nyctTripDescriptor" | "nyct_trip_descriptor" => Ok(GeneratedField::NyctTripDescriptor),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3698,6 +4275,7 @@ impl<'de> serde::Deserialize<'de> for TripDescriptor {
                 let mut schedule_relationship__ = None;
                 let mut modified_trip__ = None;
                 let mut transit_trip_descriptor_extension__ = None;
+                let mut nyct_trip_descriptor__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::TripId => {
@@ -3750,6 +4328,12 @@ impl<'de> serde::Deserialize<'de> for TripDescriptor {
                             }
                             transit_trip_descriptor_extension__ = map_.next_value()?;
                         }
+                        GeneratedField::NyctTripDescriptor => {
+                            if nyct_trip_descriptor__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nyctTripDescriptor"));
+                            }
+                            nyct_trip_descriptor__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(TripDescriptor {
@@ -3761,6 +4345,7 @@ impl<'de> serde::Deserialize<'de> for TripDescriptor {
                     schedule_relationship: schedule_relationship__,
                     modified_trip: modified_trip__,
                     transit_trip_descriptor_extension: transit_trip_descriptor_extension__,
+                    nyct_trip_descriptor: nyct_trip_descriptor__,
                 })
             }
         }
@@ -4423,6 +5008,116 @@ impl<'de> serde::Deserialize<'de> for trip_modifications::SelectedTrips {
         deserializer.deserialize_struct("transit_realtime.TripModifications.SelectedTrips", FIELDS, GeneratedVisitor)
     }
 }
+impl serde::Serialize for TripReplacementPeriod {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.route_id.is_some() {
+            len += 1;
+        }
+        if self.replacement_period.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("transit_realtime.TripReplacementPeriod", len)?;
+        if let Some(v) = self.route_id.as_ref() {
+            struct_ser.serialize_field("routeId", v)?;
+        }
+        if let Some(v) = self.replacement_period.as_ref() {
+            struct_ser.serialize_field("replacementPeriod", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for TripReplacementPeriod {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "route_id",
+            "routeId",
+            "replacement_period",
+            "replacementPeriod",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            RouteId,
+            ReplacementPeriod,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "routeId" | "route_id" => Ok(GeneratedField::RouteId),
+                            "replacementPeriod" | "replacement_period" => Ok(GeneratedField::ReplacementPeriod),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = TripReplacementPeriod;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct transit_realtime.TripReplacementPeriod")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<TripReplacementPeriod, V::Error>
+                where
+                    V: serde::de::MapAccess<'de>,
+            {
+                let mut route_id__ = None;
+                let mut replacement_period__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::RouteId => {
+                            if route_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("routeId"));
+                            }
+                            route_id__ = map_.next_value()?;
+                        }
+                        GeneratedField::ReplacementPeriod => {
+                            if replacement_period__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("replacementPeriod"));
+                            }
+                            replacement_period__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(TripReplacementPeriod {
+                    route_id: route_id__,
+                    replacement_period: replacement_period__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("transit_realtime.TripReplacementPeriod", FIELDS, GeneratedVisitor)
+    }
+}
 impl serde::Serialize for TripUpdate {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -4765,6 +5460,9 @@ impl serde::Serialize for trip_update::StopTimeUpdate {
         if self.transit_stop_time_update_extension.is_some() {
             len += 1;
         }
+        if self.nyct_stop_time_update.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("transit_realtime.TripUpdate.StopTimeUpdate", len)?;
         if let Some(v) = self.stop_sequence.as_ref() {
             struct_ser.serialize_field("stopSequence", v)?;
@@ -4794,6 +5492,9 @@ impl serde::Serialize for trip_update::StopTimeUpdate {
         if let Some(v) = self.transit_stop_time_update_extension.as_ref() {
             struct_ser.serialize_field("transitStopTimeUpdateExtension", v)?;
         }
+        if let Some(v) = self.nyct_stop_time_update.as_ref() {
+            struct_ser.serialize_field("nyctStopTimeUpdate", v)?;
+        }
         struct_ser.end()
     }
 }
@@ -4818,6 +5519,8 @@ impl<'de> serde::Deserialize<'de> for trip_update::StopTimeUpdate {
             "stopTimeProperties",
             "transit_stop_time_update_extension",
             "transitStopTimeUpdateExtension",
+            "nyct_stop_time_update",
+            "nyctStopTimeUpdate",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -4830,6 +5533,7 @@ impl<'de> serde::Deserialize<'de> for trip_update::StopTimeUpdate {
             ScheduleRelationship,
             StopTimeProperties,
             TransitStopTimeUpdateExtension,
+            NyctStopTimeUpdate,
         }
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
@@ -4859,6 +5563,7 @@ impl<'de> serde::Deserialize<'de> for trip_update::StopTimeUpdate {
                             "scheduleRelationship" | "schedule_relationship" => Ok(GeneratedField::ScheduleRelationship),
                             "stopTimeProperties" | "stop_time_properties" => Ok(GeneratedField::StopTimeProperties),
                             "transitStopTimeUpdateExtension" | "transit_stop_time_update_extension" => Ok(GeneratedField::TransitStopTimeUpdateExtension),
+                            "nyctStopTimeUpdate" | "nyct_stop_time_update" => Ok(GeneratedField::NyctStopTimeUpdate),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -4886,6 +5591,7 @@ impl<'de> serde::Deserialize<'de> for trip_update::StopTimeUpdate {
                 let mut schedule_relationship__ = None;
                 let mut stop_time_properties__ = None;
                 let mut transit_stop_time_update_extension__ = None;
+                let mut nyct_stop_time_update__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::StopSequence => {
@@ -4938,6 +5644,12 @@ impl<'de> serde::Deserialize<'de> for trip_update::StopTimeUpdate {
                             }
                             transit_stop_time_update_extension__ = map_.next_value()?;
                         }
+                        GeneratedField::NyctStopTimeUpdate => {
+                            if nyct_stop_time_update__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nyctStopTimeUpdate"));
+                            }
+                            nyct_stop_time_update__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(trip_update::StopTimeUpdate {
@@ -4949,6 +5661,7 @@ impl<'de> serde::Deserialize<'de> for trip_update::StopTimeUpdate {
                     schedule_relationship: schedule_relationship__,
                     stop_time_properties: stop_time_properties__,
                     transit_stop_time_update_extension: transit_stop_time_update_extension__,
+                    nyct_stop_time_update: nyct_stop_time_update__,
                 })
             }
         }

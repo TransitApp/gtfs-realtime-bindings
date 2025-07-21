@@ -38,6 +38,12 @@ pub struct FeedHeader {
     /// January 1st 1970 00:00:00 UTC).
     #[prost(uint64, optional, tag = "3")]
     pub timestamp: ::core::option::Option<u64>,
+    /// The extensions namespace allows 3rd-party developers to extend the
+    /// GTFS Realtime specification in order to add and evaluate new features and
+    /// modifications to the spec.
+    /// extensions 1000 to 1999;
+    #[prost(message, optional, tag = "1001")]
+    pub nyct_feed_header: ::core::option::Option<NyctFeedHeader>,
 }
 /// Nested message and enum types in `FeedHeader`.
 pub mod feed_header {
@@ -356,6 +362,8 @@ pub mod trip_update {
         pub transit_stop_time_update_extension: ::core::option::Option<
             TransitStopTimeUpdateExtension,
         >,
+        #[prost(message, optional, tag = "1001")]
+        pub nyct_stop_time_update: ::core::option::Option<super::NyctStopTimeUpdate>,
     }
     /// Nested message and enum types in `StopTimeUpdate`.
     pub mod stop_time_update {
@@ -1134,6 +1142,171 @@ pub mod transit_trip_descriptor_extension {
         }
     }
 }
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TripReplacementPeriod {
+    /// The replacement period is for this route
+    #[prost(string, optional, tag = "1")]
+    pub route_id: ::core::option::Option<::prost::alloc::string::String>,
+    /// The start time is omitted, the end time is currently now + 30 minutes for
+    /// all routes of the A division
+    #[prost(message, optional, tag = "2")]
+    pub replacement_period: ::core::option::Option<TimeRange>,
+}
+/// NYCT Subway extensions for the feed header
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NyctFeedHeader {
+    /// Version of the NYCT Subway extensions
+    /// The current version is 1.0
+    #[prost(string, required, tag = "1")]
+    pub nyct_subway_version: ::prost::alloc::string::String,
+    /// For the NYCT Subway, the GTFS-realtime feed replaces any scheduled
+    /// trip within the trip_replacement_period.
+    /// This feed is a full dataset, it contains all trips starting
+    /// in the trip_replacement_period. If a trip from the static GTFS is not
+    /// found in the GTFS-realtime feed, it should be considered as cancelled.
+    /// The replacement period can be different for each route, so here is
+    /// a list of the routes where the trips in the feed replace all
+    /// scheduled trips within the replacement period.
+    #[prost(message, repeated, tag = "2")]
+    pub trip_replacement_period: ::prost::alloc::vec::Vec<TripReplacementPeriod>,
+}
+/// NYCT Subway extensions for the trip descriptor
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NyctTripDescriptor {
+    /// The nyct_train_id is meant for internal use only. It provides an
+    /// easy way to associated GTFS-realtime trip identifiers with NYCT rail
+    /// operations identifier
+    ///
+    /// The ATS office system assigns unique train identification (Train ID) to
+    /// each train operating within or ready to enter the mainline of the
+    /// monitored territory. An example of this is 06 0123+ PEL/BBR and is decoded
+    /// as follows:
+    ///
+    /// The first character represents the trip type designator. 0 identifies a
+    /// scheduled revenue trip. Other revenue trip values that are a result of a
+    /// change to the base schedule include; \[= reroute\], \[/ skip stop\], [$ turn
+    /// train] also known as shortly lined service.
+    ///
+    /// The second character 6 represents the trip line i.e. number 6 train The
+    /// third set of characters identify the decoded origin time. The last
+    /// character may be blank "on the whole minute" or + "30 seconds"
+    ///
+    /// Note: Origin times will not change when there is a trip type change.  This
+    /// is followed by a three character "Origin Location" / "Destination
+    /// Location"
+    #[prost(string, optional, tag = "1")]
+    pub train_id: ::core::option::Option<::prost::alloc::string::String>,
+    /// This trip has been assigned to a physical train. If true, this trip is
+    /// already underway or most likely will depart shortly.
+    ///
+    /// Train Assignment is a function of the Automatic Train Supervision (ATS)
+    /// office system used by NYCT Rail Operations to monitor and track train
+    /// movements. ATS provides the ability to "assign" the nyct_train_id
+    /// attribute when a physical train is at its origin terminal. These assigned
+    /// trips have the is_assigned field set in the TripDescriptor.
+    ///
+    /// When a train is at a terminal but has not been given a work program it is
+    /// declared unassigned and is tagged as such. Unassigned trains can be moved
+    /// to a storage location or assigned a nyct_train_id when a determination for
+    /// service is made.
+    #[prost(bool, optional, tag = "2")]
+    pub is_assigned: ::core::option::Option<bool>,
+    /// Uptown and Bronx-bound trains are moving NORTH.
+    /// Times Square Shuttle to Grand Central is also northbound.
+    ///
+    /// Downtown and Brooklyn-bound trains are moving SOUTH.
+    /// Times Square Shuttle to Times Square is also southbound.
+    ///
+    /// EAST and WEST are not used currently.
+    #[prost(enumeration = "nyct_trip_descriptor::Direction", optional, tag = "3")]
+    pub direction: ::core::option::Option<i32>,
+}
+/// Nested message and enum types in `NyctTripDescriptor`.
+pub mod nyct_trip_descriptor {
+    /// The direction the train is moving.
+    #[derive(
+        Clone,
+        Copy,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+        PartialOrd,
+        Ord,
+        ::prost::Enumeration
+    )]
+    #[repr(i32)]
+    pub enum Direction {
+        North = 1,
+        East = 2,
+        South = 3,
+        West = 4,
+    }
+    impl Direction {
+        /// String value of the enum field names used in the ProtoBuf definition.
+        ///
+        /// The values are not transformed in any way and thus are considered stable
+        /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+        pub fn as_str_name(&self) -> &'static str {
+            match self {
+                Direction::North => "NORTH",
+                Direction::East => "EAST",
+                Direction::South => "SOUTH",
+                Direction::West => "WEST",
+            }
+        }
+        /// Creates an enum from field names used in the ProtoBuf definition.
+        pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+            match value {
+                "NORTH" => Some(Self::North),
+                "EAST" => Some(Self::East),
+                "SOUTH" => Some(Self::South),
+                "WEST" => Some(Self::West),
+                _ => None,
+            }
+        }
+    }
+}
+/// NYCT Subway extensions for the stop time update
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NyctStopTimeUpdate {
+    /// Provides the planned station arrival track. The following is the Manhattan
+    /// track configurations:
+    /// 1: southbound local
+    /// 2: southbound express
+    /// 3: northbound express
+    /// 4: northbound local
+    ///
+    /// In the Bronx (except Dyre Ave line)
+    /// M: bi-directional express (in the AM express to Manhattan, in the PM
+    /// express away).
+    ///
+    /// The Dyre Ave line is configured:
+    /// 1: southbound
+    /// 2: northbound
+    /// 3: bi-directional
+    #[prost(string, optional, tag = "1")]
+    pub scheduled_track: ::core::option::Option<::prost::alloc::string::String>,
+    /// This is the actual track that the train is operating on and can be used to
+    /// determine if a train is operating according to its current schedule
+    /// (plan).
+    ///
+    /// The actual track is known only shortly before the train reaches a station,
+    /// typically not before it leaves the previous station. Therefore, the NYCT
+    /// feed sets this field only for the first station of the remaining trip.
+    ///
+    /// Different actual and scheduled track is the result of manually rerouting a
+    /// train off it scheduled path.  When this occurs, prediction data may become
+    /// unreliable since the train is no longer operating in accordance to its
+    /// schedule.  The rules engine for the 'countdown' clocks will remove this
+    /// train from all schedule stations.
+    #[prost(string, optional, tag = "2")]
+    pub actual_track: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// A descriptor that identifies an instance of a GTFS trip, or all instances of
 /// a trip along a route.
 /// - To specify a single trip instance, the trip_id (and if necessary,
@@ -1200,6 +1373,8 @@ pub struct TripDescriptor {
     pub transit_trip_descriptor_extension: ::core::option::Option<
         TransitTripDescriptorExtension,
     >,
+    #[prost(message, optional, tag = "1001")]
+    pub nyct_trip_descriptor: ::core::option::Option<NyctTripDescriptor>,
 }
 /// Nested message and enum types in `TripDescriptor`.
 pub mod trip_descriptor {
@@ -1725,6 +1900,10 @@ pub struct ReplacementStop {
     /// The replacement stop ID which will now be visited by the trip. May refer to a new stop added using a GTFS-RT Stop message, or to an existing stop defined in the GTFS-Static feed’s stops.txt. The stop MUST have location_type=0 (routable stops).
     #[prost(string, optional, tag = "2")]
     pub stop_id: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "9514")]
+    pub transit_replacement_stop_extension: ::core::option::Option<
+        TransitReplacementStopExtension,
+    >,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1738,4 +1917,13 @@ pub struct TransitModificationExtension {
     /// Modification to identify that whole modification
     #[prost(string, optional, tag = "3")]
     pub modification_id: ::core::option::Option<::prost::alloc::string::String>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TransitReplacementStopExtension {
+    /// See `transit-extensions.proto`
+    #[prost(bool, optional, tag = "1")]
+    pub no_through_travel: ::core::option::Option<bool>,
+    #[prost(string, optional, tag = "2")]
+    pub next_shape_id: ::core::option::Option<::prost::alloc::string::String>,
 }
