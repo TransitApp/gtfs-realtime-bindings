@@ -76,7 +76,8 @@ message FeedHeader {
   // The extensions namespace allows 3rd-party developers to extend the
   // GTFS Realtime specification in order to add and evaluate new features and
   // modifications to the spec.
-  extensions 1000 to 1999;
+  // extensions 1000 to 1999;
+  optional NyctFeedHeader nyct_feed_header = 1001;
 
   // The following extension IDs are reserved for private use by any organization.
   extensions 9000 to 9999;
@@ -242,9 +243,9 @@ message TripUpdate {
     // Expected occupancy after departure from the given stop.
     // Should be provided only for future stops.
     // In order to provide departure_occupancy_status without either arrival or
-    // departure StopTimeEvents, ScheduleRelationship should be set to NO_DATA. 
+    // departure StopTimeEvents, ScheduleRelationship should be set to NO_DATA.
     optional VehiclePosition.OccupancyStatus departure_occupancy_status = 7;
-    
+
     // The relation between the StopTimeEvents and the static schedule.
     enum ScheduleRelationship {
       // The vehicle is proceeding in accordance with its static schedule of
@@ -312,11 +313,12 @@ message TripUpdate {
     // The extensions namespace allows 3rd-party developers to extend the
     // GTFS Realtime Specification in order to add and evaluate new features
     // and modifications to the spec.
-    extensions 1000 to 1999;
+    // extensions 1000 to 1999;
 
     // The following extension IDs are reserved for private use by any organization.
     // extensions 9000 to 9999;
     optional TransitStopTimeUpdateExtension transit_stop_time_update_extension = 9514;
+    optional NyctStopTimeUpdate nyct_stop_time_update = 1001;
   }
 
   // Updates to StopTimes for the trip (both future, i.e., predictions, and in
@@ -367,7 +369,7 @@ message TripUpdate {
   optional int32 delay = 5;
 
   // Defines updated properties of the trip, such as a new shape_id when there is a detour. Or defines the
-  // trip_id, start_date, and start_time of a DUPLICATED trip. 
+  // trip_id, start_date, and start_time of a DUPLICATED trip.
   // NOTE: This message is still experimental, and subject to change. It may be formally adopted in the future.
   message TripProperties {
     // Defines the identifier of a new trip that is a duplicate of an existing trip defined in (CSV) GTFS trips.txt
@@ -401,7 +403,7 @@ message TripUpdate {
     // or a Shape in the (protobuf) real-time feed. The order of stops (stop sequences) for this trip must remain the same as
     // (CSV) GTFS. Stops that are a part of the original trip but will no longer be made, such as when a detour occurs, should
     // be marked as schedule_relationship=SKIPPED.
-    // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future. 
+    // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     optional string shape_id = 4;
 
     // The extensions namespace allows 3rd-party developers to extend the
@@ -477,7 +479,7 @@ message VehiclePosition {
   // The state of passenger occupancy for the vehicle or carriage.
   // Individual producers may not publish all OccupancyStatus values. Therefore, consumers
   // must not assume that the OccupancyStatus values follow a linear scale.
-  // Consumers should represent OccupancyStatus values as the state indicated 
+  // Consumers should represent OccupancyStatus values as the state indicated
   // and intended by the producer. Likewise, producers must use OccupancyStatus values that
   // correspond to actual vehicle occupancy states.
   // For describing passenger occupancy levels on a linear scale, see `occupancy_percentage`.
@@ -531,7 +533,7 @@ message VehiclePosition {
   // including both seated and standing capacity, and current operating regulations allow.
   // The value may exceed 100 if there are more passengers than the maximum designed capacity.
   // The precision of occupancy_percentage should be low enough that individual passengers cannot be tracked boarding or alighting the vehicle.
-  // If multi_carriage_status is populated with per-carriage occupancy_percentage, 
+  // If multi_carriage_status is populated with per-carriage occupancy_percentage,
   // then this field should describe the entire vehicle with all carriages accepting passengers considered.
   // This field is still experimental, and subject to change. It may be formally adopted in the future.
   optional uint32 occupancy_percentage = 10;
@@ -566,7 +568,7 @@ message VehiclePosition {
     // For example, the first carriage in the direction of travel has a value of 1.
     // If the second carriage in the direction of travel has a value of 3,
     // consumers will discard data for all carriages (i.e., the multi_carriage_details field).
-    // Carriages without data must be represented with a valid carriage_sequence number and the fields 
+    // Carriages without data must be represented with a valid carriage_sequence number and the fields
     // without data should be omitted (alternately, those fields could also be included and set to the "no data" values).
     // This message/field is still experimental, and subject to change. It may be formally adopted in the future.
     optional uint32 carriage_sequence = 5;
@@ -581,12 +583,12 @@ message VehiclePosition {
   }
 
   // Details of the multiple carriages of this given vehicle.
-  // The first occurrence represents the first carriage of the vehicle, 
-  // given the current direction of travel. 
-  // The number of occurrences of the multi_carriage_details 
+  // The first occurrence represents the first carriage of the vehicle,
+  // given the current direction of travel.
+  // The number of occurrences of the multi_carriage_details
   // field represents the number of carriages of the vehicle.
-  // It also includes non boardable carriages, 
-  // like engines, maintenance carriages, etc… as they provide valuable 
+  // It also includes non boardable carriages,
+  // like engines, maintenance carriages, etc… as they provide valuable
   // information to passengers about where to stand on a platform.
   // This message/field is still experimental, and subject to change. It may be formally adopted in the future.
   repeated CarriageDetails multi_carriage_details = 11;
@@ -688,20 +690,20 @@ message Alert {
   optional SeverityLevel severity_level = 14 [default = UNKNOWN_SEVERITY];
 
   // TranslatedImage to be displayed along the alert text. Used to explain visually the alert effect of a detour, station closure, etc. The image must enhance the understanding of the alert. Any essential information communicated within the image must also be contained in the alert text.
-  // The following types of images are discouraged : image containing mainly text, marketing or branded images that add no additional information. 
+  // The following types of images are discouraged : image containing mainly text, marketing or branded images that add no additional information.
   // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
-  optional TranslatedImage image = 15; 
+  optional TranslatedImage image = 15;
 
   // Text describing the appearance of the linked image in the `image` field (e.g., in case the image can't be displayed
   // or the user can't see the image for accessibility reasons). See the HTML spec for alt image text - https://html.spec.whatwg.org/#alt.
   // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
   optional TranslatedString image_alternative_text = 16;
-  
-  
+
+
   // Description of the cause of the alert that allows for agency-specific language; more specific than the Cause. If cause_detail is included, then Cause must also be included.
   // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
   optional TranslatedString cause_detail = 17;
-  
+
   // Description of the effect of the alert that allows for agency-specific language; more specific than the Effect. If effect_detail is included, then Effect must also be included.
   // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
   optional TranslatedString effect_detail = 18;
@@ -789,6 +791,122 @@ message TransitTripDescriptorExtension {
 
     // Timestamp when the prediction was made, in POSIX time
     optional uint64 prediction_made_at = 2;
+}
+
+message TripReplacementPeriod {
+  // The replacement period is for this route
+  optional string route_id = 1;
+  // The start time is omitted, the end time is currently now + 30 minutes for
+  // all routes of the A division
+  optional TimeRange replacement_period = 2;
+}
+
+// NYCT Subway extensions for the feed header
+message NyctFeedHeader {
+  // Version of the NYCT Subway extensions
+  // The current version is 1.0
+  required string nyct_subway_version = 1;
+  // For the NYCT Subway, the GTFS-realtime feed replaces any scheduled
+  // trip within the trip_replacement_period.
+  // This feed is a full dataset, it contains all trips starting
+  // in the trip_replacement_period. If a trip from the static GTFS is not
+  // found in the GTFS-realtime feed, it should be considered as cancelled.
+  // The replacement period can be different for each route, so here is
+  // a list of the routes where the trips in the feed replace all
+  // scheduled trips within the replacement period.
+  repeated TripReplacementPeriod trip_replacement_period = 2;
+}
+
+// NYCT Subway extensions for the trip descriptor
+message NyctTripDescriptor {
+  // The nyct_train_id is meant for internal use only. It provides an
+  // easy way to associated GTFS-realtime trip identifiers with NYCT rail
+  // operations identifier
+  //
+  // The ATS office system assigns unique train identification (Train ID) to
+  // each train operating within or ready to enter the mainline of the
+  // monitored territory. An example of this is 06 0123+ PEL/BBR and is decoded
+  // as follows:
+  //
+  // The first character represents the trip type designator. 0 identifies a
+  // scheduled revenue trip. Other revenue trip values that are a result of a
+  // change to the base schedule include; [= reroute], [/ skip stop], [$ turn
+  // train] also known as shortly lined service.
+  //
+  // The second character 6 represents the trip line i.e. number 6 train The
+  // third set of characters identify the decoded origin time. The last
+  // character may be blank "on the whole minute" or + "30 seconds"
+  //
+  // Note: Origin times will not change when there is a trip type change.  This
+  // is followed by a three character "Origin Location" / "Destination
+  // Location"
+  optional string train_id = 1;
+
+  // This trip has been assigned to a physical train. If true, this trip is
+  // already underway or most likely will depart shortly.
+  //
+  // Train Assignment is a function of the Automatic Train Supervision (ATS)
+  // office system used by NYCT Rail Operations to monitor and track train
+  // movements. ATS provides the ability to "assign" the nyct_train_id
+  // attribute when a physical train is at its origin terminal. These assigned
+  // trips have the is_assigned field set in the TripDescriptor.
+  //
+  // When a train is at a terminal but has not been given a work program it is
+  // declared unassigned and is tagged as such. Unassigned trains can be moved
+  // to a storage location or assigned a nyct_train_id when a determination for
+  // service is made.
+  optional bool is_assigned = 2;
+
+  // The direction the train is moving.
+  enum Direction {
+    NORTH = 1;
+    EAST = 2;
+    SOUTH = 3;
+    WEST = 4;
+  }
+  // Uptown and Bronx-bound trains are moving NORTH.
+  // Times Square Shuttle to Grand Central is also northbound.
+  //
+  // Downtown and Brooklyn-bound trains are moving SOUTH.
+  // Times Square Shuttle to Times Square is also southbound.
+  //
+  // EAST and WEST are not used currently.
+  optional Direction direction = 3;
+}
+
+// NYCT Subway extensions for the stop time update
+message NyctStopTimeUpdate {
+  // Provides the planned station arrival track. The following is the Manhattan
+  // track configurations:
+  // 1: southbound local
+  // 2: southbound express
+  // 3: northbound express
+  // 4: northbound local
+  //
+  // In the Bronx (except Dyre Ave line)
+  // M: bi-directional express (in the AM express to Manhattan, in the PM
+  // express away).
+  //
+  // The Dyre Ave line is configured:
+  // 1: southbound
+  // 2: northbound
+  // 3: bi-directional
+  optional string scheduled_track = 1;
+
+  // This is the actual track that the train is operating on and can be used to
+  // determine if a train is operating according to its current schedule
+  // (plan).
+  //
+  // The actual track is known only shortly before the train reaches a station,
+  // typically not before it leaves the previous station. Therefore, the NYCT
+  // feed sets this field only for the first station of the remaining trip.
+  //
+  // Different actual and scheduled track is the result of manually rerouting a
+  // train off it scheduled path.  When this occurs, prediction data may become
+  // unreliable since the train is no longer operating in accordance to its
+  // schedule.  The rules engine for the 'countdown' clocks will remove this
+  // train from all schedule stations.
+  optional string actual_track = 2;
 }
 
 // A descriptor that identifies an instance of a GTFS trip, or all instances of
@@ -913,11 +1031,12 @@ message TripDescriptor {
   // The extensions namespace allows 3rd-party developers to extend the
   // GTFS Realtime Specification in order to add and evaluate new features and
   // modifications to the spec.
-  extensions 1000 to 1999;
+  // extensions 1000 to 1999;
 
   // The following extension IDs are reserved for private use by any organization.
   // extensions 9000 to 9999;
   optional TransitTripDescriptorExtension transit_trip_descriptor_extension = 9514;
+  optional NyctTripDescriptor nyct_trip_descriptor = 1001;
 }
 
 message TransitVehicleDescriptorExtension {
@@ -930,7 +1049,7 @@ message TransitVehicleDescriptorExtension {
 
 
 message TfnswVehicleDescriptor {
-  // Indicates the availability of air-conditioning on this vehicle, Default is true because the whole fleet is air-conditioned. 
+  // Indicates the availability of air-conditioning on this vehicle, Default is true because the whole fleet is air-conditioned.
   optional bool air_conditioned = 1 [default = true];
 
   // Indicates whether the vehicle is wheelchair accessible or not. It returns 1 if the vehicle is accessible otherwise returns 0
@@ -1073,12 +1192,12 @@ message TranslatedString {
 message TranslatedImage {
   message LocalizedImage {
     // String containing an URL linking to an image
-    // The image linked must be less than 2MB. 
+    // The image linked must be less than 2MB.
     // If an image changes in a significant enough way that an update is required on the consumer side, the producer must update the URL to a new one.
     // The URL should be a fully qualified URL that includes http:// or https://, and any special characters in the URL must be correctly escaped. See the following http://www.w3.org/Addressing/URL/4_URI_Recommentations.html for a description of how to create fully qualified URL values.
     required string url = 1;
 
-    // IANA media type as to specify the type of image to be displayed. 
+    // IANA media type as to specify the type of image to be displayed.
     // The type must start with "image/"
     required string media_type = 2;
 
@@ -1120,7 +1239,7 @@ message Shape {
   // See https://developers.google.com/protocol-buffers/docs/proto#specifying_field_rules
   // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
   optional string shape_id = 1;
-  
+
   // Encoded polyline representation of the shape. This polyline must contain at least two points.
   // For more information about encoded polylines, see https://developers.google.com/maps/documentation/utilities/polylinealgorithm
   // This field is required as per reference.md, but needs to be specified here optional because "Required is Forever"
@@ -1175,21 +1294,21 @@ message TripModifications {
   // A `Modification` message replaces a span of n stop times from each affected trip starting at `start_stop_selector`.
   message Modification {
     // The stop selector of the first stop_time of the original trip that is to be affected by this modification.
-    // Used in conjuction with `end_stop_selector`. 
+    // Used in conjuction with `end_stop_selector`.
     // `start_stop_selector` is required and is used to define the reference stop used with `travel_time_to_stop`.
     optional StopSelector start_stop_selector = 1;
 
-    // The stop selector of the last stop of the original trip that is to be affected by this modification. 
+    // The stop selector of the last stop of the original trip that is to be affected by this modification.
     // The selection is inclusive, so if only one stop_time is replaced by that modification, `start_stop_selector` and `end_stop_selector` must be equivalent.
     // If no stop_time is replaced, `end_stop_selector` must not be provided. It's otherwise required.
     optional StopSelector end_stop_selector = 2;
 
-    // The number of seconds of delay to add to all departure and arrival times following the end of this modification. 
-    // If multiple modifications apply to the same trip, the delays accumulate as the trip advances. 
+    // The number of seconds of delay to add to all departure and arrival times following the end of this modification.
+    // If multiple modifications apply to the same trip, the delays accumulate as the trip advances.
     optional int32 propagated_modification_delay = 3 [default = 0];
 
-    // A list of replacement stops, replacing those of the original trip. 
-    // The length of the new stop times may be less, the same, or greater than the number of replaced stop times. 
+    // A list of replacement stops, replacing those of the original trip.
+    // The length of the new stop times may be less, the same, or greater than the number of replaced stop times.
     repeated ReplacementStop replacement_stops = 4;
 
     // An `id` value from the `FeedEntity` message that contains the `Alert` describing this Modification for user-facing communication.
@@ -1228,7 +1347,7 @@ message TripModifications {
    // A list of selected trips affected by this TripModifications.
   repeated SelectedTrips selected_trips = 1;
 
-  // A list of start times in the real-time trip descriptor for the trip_id defined in trip_ids. 
+  // A list of start times in the real-time trip descriptor for the trip_id defined in trip_ids.
   // Useful to target multiple departures of a trip_id in a frequency-based trip.
   repeated string start_times = 2;
 
@@ -1236,8 +1355,8 @@ message TripModifications {
   // The dates provided should not be used as user-facing information, if a user-facing start and end date needs to be provided, they can be provided in the linked service alert with `service_alert_id`
   repeated string service_dates = 3;
 
-  // A list of modifications to apply to the affected trips. 
-  repeated Modification modifications = 4; 
+  // A list of modifications to apply to the affected trips.
+  repeated Modification modifications = 4;
 
   // The extensions namespace allows 3rd-party developers to extend the
   // GTFS Realtime Specification in order to add and evaluate new features and
@@ -1250,7 +1369,7 @@ message TripModifications {
 
 // NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
 // Select a stop by stop sequence or by stop_id. At least one of the two values must be provided.
-message StopSelector { 
+message StopSelector {
   // Must be the same as in stop_times.txt in the corresponding GTFS feed.
   optional uint32 stop_sequence = 1;
   // Must be the same as in stops.txt in the corresponding GTFS feed.
@@ -1298,4 +1417,3 @@ message TransitReplacementStopExtension {
   optional bool no_through_travel = 1;
   optional string next_shape_id = 2;
 }
-
