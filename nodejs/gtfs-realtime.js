@@ -18,6 +18,7 @@ $root.TransitAlertExtension = (function() {
      * @property {number|Long} createdAt TransitAlertExtension createdAt
      * @property {string|null} [sourceName] TransitAlertExtension sourceName
      * @property {boolean|null} [isServiceChangeAlert] TransitAlertExtension isServiceChangeAlert
+     * @property {string|null} [pushNotificationId] TransitAlertExtension pushNotificationId
      */
 
     /**
@@ -60,6 +61,14 @@ $root.TransitAlertExtension = (function() {
     TransitAlertExtension.prototype.isServiceChangeAlert = false;
 
     /**
+     * TransitAlertExtension pushNotificationId.
+     * @member {string} pushNotificationId
+     * @memberof TransitAlertExtension
+     * @instance
+     */
+    TransitAlertExtension.prototype.pushNotificationId = "";
+
+    /**
      * Creates a new TransitAlertExtension instance using the specified properties.
      * @function create
      * @memberof TransitAlertExtension
@@ -88,6 +97,8 @@ $root.TransitAlertExtension = (function() {
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.sourceName);
         if (message.isServiceChangeAlert != null && Object.hasOwnProperty.call(message, "isServiceChangeAlert"))
             writer.uint32(/* id 3, wireType 0 =*/24).bool(message.isServiceChangeAlert);
+        if (message.pushNotificationId != null && Object.hasOwnProperty.call(message, "pushNotificationId"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.pushNotificationId);
         return writer;
     };
 
@@ -132,6 +143,10 @@ $root.TransitAlertExtension = (function() {
                 }
             case 3: {
                     message.isServiceChangeAlert = reader.bool();
+                    break;
+                }
+            case 4: {
+                    message.pushNotificationId = reader.string();
                     break;
                 }
             default:
@@ -179,6 +194,9 @@ $root.TransitAlertExtension = (function() {
         if (message.isServiceChangeAlert != null && message.hasOwnProperty("isServiceChangeAlert"))
             if (typeof message.isServiceChangeAlert !== "boolean")
                 return "isServiceChangeAlert: boolean expected";
+        if (message.pushNotificationId != null && message.hasOwnProperty("pushNotificationId"))
+            if (!$util.isString(message.pushNotificationId))
+                return "pushNotificationId: string expected";
         return null;
     };
 
@@ -207,6 +225,8 @@ $root.TransitAlertExtension = (function() {
             message.sourceName = String(object.sourceName);
         if (object.isServiceChangeAlert != null)
             message.isServiceChangeAlert = Boolean(object.isServiceChangeAlert);
+        if (object.pushNotificationId != null)
+            message.pushNotificationId = String(object.pushNotificationId);
         return message;
     };
 
@@ -231,6 +251,7 @@ $root.TransitAlertExtension = (function() {
                 object.createdAt = options.longs === String ? "0" : 0;
             object.sourceName = "";
             object.isServiceChangeAlert = false;
+            object.pushNotificationId = "";
         }
         if (message.createdAt != null && message.hasOwnProperty("createdAt"))
             if (typeof message.createdAt === "number")
@@ -241,6 +262,8 @@ $root.TransitAlertExtension = (function() {
             object.sourceName = message.sourceName;
         if (message.isServiceChangeAlert != null && message.hasOwnProperty("isServiceChangeAlert"))
             object.isServiceChangeAlert = message.isServiceChangeAlert;
+        if (message.pushNotificationId != null && message.hasOwnProperty("pushNotificationId"))
+            object.pushNotificationId = message.pushNotificationId;
         return object;
     };
 

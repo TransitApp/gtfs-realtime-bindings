@@ -18,7 +18,11 @@ message TransitAlertExtension {
   optional string source_name = 2;
 
   // Flag for automatically generated service change alerts
+  // *DEPRECATED* Never used, replaced with actual 
   optional bool is_service_change_alert = 3;
+
+  // Push notification ID for that alert.
+  optional string push_notification_id = 4;
 }
 
 extend transit_realtime.Alert {

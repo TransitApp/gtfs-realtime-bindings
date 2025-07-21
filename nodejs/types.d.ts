@@ -11,6 +11,9 @@ export interface ITransitAlertExtension {
 
     /** TransitAlertExtension isServiceChangeAlert */
     isServiceChangeAlert?: (boolean|null);
+
+    /** TransitAlertExtension pushNotificationId */
+    pushNotificationId?: (string|null);
 }
 
 /** Represents a TransitAlertExtension. */
@@ -30,6 +33,9 @@ export class TransitAlertExtension implements ITransitAlertExtension {
 
     /** TransitAlertExtension isServiceChangeAlert. */
     public isServiceChangeAlert: boolean;
+
+    /** TransitAlertExtension pushNotificationId. */
+    public pushNotificationId: string;
 
     /**
      * Creates a new TransitAlertExtension instance using the specified properties.
