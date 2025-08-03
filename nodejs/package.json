@@ -15,7 +15,8 @@
     },
     "exports": {
         "types": "./types.d.ts",
-        "require": "./gtfs-realtime.js"
+        "require": "./gtfs-realtime.js",
+        "import": "./gtfs-realtime.js"
     },
     "main": "./gtfs-realtime.js",
     "types": "./types.d.ts",
