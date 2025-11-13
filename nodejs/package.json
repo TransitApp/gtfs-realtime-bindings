@@ -14,15 +14,27 @@
         "url": "https://github.com/google/gtfs-realtime-bindings/issues"
     },
     "exports": {
-        "types": "./types.d.ts",
-        "require": "./gtfs-realtime.js"
+        ".": {
+            "import": {
+                "types": "./types.d.mts",
+                "default": "./gtfs-realtime.mjs"
+            },
+            "require": {
+                "types": "./types.d.ts",
+                "default": "./gtfs-realtime.js"
+            }
+        }
     },
     "main": "./gtfs-realtime.js",
     "types": "./types.d.ts",
-    "type": "commonjs",
     "scripts": {
         "test": "mocha test/*.js",
-        "buildProto": "pbjs -t static-module -w commonjs -o gtfs-realtime.js ../transit-extensions.proto && pbts -o types.d.ts gtfs-realtime.js"
+        "buildProto": "npm run buildProto:cjs && npm run buildProto:esm",
+        "buildProto:cjs": "pbjs -t static-module -w commonjs -o gtfs-realtime.js ../transit-extensions.proto && pbts -o types.d.ts gtfs-realtime.js && npm run fixLongImport:cjs",
+        "buildProto:esm": "pbjs -t static-module -w es6 -o gtfs-realtime.mjs ../transit-extensions.proto && npm run fixDefaultExport:esm && cp gtfs-realtime.mjs gtfs-realtime-esm.js && pbts -o types.d.mts gtfs-realtime-esm.js && rm gtfs-realtime-esm.js && npm run fixLongImport:esm",
+        "fixLongImport:cjs": "sed -i.bak 's/import Long = require(\"long\");/import { Long } from \"protobufjs\";/' types.d.ts && rm types.d.ts.bak",
+        "fixLongImport:esm": "sed -i.bak 's/import Long = require(\"long\");/import { Long } from \"protobufjs\";/' types.d.mts && rm types.d.mts.bak",
+        "fixDefaultExport:esm": "sed -i.bak 's/export { \\$root as default };/export default \\$root;/' gtfs-realtime.mjs && rm gtfs-realtime.mjs.bak"
     },
     "engines": {
         "node": ">=8.0.0"

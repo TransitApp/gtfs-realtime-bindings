@@ -5,6 +5,18 @@ When
 is updated, the various languages bindings must be regenerated, packaged, and
 deployed.
 
+## Prerequisites
+
+If you've just cloned the repository, initialize the git submodules first:
+
+```bash
+git submodule update --init --recursive
+```
+
+This is required because the bindings depend on the base GTFS-realtime proto files from the `gtfs-spec` submodule.
+
+## Updating Process
+
 First step is to copy the latest version of `gtfs-realtime.proto` into project.
 Then, follow the instructions in each individual UPDATING.md file for each
 language type. 
