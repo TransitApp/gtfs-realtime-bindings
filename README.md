@@ -37,6 +37,18 @@ published as packages to facilitate their use in other projects.
 * [Ruby](ruby/README.md)
 * [Golang](golang/README.md)
 
+## Development
+
+If you're contributing to this project or regenerating the bindings, you'll need to initialize the git submodules after cloning:
+
+```bash
+git submodule update --init --recursive
+```
+
+This downloads the base GTFS-realtime protocol buffer specification from the [google/transit](https://github.com/google/transit) repository, which is required for building the language bindings.
+
+For language-specific build instructions, see the UPDATING.md file in each language directory.
+
 ## Other Languages
 
 We don't provide generated code for C++, use the official protoc compiler for that (from [here](https://developers.google.com/protocol-buffers/docs/downloads) or [here](https://github.com/google/protobuf))
