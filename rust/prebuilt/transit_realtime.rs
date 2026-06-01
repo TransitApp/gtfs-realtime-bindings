@@ -38,6 +38,11 @@ pub struct FeedHeader {
     /// January 1st 1970 00:00:00 UTC).
     #[prost(uint64, optional, tag = "3")]
     pub timestamp: ::core::option::Option<u64>,
+    /// String that matches the feed_info.feed_version from the GTFS feed that the real
+    /// time data is based on. Consumers can use this to identify which GTFS feed is
+    /// currently active or when a new one is available to download.
+    #[prost(string, optional, tag = "4")]
+    pub feed_version: ::core::option::Option<::prost::alloc::string::String>,
     /// The extensions namespace allows 3rd-party developers to extend the
     /// GTFS Realtime specification in order to add and evaluate new features and
     /// modifications to the spec.
@@ -122,6 +127,8 @@ pub struct FeedEntity {
     pub stop: ::core::option::Option<Stop>,
     #[prost(message, optional, tag = "8")]
     pub trip_modifications: ::core::option::Option<TripModifications>,
+    #[prost(message, optional, tag = "9")]
+    pub route: ::core::option::Option<Route>,
 }
 /// Realtime update of the progress of a vehicle along a trip.
 /// Depending on the value of ScheduleRelationship, a TripUpdate can specify:
@@ -247,6 +254,13 @@ pub mod trip_update {
         /// To specify a completely certain prediction, set its uncertainty to 0.
         #[prost(int32, optional, tag = "3")]
         pub uncertainty: ::core::option::Option<i32>,
+        /// Scheduled time for a NEW, REPLACEMENT, or DUPLICATED trip.
+        /// In Unix time (i.e., number of seconds since January 1st 1970 00:00:00
+        /// UTC).
+        /// Optional if TripUpdate.schedule_relationship is NEW, REPLACEMENT or DUPLICATED, forbidden otherwise.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+        #[prost(int64, optional, tag = "4")]
+        pub scheduled_time: ::core::option::Option<i64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
@@ -387,6 +401,77 @@ pub mod trip_update {
             /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
             #[prost(string, optional, tag = "1")]
             pub assigned_stop_id: ::core::option::Option<::prost::alloc::string::String>,
+            /// The updated headsign of the vehicle at the stop.
+            /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+            #[prost(string, optional, tag = "2")]
+            pub stop_headsign: ::core::option::Option<::prost::alloc::string::String>,
+            /// The updated pickup of the vehicle at the stop.
+            /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+            #[prost(
+                enumeration = "stop_time_properties::DropOffPickupType",
+                optional,
+                tag = "3"
+            )]
+            pub pickup_type: ::core::option::Option<i32>,
+            /// The updated drop off of the vehicle at the stop.
+            /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+            #[prost(
+                enumeration = "stop_time_properties::DropOffPickupType",
+                optional,
+                tag = "4"
+            )]
+            pub drop_off_type: ::core::option::Option<i32>,
+        }
+        /// Nested message and enum types in `StopTimeProperties`.
+        pub mod stop_time_properties {
+            #[derive(
+                Clone,
+                Copy,
+                Debug,
+                PartialEq,
+                Eq,
+                Hash,
+                PartialOrd,
+                Ord,
+                ::prost::Enumeration
+            )]
+            #[repr(i32)]
+            pub enum DropOffPickupType {
+                /// Regularly scheduled pickup/dropoff.
+                Regular = 0,
+                /// No pickup/dropoff available
+                None = 1,
+                /// Must phone agency to arrange pickup/dropoff.
+                PhoneAgency = 2,
+                /// Must coordinate with driver to arrange pickup/dropoff.
+                CoordinateWithDriver = 3,
+            }
+            impl DropOffPickupType {
+                /// String value of the enum field names used in the ProtoBuf definition.
+                ///
+                /// The values are not transformed in any way and thus are considered stable
+                /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+                pub fn as_str_name(&self) -> &'static str {
+                    match self {
+                        DropOffPickupType::Regular => "REGULAR",
+                        DropOffPickupType::None => "NONE",
+                        DropOffPickupType::PhoneAgency => "PHONE_AGENCY",
+                        DropOffPickupType::CoordinateWithDriver => {
+                            "COORDINATE_WITH_DRIVER"
+                        }
+                    }
+                }
+                /// Creates an enum from field names used in the ProtoBuf definition.
+                pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+                    match value {
+                        "REGULAR" => Some(Self::Regular),
+                        "NONE" => Some(Self::None),
+                        "PHONE_AGENCY" => Some(Self::PhoneAgency),
+                        "COORDINATE_WITH_DRIVER" => Some(Self::CoordinateWithDriver),
+                        _ => None,
+                    }
+                }
+            }
         }
         /// The relation between the StopTimeEvents and the static schedule.
         #[derive(
@@ -485,16 +570,27 @@ pub mod trip_update {
         /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
         #[prost(string, optional, tag = "3")]
         pub start_time: ::core::option::Option<::prost::alloc::string::String>,
-        /// Specifies the shape of the vehicle travel path when the trip shape differs from the shape specified in
-        /// (CSV) GTFS or to specify it in real-time when it's not provided by (CSV) GTFS, such as a vehicle that takes differing
-        /// paths based on rider demand. See definition of trips.shape_id in (CSV) GTFS. If a shape is neither defined in (CSV) GTFS
-        /// nor in real-time, the shape is considered unknown. This field can refer to a shape defined in the (CSV) GTFS in shapes.txt
-        /// or a Shape in the (protobuf) real-time feed. The order of stops (stop sequences) for this trip must remain the same as
-        /// (CSV) GTFS. Stops that are a part of the original trip but will no longer be made, such as when a detour occurs, should
-        /// be marked as schedule_relationship=SKIPPED.
+        /// Specifies the identifier of the shape of the vehicle travel path when the trip shape differs from the shape specified in (CSV) GTFS
+        /// or to specify it in real-time when it's not provided by (CSV) GTFS, such as a vehicle that takes differing paths based on rider demand. See definition of trips.shape_id in (CSV) GTFS.
+        /// If a shape is neither defined in (CSV) GTFS nor in real-time, the shape is considered unknown. This field can refer to a shape defined in the (CSV) GTFS in shapes.txt or a `Shape` in the same (protobuf) real-time feed.
+        /// The order of stops (stop sequences) for this trip must remain the same as (CSV) GTFS.
+        /// If it refers to a `Shape` entity in the same real-time feed, the value of this field should be the one of the `shape_id` inside the entity, and _not_ the `id` of `FeedEntity`.
+        /// Stops that are a part of the original trip but will no longer be made, such as when a detour occurs, should be marked as schedule_relationship=SKIPPED or more details can be provided via a `TripModifications` message.
         /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
         #[prost(string, optional, tag = "4")]
         pub shape_id: ::core::option::Option<::prost::alloc::string::String>,
+        /// Specifies the headsign for this trip when it differs from the original.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+        #[prost(string, optional, tag = "5")]
+        pub trip_headsign: ::core::option::Option<::prost::alloc::string::String>,
+        /// Specifies the name for this trip when it differs from the original.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+        #[prost(string, optional, tag = "6")]
+        pub trip_short_name: ::core::option::Option<::prost::alloc::string::String>,
+        /// Specify the route associated with the trip, if the route has been added dynamically. The associated `Route` message should be included in the same feed.
+        /// Optional if schedule_relationship is NEW, forbidden otherwise.
+        #[prost(string, optional, tag = "7")]
+        pub route_id: ::core::option::Option<::prost::alloc::string::String>,
     }
 }
 /// Realtime positioning information for a given vehicle.
@@ -1328,6 +1424,8 @@ pub struct TripDescriptor {
     #[prost(string, optional, tag = "1")]
     pub trip_id: ::core::option::Option<::prost::alloc::string::String>,
     /// The route_id from the GTFS that this selector refers to.
+    /// This field is used to identify a trip inside an existing GTFS, not to dynamically create or insert new routes
+    /// To assign routes dynamically, use the `trip_properties.route_id` field.
     #[prost(string, optional, tag = "5")]
     pub route_id: ::core::option::Option<::prost::alloc::string::String>,
     /// The direction_id from the GTFS feed trips.txt file, indicating the
@@ -1365,6 +1463,8 @@ pub struct TripDescriptor {
     pub start_date: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(enumeration = "trip_descriptor::ScheduleRelationship", optional, tag = "4")]
     pub schedule_relationship: ::core::option::Option<i32>,
+    /// Linkage to any modifications done to this trip (shape changes, removal or addition of stops).
+    /// If this field is provided, the `trip_id`, `route_id`, `direction_id`, `start_time`, `start_date` fields of the `TripDescriptor` MUST be left empty, to avoid confusion by consumers that aren't looking for the `ModifiedTripSelector` value.
     #[prost(message, optional, tag = "7")]
     pub modified_trip: ::core::option::Option<trip_descriptor::ModifiedTripSelector>,
     /// The following extension IDs are reserved for private use by any organization.
@@ -1387,6 +1487,12 @@ pub mod trip_descriptor {
         /// The trip_id from the GTFS feed that is modified by the modifications_id
         #[prost(string, optional, tag = "2")]
         pub affected_trip_id: ::core::option::Option<::prost::alloc::string::String>,
+        /// The initially scheduled start time of this trip instance, applied to the frequency based modified trip. Same definition as start_time in TripDescriptor.
+        #[prost(string, optional, tag = "3")]
+        pub start_time: ::core::option::Option<::prost::alloc::string::String>,
+        /// The start date of this trip instance in YYYYMMDD format, applied to the modified trip. Same definition as start_date in TripDescriptor.
+        #[prost(string, optional, tag = "4")]
+        pub start_date: ::core::option::Option<::prost::alloc::string::String>,
     }
     /// The relation between this trip and the static schedule. If a trip is done
     /// in accordance with temporary schedule, not reflected in GTFS, then it
@@ -1407,20 +1513,17 @@ pub mod trip_descriptor {
         /// Trip that is running in accordance with its GTFS schedule, or is close
         /// enough to the scheduled trip to be associated with it.
         Scheduled = 0,
-        /// An extra trip that was added in addition to a running schedule, for
-        /// example, to replace a broken vehicle or to respond to sudden passenger
-        /// load.
-        /// NOTE: Currently, behavior is unspecified for feeds that use this mode. There are discussions on the GTFS GitHub
-        /// [(1)](<https://github.com/google/transit/issues/106>) [(2)](<https://github.com/google/transit/pull/221>)
-        /// [(3)](<https://github.com/google/transit/pull/219>) around fully specifying or deprecating ADDED trips and the
-        /// documentation will be updated when those discussions are finalized.
+        /// This value has been deprecated as the behavior was unspecified.
+        /// Use DUPLICATED for an extra trip that is the same as a scheduled trip except the start date or time,
+        /// or NEW for an extra trip that is unrelated to an existing trip.
         Added = 1,
         /// A trip that is running with no schedule associated to it (GTFS frequencies.txt exact_times=0).
         /// Trips with ScheduleRelationship=UNSCHEDULED must also set all StopTimeUpdates.ScheduleRelationship=UNSCHEDULED.
         Unscheduled = 2,
         /// A trip that existed in the schedule but was removed.
         Canceled = 3,
-        /// Should not be used - for backwards-compatibility only.
+        /// A trip that replaces an existing trip in the schedule.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
         Replacement = 5,
         /// An extra trip that was added in addition to a running schedule, for example, to replace a broken vehicle or to
         /// respond to sudden passenger load. Used with TripUpdate.TripProperties.trip_id, TripUpdate.TripProperties.start_date,
@@ -1429,7 +1532,10 @@ pub mod trip_descriptor {
         /// (in calendar.txt or calendar_dates.txt) is operating within the next 30 days. The trip to be duplicated is
         /// identified via TripUpdate.TripDescriptor.trip_id. This enumeration does not modify the existing trip referenced by
         /// TripUpdate.TripDescriptor.trip_id - if a producer wants to cancel the original trip, it must publish a separate
-        /// TripUpdate with the value of CANCELED or DELETED. Trips defined in GTFS frequencies.txt with exact_times that is
+        /// TripUpdate with the value of CANCELED or DELETED. If a producer wants to replace the original trip, a value of
+        /// `REPLACEMENT` should be used instead.
+        ///
+        /// Trips defined in GTFS frequencies.txt with exact_times that is
         /// empty or equal to 0 cannot be duplicated. The VehiclePosition.TripDescriptor.trip_id for the new trip must contain
         /// the matching value from TripUpdate.TripProperties.trip_id and VehiclePosition.TripDescriptor.ScheduleRelationship
         /// must also be set to DUPLICATED.
@@ -1447,6 +1553,9 @@ pub mod trip_descriptor {
         /// real-time predictions.
         /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
         Deleted = 7,
+        /// An extra trip unrelated to any existing trips, for example, to respond to sudden passenger load.
+        /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+        New = 8,
     }
     impl ScheduleRelationship {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -1462,6 +1571,7 @@ pub mod trip_descriptor {
                 ScheduleRelationship::Replacement => "REPLACEMENT",
                 ScheduleRelationship::Duplicated => "DUPLICATED",
                 ScheduleRelationship::Deleted => "DELETED",
+                ScheduleRelationship::New => "NEW",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -1474,6 +1584,7 @@ pub mod trip_descriptor {
                 "REPLACEMENT" => Some(Self::Replacement),
                 "DUPLICATED" => Some(Self::Duplicated),
                 "DELETED" => Some(Self::Deleted),
+                "NEW" => Some(Self::New),
                 _ => None,
             }
         }
@@ -1719,7 +1830,7 @@ pub struct Shape {
     /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
     #[prost(string, optional, tag = "1")]
     pub shape_id: ::core::option::Option<::prost::alloc::string::String>,
-    /// Encoded polyline representation of the shape. This polyline must contain at least two points.
+    /// Encoded polyline representation of the shape. This polyline must contain at least two points and represent the full shape of the trip where it's used.
     /// For more information about encoded polylines, see <https://developers.google.com/maps/documentation/utilities/polylinealgorithm>
     /// This field is required as per reference.md, but needs to be specified here optional because "Required is Forever"
     /// See <https://developers.google.com/protocol-buffers/docs/proto#specifying_field_rules>
@@ -1868,14 +1979,63 @@ pub mod trip_modifications {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct SelectedTrips {
-        /// A list of trips affected with this replacement that all have the same new `shape_id`.
+        /// A list of trips affected with this replacement that all have the same new `shape_id`. A `TripUpdate` with `schedule_relationship=REPLACEMENT` must not already exist for the trip.
         #[prost(string, repeated, tag = "1")]
         pub trip_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
         /// The ID of the new shape for the modified trips in this SelectedTrips.
-        /// May refer to a new shape added using a GTFS-RT Shape message, or to an existing shape defined in the GTFS-Static feed’s shapes.txt.
+        /// May refer to a new shape added using a `Shape` message in the same GTFS-RT feed, or to an existing shape defined in the GTFS-Static feed’s shapes.txt.
+        /// If it refers to a `Shape` entity in the real-time feed, the value of this field should be the one of the `shape_id` inside the entity, and _not_ the `id` of `FeedEntity`.
         #[prost(string, optional, tag = "2")]
         pub shape_id: ::core::option::Option<::prost::alloc::string::String>,
     }
+}
+/// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Route {
+    /// Identifier of the route. Must be different than any route_id defined in the (CSV) GTFS.
+    /// Required
+    #[prost(string, optional, tag = "1")]
+    pub route_id: ::core::option::Option<::prost::alloc::string::String>,
+    /// See definition of routes.agency_id in (CSV) GTFS.
+    /// Conditionally Required, see reference
+    #[prost(string, optional, tag = "2")]
+    pub agency_id: ::core::option::Option<::prost::alloc::string::String>,
+    /// See definition of routes.route_short_name in (CSV) GTFS.
+    /// Conditionally Required, see reference
+    #[prost(message, optional, tag = "3")]
+    pub route_short_name: ::core::option::Option<TranslatedString>,
+    /// See definition of routes.route_long_name in (CSV) GTFS.
+    /// Conditionally Required, see reference
+    #[prost(message, optional, tag = "4")]
+    pub route_long_name: ::core::option::Option<TranslatedString>,
+    /// See definition of routes.route_desc in (CSV) GTFS.
+    #[prost(message, optional, tag = "5")]
+    pub route_desc: ::core::option::Option<TranslatedString>,
+    /// See definition of routes.route_type in (CSV) GTFS.
+    /// Required
+    #[prost(int32, optional, tag = "6")]
+    pub route_type: ::core::option::Option<i32>,
+    /// See definition of routes.route_url in (CSV) GTFS.
+    #[prost(message, optional, tag = "7")]
+    pub route_url: ::core::option::Option<TranslatedString>,
+    /// See definition of routes.route_color in (CSV) GTFS.
+    #[prost(string, optional, tag = "8")]
+    pub route_color: ::core::option::Option<::prost::alloc::string::String>,
+    /// See definition of routes.route_text_color in (CSV) GTFS.
+    #[prost(string, optional, tag = "9")]
+    pub route_text_color: ::core::option::Option<::prost::alloc::string::String>,
+    /// See definition of routes.route_sort_order in (CSV) GTFS.
+    #[prost(uint32, optional, tag = "10")]
+    pub route_sort_order: ::core::option::Option<u32>,
+    /// See definition of calendar.start_date in (CSV) GTFS.
+    /// The first day that the new route is active, in YYYYMMDD format.
+    #[prost(string, optional, tag = "11")]
+    pub start_date: ::core::option::Option<::prost::alloc::string::String>,
+    /// See definition of calendar.end_date in (CSV) GTFS.
+    /// The last day that the new route is active, in YYYYMMDD format.
+    #[prost(string, optional, tag = "12")]
+    pub end_date: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
 /// Select a stop by stop sequence or by stop_id. At least one of the two values must be provided.
@@ -1897,7 +2057,8 @@ pub struct ReplacementStop {
     /// This value MUST be monotonically increasing and may only be a negative number if the first stop of the original trip is the reference stop.
     #[prost(int32, optional, tag = "1")]
     pub travel_time_to_stop: ::core::option::Option<i32>,
-    /// The replacement stop ID which will now be visited by the trip. May refer to a new stop added using a GTFS-RT Stop message, or to an existing stop defined in the GTFS-Static feed’s stops.txt. The stop MUST have location_type=0 (routable stops).
+    /// The replacement stop ID which will now be visited by the trip. May refer to a new stop added using a GTFS-RT `Stop` message in the same GTFS-RT feed, or to an existing stop defined in the (CSV) GTFS feed’s `stops.txt`.
+    /// If it refers to a `Shape` entity in the real-time feed, the value of this field should be the one of the `stop_id` inside the entity, and _not_ the `id` of `FeedEntity`. The replacement stop MUST have `location_type=0` (routable stops).
     #[prost(string, optional, tag = "2")]
     pub stop_id: ::core::option::Option<::prost::alloc::string::String>,
     #[prost(message, optional, tag = "9514")]
