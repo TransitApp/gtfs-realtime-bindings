@@ -1124,6 +1124,9 @@ export namespace transit_realtime {
 
         /** FeedEntity tripModifications */
         tripModifications?: (transit_realtime.ITripModifications|null);
+
+        /** FeedEntity route */
+        route?: (transit_realtime.IRoute|null);
     }
 
     /** Represents a FeedEntity. */
@@ -1158,6 +1161,9 @@ export namespace transit_realtime {
 
         /** FeedEntity tripModifications. */
         public tripModifications?: (transit_realtime.ITripModifications|null);
+
+        /** FeedEntity route. */
+        public route?: (transit_realtime.IRoute|null);
 
         /**
          * Creates a new FeedEntity instance using the specified properties.
@@ -1377,6 +1383,9 @@ export namespace transit_realtime {
 
             /** StopTimeEvent uncertainty */
             uncertainty?: (number|null);
+
+            /** StopTimeEvent scheduledTime */
+            scheduledTime?: (number|Long|null);
         }
 
         /** Represents a StopTimeEvent. */
@@ -1396,6 +1405,9 @@ export namespace transit_realtime {
 
             /** StopTimeEvent uncertainty. */
             public uncertainty: number;
+
+            /** StopTimeEvent scheduledTime. */
+            public scheduledTime: (number|Long);
 
             /**
              * Creates a new StopTimeEvent instance using the specified properties.
@@ -1635,6 +1647,15 @@ export namespace transit_realtime {
 
                 /** StopTimeProperties assignedStopId */
                 assignedStopId?: (string|null);
+
+                /** StopTimeProperties stopHeadsign */
+                stopHeadsign?: (string|null);
+
+                /** StopTimeProperties pickupType */
+                pickupType?: (transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.DropOffPickupType|null);
+
+                /** StopTimeProperties dropOffType */
+                dropOffType?: (transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.DropOffPickupType|null);
             }
 
             /** Represents a StopTimeProperties. */
@@ -1648,6 +1669,15 @@ export namespace transit_realtime {
 
                 /** StopTimeProperties assignedStopId. */
                 public assignedStopId: string;
+
+                /** StopTimeProperties stopHeadsign. */
+                public stopHeadsign: string;
+
+                /** StopTimeProperties pickupType. */
+                public pickupType: transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.DropOffPickupType;
+
+                /** StopTimeProperties dropOffType. */
+                public dropOffType: transit_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties.DropOffPickupType;
 
                 /**
                  * Creates a new StopTimeProperties instance using the specified properties.
@@ -1726,6 +1756,17 @@ export namespace transit_realtime {
                  */
                 public static getTypeUrl(typeUrlPrefix?: string): string;
             }
+
+            namespace StopTimeProperties {
+
+                /** DropOffPickupType enum. */
+                enum DropOffPickupType {
+                    REGULAR = 0,
+                    NONE = 1,
+                    PHONE_AGENCY = 2,
+                    COORDINATE_WITH_DRIVER = 3
+                }
+            }
         }
 
         /** Properties of a TripProperties. */
@@ -1742,6 +1783,15 @@ export namespace transit_realtime {
 
             /** TripProperties shapeId */
             shapeId?: (string|null);
+
+            /** TripProperties tripHeadsign */
+            tripHeadsign?: (string|null);
+
+            /** TripProperties tripShortName */
+            tripShortName?: (string|null);
+
+            /** TripProperties routeId */
+            routeId?: (string|null);
         }
 
         /** Represents a TripProperties. */
@@ -1764,6 +1814,15 @@ export namespace transit_realtime {
 
             /** TripProperties shapeId. */
             public shapeId: string;
+
+            /** TripProperties tripHeadsign. */
+            public tripHeadsign: string;
+
+            /** TripProperties tripShortName. */
+            public tripShortName: string;
+
+            /** TripProperties routeId. */
+            public routeId: string;
 
             /**
              * Creates a new TripProperties instance using the specified properties.
@@ -2762,7 +2821,8 @@ export namespace transit_realtime {
             CANCELED = 3,
             REPLACEMENT = 5,
             DUPLICATED = 6,
-            DELETED = 7
+            DELETED = 7,
+            NEW = 8
         }
 
         /** Properties of a ModifiedTripSelector. */
@@ -4216,6 +4276,169 @@ export namespace transit_realtime {
              */
             public static getTypeUrl(typeUrlPrefix?: string): string;
         }
+    }
+
+    /** Properties of a Route. */
+    interface IRoute {
+
+        /** Route routeId */
+        routeId?: (string|null);
+
+        /** Route agencyId */
+        agencyId?: (string|null);
+
+        /** Route routeShortName */
+        routeShortName?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeLongName */
+        routeLongName?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeDesc */
+        routeDesc?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeType */
+        routeType?: (number|null);
+
+        /** Route routeUrl */
+        routeUrl?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeColor */
+        routeColor?: (string|null);
+
+        /** Route routeTextColor */
+        routeTextColor?: (string|null);
+
+        /** Route routeSortOrder */
+        routeSortOrder?: (number|null);
+
+        /** Route startDate */
+        startDate?: (string|null);
+
+        /** Route endDate */
+        endDate?: (string|null);
+    }
+
+    /** Represents a Route. */
+    class Route implements IRoute {
+
+        /**
+         * Constructs a new Route.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: transit_realtime.IRoute);
+
+        /** Route routeId. */
+        public routeId: string;
+
+        /** Route agencyId. */
+        public agencyId: string;
+
+        /** Route routeShortName. */
+        public routeShortName?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeLongName. */
+        public routeLongName?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeDesc. */
+        public routeDesc?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeType. */
+        public routeType: number;
+
+        /** Route routeUrl. */
+        public routeUrl?: (transit_realtime.ITranslatedString|null);
+
+        /** Route routeColor. */
+        public routeColor: string;
+
+        /** Route routeTextColor. */
+        public routeTextColor: string;
+
+        /** Route routeSortOrder. */
+        public routeSortOrder: number;
+
+        /** Route startDate. */
+        public startDate: string;
+
+        /** Route endDate. */
+        public endDate: string;
+
+        /**
+         * Creates a new Route instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Route instance
+         */
+        public static create(properties?: transit_realtime.IRoute): transit_realtime.Route;
+
+        /**
+         * Encodes the specified Route message. Does not implicitly {@link transit_realtime.Route.verify|verify} messages.
+         * @param message Route message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: transit_realtime.IRoute, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Route message, length delimited. Does not implicitly {@link transit_realtime.Route.verify|verify} messages.
+         * @param message Route message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: transit_realtime.IRoute, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Route message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Route
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): transit_realtime.Route;
+
+        /**
+         * Decodes a Route message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Route
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): transit_realtime.Route;
+
+        /**
+         * Verifies a Route message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Route message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Route
+         */
+        public static fromObject(object: { [k: string]: any }): transit_realtime.Route;
+
+        /**
+         * Creates a plain object from a Route message. Also converts values to other types if specified.
+         * @param message Route
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: transit_realtime.Route, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Route to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for Route
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
     /** Properties of a StopSelector. */
