@@ -4958,6 +4958,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
          * @property {transit_realtime.VehiclePosition.OccupancyStatus|null} [occupancyStatus] VehiclePosition occupancyStatus
          * @property {number|null} [occupancyPercentage] VehiclePosition occupancyPercentage
          * @property {Array.<transit_realtime.VehiclePosition.ICarriageDetails>|null} [multiCarriageDetails] VehiclePosition multiCarriageDetails
+         * @property {number|null} [cyclistPositionsAvailable] VehiclePosition cyclistPositionsAvailable
+         * @property {number|null} [totalCyclistPositions] VehiclePosition totalCyclistPositions
          */
 
         /**
@@ -5065,6 +5067,22 @@ export const transit_realtime = $root.transit_realtime = (() => {
         VehiclePosition.prototype.multiCarriageDetails = $util.emptyArray;
 
         /**
+         * VehiclePosition cyclistPositionsAvailable.
+         * @member {number} cyclistPositionsAvailable
+         * @memberof transit_realtime.VehiclePosition
+         * @instance
+         */
+        VehiclePosition.prototype.cyclistPositionsAvailable = 0;
+
+        /**
+         * VehiclePosition totalCyclistPositions.
+         * @member {number} totalCyclistPositions
+         * @memberof transit_realtime.VehiclePosition
+         * @instance
+         */
+        VehiclePosition.prototype.totalCyclistPositions = 0;
+
+        /**
          * Creates a new VehiclePosition instance using the specified properties.
          * @function create
          * @memberof transit_realtime.VehiclePosition
@@ -5111,6 +5129,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
             if (message.multiCarriageDetails != null && message.multiCarriageDetails.length)
                 for (let i = 0; i < message.multiCarriageDetails.length; ++i)
                     $root.transit_realtime.VehiclePosition.CarriageDetails.encode(message.multiCarriageDetails[i], writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
+            if (message.cyclistPositionsAvailable != null && Object.hasOwnProperty.call(message, "cyclistPositionsAvailable"))
+                writer.uint32(/* id 12, wireType 0 =*/96).uint32(message.cyclistPositionsAvailable);
+            if (message.totalCyclistPositions != null && Object.hasOwnProperty.call(message, "totalCyclistPositions"))
+                writer.uint32(/* id 13, wireType 0 =*/104).uint32(message.totalCyclistPositions);
             return writer;
         };
 
@@ -5189,6 +5211,14 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         if (!(message.multiCarriageDetails && message.multiCarriageDetails.length))
                             message.multiCarriageDetails = [];
                         message.multiCarriageDetails.push($root.transit_realtime.VehiclePosition.CarriageDetails.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 12: {
+                        message.cyclistPositionsAvailable = reader.uint32();
+                        break;
+                    }
+                case 13: {
+                        message.totalCyclistPositions = reader.uint32();
                         break;
                     }
                 default:
@@ -5297,6 +5327,12 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         return "multiCarriageDetails." + error;
                 }
             }
+            if (message.cyclistPositionsAvailable != null && message.hasOwnProperty("cyclistPositionsAvailable"))
+                if (!$util.isInteger(message.cyclistPositionsAvailable))
+                    return "cyclistPositionsAvailable: integer expected";
+            if (message.totalCyclistPositions != null && message.hasOwnProperty("totalCyclistPositions"))
+                if (!$util.isInteger(message.totalCyclistPositions))
+                    return "totalCyclistPositions: integer expected";
             return null;
         };
 
@@ -5444,6 +5480,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     message.multiCarriageDetails[i] = $root.transit_realtime.VehiclePosition.CarriageDetails.fromObject(object.multiCarriageDetails[i]);
                 }
             }
+            if (object.cyclistPositionsAvailable != null)
+                message.cyclistPositionsAvailable = object.cyclistPositionsAvailable >>> 0;
+            if (object.totalCyclistPositions != null)
+                message.totalCyclistPositions = object.totalCyclistPositions >>> 0;
             return message;
         };
 
@@ -5477,6 +5517,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
                 object.vehicle = null;
                 object.occupancyStatus = options.enums === String ? "EMPTY" : 0;
                 object.occupancyPercentage = 0;
+                object.cyclistPositionsAvailable = 0;
+                object.totalCyclistPositions = 0;
             }
             if (message.trip != null && message.hasOwnProperty("trip"))
                 object.trip = $root.transit_realtime.TripDescriptor.toObject(message.trip, options);
@@ -5506,6 +5548,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
                 for (let j = 0; j < message.multiCarriageDetails.length; ++j)
                     object.multiCarriageDetails[j] = $root.transit_realtime.VehiclePosition.CarriageDetails.toObject(message.multiCarriageDetails[j], options);
             }
+            if (message.cyclistPositionsAvailable != null && message.hasOwnProperty("cyclistPositionsAvailable"))
+                object.cyclistPositionsAvailable = message.cyclistPositionsAvailable;
+            if (message.totalCyclistPositions != null && message.hasOwnProperty("totalCyclistPositions"))
+                object.totalCyclistPositions = message.totalCyclistPositions;
             return object;
         };
 
@@ -5610,6 +5656,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
              * @property {transit_realtime.VehiclePosition.OccupancyStatus|null} [occupancyStatus] CarriageDetails occupancyStatus
              * @property {number|null} [occupancyPercentage] CarriageDetails occupancyPercentage
              * @property {number|null} [carriageSequence] CarriageDetails carriageSequence
+             * @property {number|null} [cyclistPositionsAvailable] CarriageDetails cyclistPositionsAvailable
+             * @property {number|null} [totalCyclistPositions] CarriageDetails totalCyclistPositions
              */
 
             /**
@@ -5668,6 +5716,22 @@ export const transit_realtime = $root.transit_realtime = (() => {
             CarriageDetails.prototype.carriageSequence = 0;
 
             /**
+             * CarriageDetails cyclistPositionsAvailable.
+             * @member {number} cyclistPositionsAvailable
+             * @memberof transit_realtime.VehiclePosition.CarriageDetails
+             * @instance
+             */
+            CarriageDetails.prototype.cyclistPositionsAvailable = 0;
+
+            /**
+             * CarriageDetails totalCyclistPositions.
+             * @member {number} totalCyclistPositions
+             * @memberof transit_realtime.VehiclePosition.CarriageDetails
+             * @instance
+             */
+            CarriageDetails.prototype.totalCyclistPositions = 0;
+
+            /**
              * Creates a new CarriageDetails instance using the specified properties.
              * @function create
              * @memberof transit_realtime.VehiclePosition.CarriageDetails
@@ -5701,6 +5765,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     writer.uint32(/* id 4, wireType 0 =*/32).int32(message.occupancyPercentage);
                 if (message.carriageSequence != null && Object.hasOwnProperty.call(message, "carriageSequence"))
                     writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.carriageSequence);
+                if (message.cyclistPositionsAvailable != null && Object.hasOwnProperty.call(message, "cyclistPositionsAvailable"))
+                    writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.cyclistPositionsAvailable);
+                if (message.totalCyclistPositions != null && Object.hasOwnProperty.call(message, "totalCyclistPositions"))
+                    writer.uint32(/* id 7, wireType 0 =*/56).uint32(message.totalCyclistPositions);
                 return writer;
             };
 
@@ -5753,6 +5821,14 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         }
                     case 5: {
                             message.carriageSequence = reader.uint32();
+                            break;
+                        }
+                    case 6: {
+                            message.cyclistPositionsAvailable = reader.uint32();
+                            break;
+                        }
+                    case 7: {
+                            message.totalCyclistPositions = reader.uint32();
                             break;
                         }
                     default:
@@ -5817,6 +5893,12 @@ export const transit_realtime = $root.transit_realtime = (() => {
                 if (message.carriageSequence != null && message.hasOwnProperty("carriageSequence"))
                     if (!$util.isInteger(message.carriageSequence))
                         return "carriageSequence: integer expected";
+                if (message.cyclistPositionsAvailable != null && message.hasOwnProperty("cyclistPositionsAvailable"))
+                    if (!$util.isInteger(message.cyclistPositionsAvailable))
+                        return "cyclistPositionsAvailable: integer expected";
+                if (message.totalCyclistPositions != null && message.hasOwnProperty("totalCyclistPositions"))
+                    if (!$util.isInteger(message.totalCyclistPositions))
+                        return "totalCyclistPositions: integer expected";
                 return null;
             };
 
@@ -5884,6 +5966,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     message.occupancyPercentage = object.occupancyPercentage | 0;
                 if (object.carriageSequence != null)
                     message.carriageSequence = object.carriageSequence >>> 0;
+                if (object.cyclistPositionsAvailable != null)
+                    message.cyclistPositionsAvailable = object.cyclistPositionsAvailable >>> 0;
+                if (object.totalCyclistPositions != null)
+                    message.totalCyclistPositions = object.totalCyclistPositions >>> 0;
                 return message;
             };
 
@@ -5906,6 +5992,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     object.occupancyStatus = options.enums === String ? "NO_DATA_AVAILABLE" : 7;
                     object.occupancyPercentage = -1;
                     object.carriageSequence = 0;
+                    object.cyclistPositionsAvailable = 0;
+                    object.totalCyclistPositions = 0;
                 }
                 if (message.id != null && message.hasOwnProperty("id"))
                     object.id = message.id;
@@ -5917,6 +6005,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     object.occupancyPercentage = message.occupancyPercentage;
                 if (message.carriageSequence != null && message.hasOwnProperty("carriageSequence"))
                     object.carriageSequence = message.carriageSequence;
+                if (message.cyclistPositionsAvailable != null && message.hasOwnProperty("cyclistPositionsAvailable"))
+                    object.cyclistPositionsAvailable = message.cyclistPositionsAvailable;
+                if (message.totalCyclistPositions != null && message.hasOwnProperty("totalCyclistPositions"))
+                    object.totalCyclistPositions = message.totalCyclistPositions;
                 return object;
             };
 
@@ -5959,6 +6051,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
          * @memberof transit_realtime
          * @interface IAlert
          * @property {Array.<transit_realtime.ITimeRange>|null} [activePeriod] Alert activePeriod
+         * @property {Array.<transit_realtime.ITimeRange>|null} [communicationPeriod] Alert communicationPeriod
+         * @property {Array.<transit_realtime.ITimeRange>|null} [impactPeriod] Alert impactPeriod
          * @property {Array.<transit_realtime.IEntitySelector>|null} [informedEntity] Alert informedEntity
          * @property {transit_realtime.Alert.Cause|null} [cause] Alert cause
          * @property {transit_realtime.Alert.Effect|null} [effect] Alert effect
@@ -5986,6 +6080,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
          */
         function Alert(properties) {
             this.activePeriod = [];
+            this.communicationPeriod = [];
+            this.impactPeriod = [];
             this.informedEntity = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
@@ -6000,6 +6096,22 @@ export const transit_realtime = $root.transit_realtime = (() => {
          * @instance
          */
         Alert.prototype.activePeriod = $util.emptyArray;
+
+        /**
+         * Alert communicationPeriod.
+         * @member {Array.<transit_realtime.ITimeRange>} communicationPeriod
+         * @memberof transit_realtime.Alert
+         * @instance
+         */
+        Alert.prototype.communicationPeriod = $util.emptyArray;
+
+        /**
+         * Alert impactPeriod.
+         * @member {Array.<transit_realtime.ITimeRange>} impactPeriod
+         * @memberof transit_realtime.Alert
+         * @instance
+         */
+        Alert.prototype.impactPeriod = $util.emptyArray;
 
         /**
          * Alert informedEntity.
@@ -6148,6 +6260,12 @@ export const transit_realtime = $root.transit_realtime = (() => {
             if (message.activePeriod != null && message.activePeriod.length)
                 for (let i = 0; i < message.activePeriod.length; ++i)
                     $root.transit_realtime.TimeRange.encode(message.activePeriod[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.communicationPeriod != null && message.communicationPeriod.length)
+                for (let i = 0; i < message.communicationPeriod.length; ++i)
+                    $root.transit_realtime.TimeRange.encode(message.communicationPeriod[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.impactPeriod != null && message.impactPeriod.length)
+                for (let i = 0; i < message.impactPeriod.length; ++i)
+                    $root.transit_realtime.TimeRange.encode(message.impactPeriod[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.informedEntity != null && message.informedEntity.length)
                 for (let i = 0; i < message.informedEntity.length; ++i)
                     $root.transit_realtime.EntitySelector.encode(message.informedEntity[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
@@ -6217,6 +6335,18 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         if (!(message.activePeriod && message.activePeriod.length))
                             message.activePeriod = [];
                         message.activePeriod.push($root.transit_realtime.TimeRange.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 2: {
+                        if (!(message.communicationPeriod && message.communicationPeriod.length))
+                            message.communicationPeriod = [];
+                        message.communicationPeriod.push($root.transit_realtime.TimeRange.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 3: {
+                        if (!(message.impactPeriod && message.impactPeriod.length))
+                            message.impactPeriod = [];
+                        message.impactPeriod.push($root.transit_realtime.TimeRange.decode(reader, reader.uint32()));
                         break;
                     }
                 case 5: {
@@ -6325,6 +6455,24 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         return "activePeriod." + error;
                 }
             }
+            if (message.communicationPeriod != null && message.hasOwnProperty("communicationPeriod")) {
+                if (!Array.isArray(message.communicationPeriod))
+                    return "communicationPeriod: array expected";
+                for (let i = 0; i < message.communicationPeriod.length; ++i) {
+                    let error = $root.transit_realtime.TimeRange.verify(message.communicationPeriod[i]);
+                    if (error)
+                        return "communicationPeriod." + error;
+                }
+            }
+            if (message.impactPeriod != null && message.hasOwnProperty("impactPeriod")) {
+                if (!Array.isArray(message.impactPeriod))
+                    return "impactPeriod: array expected";
+                for (let i = 0; i < message.impactPeriod.length; ++i) {
+                    let error = $root.transit_realtime.TimeRange.verify(message.impactPeriod[i]);
+                    if (error)
+                        return "impactPeriod." + error;
+                }
+            }
             if (message.informedEntity != null && message.hasOwnProperty("informedEntity")) {
                 if (!Array.isArray(message.informedEntity))
                     return "informedEntity: array expected";
@@ -6350,6 +6498,7 @@ export const transit_realtime = $root.transit_realtime = (() => {
                 case 10:
                 case 11:
                 case 12:
+                case 13:
                     break;
                 }
             if (message.effect != null && message.hasOwnProperty("effect"))
@@ -6459,6 +6608,26 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     message.activePeriod[i] = $root.transit_realtime.TimeRange.fromObject(object.activePeriod[i]);
                 }
             }
+            if (object.communicationPeriod) {
+                if (!Array.isArray(object.communicationPeriod))
+                    throw TypeError(".transit_realtime.Alert.communicationPeriod: array expected");
+                message.communicationPeriod = [];
+                for (let i = 0; i < object.communicationPeriod.length; ++i) {
+                    if (typeof object.communicationPeriod[i] !== "object")
+                        throw TypeError(".transit_realtime.Alert.communicationPeriod: object expected");
+                    message.communicationPeriod[i] = $root.transit_realtime.TimeRange.fromObject(object.communicationPeriod[i]);
+                }
+            }
+            if (object.impactPeriod) {
+                if (!Array.isArray(object.impactPeriod))
+                    throw TypeError(".transit_realtime.Alert.impactPeriod: array expected");
+                message.impactPeriod = [];
+                for (let i = 0; i < object.impactPeriod.length; ++i) {
+                    if (typeof object.impactPeriod[i] !== "object")
+                        throw TypeError(".transit_realtime.Alert.impactPeriod: object expected");
+                    message.impactPeriod[i] = $root.transit_realtime.TimeRange.fromObject(object.impactPeriod[i]);
+                }
+            }
             if (object.informedEntity) {
                 if (!Array.isArray(object.informedEntity))
                     throw TypeError(".transit_realtime.Alert.informedEntity: array expected");
@@ -6523,6 +6692,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
             case "MEDICAL_EMERGENCY":
             case 12:
                 message.cause = 12;
+                break;
+            case "SPECIAL_EVENT":
+            case 13:
+                message.cause = 13;
                 break;
             }
             switch (object.effect) {
@@ -6674,6 +6847,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
             let object = {};
             if (options.arrays || options.defaults) {
                 object.activePeriod = [];
+                object.communicationPeriod = [];
+                object.impactPeriod = [];
                 object.informedEntity = [];
             }
             if (options.defaults) {
@@ -6696,6 +6871,16 @@ export const transit_realtime = $root.transit_realtime = (() => {
                 object.activePeriod = [];
                 for (let j = 0; j < message.activePeriod.length; ++j)
                     object.activePeriod[j] = $root.transit_realtime.TimeRange.toObject(message.activePeriod[j], options);
+            }
+            if (message.communicationPeriod && message.communicationPeriod.length) {
+                object.communicationPeriod = [];
+                for (let j = 0; j < message.communicationPeriod.length; ++j)
+                    object.communicationPeriod[j] = $root.transit_realtime.TimeRange.toObject(message.communicationPeriod[j], options);
+            }
+            if (message.impactPeriod && message.impactPeriod.length) {
+                object.impactPeriod = [];
+                for (let j = 0; j < message.impactPeriod.length; ++j)
+                    object.impactPeriod[j] = $root.transit_realtime.TimeRange.toObject(message.impactPeriod[j], options);
             }
             if (message.informedEntity && message.informedEntity.length) {
                 object.informedEntity = [];
@@ -6775,6 +6960,7 @@ export const transit_realtime = $root.transit_realtime = (() => {
          * @property {number} CONSTRUCTION=10 CONSTRUCTION value
          * @property {number} POLICE_ACTIVITY=11 POLICE_ACTIVITY value
          * @property {number} MEDICAL_EMERGENCY=12 MEDICAL_EMERGENCY value
+         * @property {number} SPECIAL_EVENT=13 SPECIAL_EVENT value
          */
         Alert.Cause = (function() {
             const valuesById = {}, values = Object.create(valuesById);
@@ -6790,6 +6976,7 @@ export const transit_realtime = $root.transit_realtime = (() => {
             values[valuesById[10] = "CONSTRUCTION"] = 10;
             values[valuesById[11] = "POLICE_ACTIVITY"] = 11;
             values[valuesById[12] = "MEDICAL_EMERGENCY"] = 12;
+            values[valuesById[13] = "SPECIAL_EVENT"] = 13;
             return values;
         })();
 
