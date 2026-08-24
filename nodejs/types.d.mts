@@ -1938,6 +1938,12 @@ export namespace transit_realtime {
 
         /** VehiclePosition multiCarriageDetails */
         multiCarriageDetails?: (transit_realtime.VehiclePosition.ICarriageDetails[]|null);
+
+        /** VehiclePosition cyclistPositionsAvailable */
+        cyclistPositionsAvailable?: (number|null);
+
+        /** VehiclePosition totalCyclistPositions */
+        totalCyclistPositions?: (number|null);
     }
 
     /** Represents a VehiclePosition. */
@@ -1981,6 +1987,12 @@ export namespace transit_realtime {
 
         /** VehiclePosition multiCarriageDetails. */
         public multiCarriageDetails: transit_realtime.VehiclePosition.ICarriageDetails[];
+
+        /** VehiclePosition cyclistPositionsAvailable. */
+        public cyclistPositionsAvailable: number;
+
+        /** VehiclePosition totalCyclistPositions. */
+        public totalCyclistPositions: number;
 
         /**
          * Creates a new VehiclePosition instance using the specified properties.
@@ -2108,6 +2120,12 @@ export namespace transit_realtime {
 
             /** CarriageDetails carriageSequence */
             carriageSequence?: (number|null);
+
+            /** CarriageDetails cyclistPositionsAvailable */
+            cyclistPositionsAvailable?: (number|null);
+
+            /** CarriageDetails totalCyclistPositions */
+            totalCyclistPositions?: (number|null);
         }
 
         /** Represents a CarriageDetails. */
@@ -2133,6 +2151,12 @@ export namespace transit_realtime {
 
             /** CarriageDetails carriageSequence. */
             public carriageSequence: number;
+
+            /** CarriageDetails cyclistPositionsAvailable. */
+            public cyclistPositionsAvailable: number;
+
+            /** CarriageDetails totalCyclistPositions. */
+            public totalCyclistPositions: number;
 
             /**
              * Creates a new CarriageDetails instance using the specified properties.
@@ -2219,6 +2243,12 @@ export namespace transit_realtime {
         /** Alert activePeriod */
         activePeriod?: (transit_realtime.ITimeRange[]|null);
 
+        /** Alert communicationPeriod */
+        communicationPeriod?: (transit_realtime.ITimeRange[]|null);
+
+        /** Alert impactPeriod */
+        impactPeriod?: (transit_realtime.ITimeRange[]|null);
+
         /** Alert informedEntity */
         informedEntity?: (transit_realtime.IEntitySelector[]|null);
 
@@ -2276,6 +2306,12 @@ export namespace transit_realtime {
 
         /** Alert activePeriod. */
         public activePeriod: transit_realtime.ITimeRange[];
+
+        /** Alert communicationPeriod. */
+        public communicationPeriod: transit_realtime.ITimeRange[];
+
+        /** Alert impactPeriod. */
+        public impactPeriod: transit_realtime.ITimeRange[];
 
         /** Alert informedEntity. */
         public informedEntity: transit_realtime.IEntitySelector[];
@@ -2415,7 +2451,8 @@ export namespace transit_realtime {
             MAINTENANCE = 9,
             CONSTRUCTION = 10,
             POLICE_ACTIVITY = 11,
-            MEDICAL_EMERGENCY = 12
+            MEDICAL_EMERGENCY = 12,
+            SPECIAL_EVENT = 13
         }
 
         /** Effect enum. */
