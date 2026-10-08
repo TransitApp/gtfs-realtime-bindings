@@ -1516,6 +1516,9 @@ export namespace transit_realtime {
 
             /** StopTimeUpdate .nyctStopTimeUpdate */
             ".nyctStopTimeUpdate"?: (INyctStopTimeUpdate|null);
+
+            /** StopTimeUpdate .mtaRailroadStopTimeUpdate */
+            ".mtaRailroadStopTimeUpdate"?: (IMtaRailroadStopTimeUpdate|null);
         }
 
         /** Represents a StopTimeUpdate. */
@@ -1553,6 +1556,9 @@ export namespace transit_realtime {
 
             /** StopTimeUpdate .nyctStopTimeUpdate. */
             public nyctStopTimeUpdate?: (INyctStopTimeUpdate|null);
+
+            /** StopTimeUpdate .mtaRailroadStopTimeUpdate. */
+            public mtaRailroadStopTimeUpdate?: (IMtaRailroadStopTimeUpdate|null);
 
             /**
              * Creates a new StopTimeUpdate instance using the specified properties.
@@ -5217,6 +5223,109 @@ export class NyctStopTimeUpdate implements INyctStopTimeUpdate {
 
     /**
      * Gets the default type url for NyctStopTimeUpdate
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
+/** Properties of a MtaRailroadStopTimeUpdate. */
+export interface IMtaRailroadStopTimeUpdate {
+
+    /** MtaRailroadStopTimeUpdate track */
+    track?: (string|null);
+
+    /** MtaRailroadStopTimeUpdate trainStatus */
+    trainStatus?: (string|null);
+}
+
+/** Represents a MtaRailroadStopTimeUpdate. */
+export class MtaRailroadStopTimeUpdate implements IMtaRailroadStopTimeUpdate {
+
+    /**
+     * Constructs a new MtaRailroadStopTimeUpdate.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IMtaRailroadStopTimeUpdate);
+
+    /** MtaRailroadStopTimeUpdate track. */
+    public track: string;
+
+    /** MtaRailroadStopTimeUpdate trainStatus. */
+    public trainStatus: string;
+
+    /**
+     * Creates a new MtaRailroadStopTimeUpdate instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns MtaRailroadStopTimeUpdate instance
+     */
+    public static create(properties?: IMtaRailroadStopTimeUpdate): MtaRailroadStopTimeUpdate;
+
+    /**
+     * Encodes the specified MtaRailroadStopTimeUpdate message. Does not implicitly {@link MtaRailroadStopTimeUpdate.verify|verify} messages.
+     * @param message MtaRailroadStopTimeUpdate message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IMtaRailroadStopTimeUpdate, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified MtaRailroadStopTimeUpdate message, length delimited. Does not implicitly {@link MtaRailroadStopTimeUpdate.verify|verify} messages.
+     * @param message MtaRailroadStopTimeUpdate message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IMtaRailroadStopTimeUpdate, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a MtaRailroadStopTimeUpdate message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns MtaRailroadStopTimeUpdate
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): MtaRailroadStopTimeUpdate;
+
+    /**
+     * Decodes a MtaRailroadStopTimeUpdate message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns MtaRailroadStopTimeUpdate
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): MtaRailroadStopTimeUpdate;
+
+    /**
+     * Verifies a MtaRailroadStopTimeUpdate message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a MtaRailroadStopTimeUpdate message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns MtaRailroadStopTimeUpdate
+     */
+    public static fromObject(object: { [k: string]: any }): MtaRailroadStopTimeUpdate;
+
+    /**
+     * Creates a plain object from a MtaRailroadStopTimeUpdate message. Also converts values to other types if specified.
+     * @param message MtaRailroadStopTimeUpdate
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: MtaRailroadStopTimeUpdate, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this MtaRailroadStopTimeUpdate to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for MtaRailroadStopTimeUpdate
      * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
      * @returns The default type url
      */
