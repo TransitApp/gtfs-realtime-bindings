@@ -3748,6 +3748,7 @@ export const transit_realtime = $root.transit_realtime = (() => {
              * @property {transit_realtime.TripUpdate.StopTimeUpdate.IStopTimeProperties|null} [stopTimeProperties] StopTimeUpdate stopTimeProperties
              * @property {ITransitStopTimeUpdateExtension|null} [".transitStopTimeUpdateExtension"] StopTimeUpdate .transitStopTimeUpdateExtension
              * @property {INyctStopTimeUpdate|null} [".nyctStopTimeUpdate"] StopTimeUpdate .nyctStopTimeUpdate
+             * @property {IMtaRailroadStopTimeUpdate|null} [".mtaRailroadStopTimeUpdate"] StopTimeUpdate .mtaRailroadStopTimeUpdate
              */
 
             /**
@@ -3838,6 +3839,14 @@ export const transit_realtime = $root.transit_realtime = (() => {
             StopTimeUpdate.prototype[".nyctStopTimeUpdate"] = null;
 
             /**
+             * StopTimeUpdate .mtaRailroadStopTimeUpdate.
+             * @member {IMtaRailroadStopTimeUpdate|null|undefined} .mtaRailroadStopTimeUpdate
+             * @memberof transit_realtime.TripUpdate.StopTimeUpdate
+             * @instance
+             */
+            StopTimeUpdate.prototype[".mtaRailroadStopTimeUpdate"] = null;
+
+            /**
              * Creates a new StopTimeUpdate instance using the specified properties.
              * @function create
              * @memberof transit_realtime.TripUpdate.StopTimeUpdate
@@ -3877,6 +3886,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     writer.uint32(/* id 7, wireType 0 =*/56).int32(message.departureOccupancyStatus);
                 if (message[".nyctStopTimeUpdate"] != null && Object.hasOwnProperty.call(message, ".nyctStopTimeUpdate"))
                     $root.NyctStopTimeUpdate.encode(message[".nyctStopTimeUpdate"], writer.uint32(/* id 1001, wireType 2 =*/8010).fork()).ldelim();
+                if (message[".mtaRailroadStopTimeUpdate"] != null && Object.hasOwnProperty.call(message, ".mtaRailroadStopTimeUpdate"))
+                    $root.MtaRailroadStopTimeUpdate.encode(message[".mtaRailroadStopTimeUpdate"], writer.uint32(/* id 1005, wireType 2 =*/8042).fork()).ldelim();
                 if (message[".transitStopTimeUpdateExtension"] != null && Object.hasOwnProperty.call(message, ".transitStopTimeUpdateExtension"))
                     $root.TransitStopTimeUpdateExtension.encode(message[".transitStopTimeUpdateExtension"], writer.uint32(/* id 9514, wireType 2 =*/76114).fork()).ldelim();
                 return writer;
@@ -3947,6 +3958,10 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         }
                     case 1001: {
                             message[".nyctStopTimeUpdate"] = $root.NyctStopTimeUpdate.decode(reader, reader.uint32());
+                            break;
+                        }
+                    case 1005: {
+                            message[".mtaRailroadStopTimeUpdate"] = $root.MtaRailroadStopTimeUpdate.decode(reader, reader.uint32());
                             break;
                         }
                     default:
@@ -4039,6 +4054,11 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     let error = $root.NyctStopTimeUpdate.verify(message[".nyctStopTimeUpdate"]);
                     if (error)
                         return ".nyctStopTimeUpdate." + error;
+                }
+                if (message[".mtaRailroadStopTimeUpdate"] != null && message.hasOwnProperty(".mtaRailroadStopTimeUpdate")) {
+                    let error = $root.MtaRailroadStopTimeUpdate.verify(message[".mtaRailroadStopTimeUpdate"]);
+                    if (error)
+                        return ".mtaRailroadStopTimeUpdate." + error;
                 }
                 return null;
             };
@@ -4152,6 +4172,11 @@ export const transit_realtime = $root.transit_realtime = (() => {
                         throw TypeError(".transit_realtime.TripUpdate.StopTimeUpdate..nyctStopTimeUpdate: object expected");
                     message[".nyctStopTimeUpdate"] = $root.NyctStopTimeUpdate.fromObject(object[".nyctStopTimeUpdate"]);
                 }
+                if (object[".mtaRailroadStopTimeUpdate"] != null) {
+                    if (typeof object[".mtaRailroadStopTimeUpdate"] !== "object")
+                        throw TypeError(".transit_realtime.TripUpdate.StopTimeUpdate..mtaRailroadStopTimeUpdate: object expected");
+                    message[".mtaRailroadStopTimeUpdate"] = $root.MtaRailroadStopTimeUpdate.fromObject(object[".mtaRailroadStopTimeUpdate"]);
+                }
                 return message;
             };
 
@@ -4177,6 +4202,7 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     object.stopTimeProperties = null;
                     object.departureOccupancyStatus = options.enums === String ? "EMPTY" : 0;
                     object[".nyctStopTimeUpdate"] = null;
+                    object[".mtaRailroadStopTimeUpdate"] = null;
                     object[".transitStopTimeUpdateExtension"] = null;
                 }
                 if (message.stopSequence != null && message.hasOwnProperty("stopSequence"))
@@ -4195,6 +4221,8 @@ export const transit_realtime = $root.transit_realtime = (() => {
                     object.departureOccupancyStatus = options.enums === String ? $root.transit_realtime.VehiclePosition.OccupancyStatus[message.departureOccupancyStatus] === undefined ? message.departureOccupancyStatus : $root.transit_realtime.VehiclePosition.OccupancyStatus[message.departureOccupancyStatus] : message.departureOccupancyStatus;
                 if (message[".nyctStopTimeUpdate"] != null && message.hasOwnProperty(".nyctStopTimeUpdate"))
                     object[".nyctStopTimeUpdate"] = $root.NyctStopTimeUpdate.toObject(message[".nyctStopTimeUpdate"], options);
+                if (message[".mtaRailroadStopTimeUpdate"] != null && message.hasOwnProperty(".mtaRailroadStopTimeUpdate"))
+                    object[".mtaRailroadStopTimeUpdate"] = $root.MtaRailroadStopTimeUpdate.toObject(message[".mtaRailroadStopTimeUpdate"], options);
                 if (message[".transitStopTimeUpdateExtension"] != null && message.hasOwnProperty(".transitStopTimeUpdateExtension"))
                     object[".transitStopTimeUpdateExtension"] = $root.TransitStopTimeUpdateExtension.toObject(message[".transitStopTimeUpdateExtension"], options);
                 return object;
@@ -14018,6 +14046,233 @@ export const NyctStopTimeUpdate = $root.NyctStopTimeUpdate = (() => {
     };
 
     return NyctStopTimeUpdate;
+})();
+
+export const MtaRailroadStopTimeUpdate = $root.MtaRailroadStopTimeUpdate = (() => {
+
+    /**
+     * Properties of a MtaRailroadStopTimeUpdate.
+     * @exports IMtaRailroadStopTimeUpdate
+     * @interface IMtaRailroadStopTimeUpdate
+     * @property {string|null} [track] MtaRailroadStopTimeUpdate track
+     * @property {string|null} [trainStatus] MtaRailroadStopTimeUpdate trainStatus
+     */
+
+    /**
+     * Constructs a new MtaRailroadStopTimeUpdate.
+     * @exports MtaRailroadStopTimeUpdate
+     * @classdesc Represents a MtaRailroadStopTimeUpdate.
+     * @implements IMtaRailroadStopTimeUpdate
+     * @constructor
+     * @param {IMtaRailroadStopTimeUpdate=} [properties] Properties to set
+     */
+    function MtaRailroadStopTimeUpdate(properties) {
+        if (properties)
+            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * MtaRailroadStopTimeUpdate track.
+     * @member {string} track
+     * @memberof MtaRailroadStopTimeUpdate
+     * @instance
+     */
+    MtaRailroadStopTimeUpdate.prototype.track = "";
+
+    /**
+     * MtaRailroadStopTimeUpdate trainStatus.
+     * @member {string} trainStatus
+     * @memberof MtaRailroadStopTimeUpdate
+     * @instance
+     */
+    MtaRailroadStopTimeUpdate.prototype.trainStatus = "";
+
+    /**
+     * Creates a new MtaRailroadStopTimeUpdate instance using the specified properties.
+     * @function create
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {IMtaRailroadStopTimeUpdate=} [properties] Properties to set
+     * @returns {MtaRailroadStopTimeUpdate} MtaRailroadStopTimeUpdate instance
+     */
+    MtaRailroadStopTimeUpdate.create = function create(properties) {
+        return new MtaRailroadStopTimeUpdate(properties);
+    };
+
+    /**
+     * Encodes the specified MtaRailroadStopTimeUpdate message. Does not implicitly {@link MtaRailroadStopTimeUpdate.verify|verify} messages.
+     * @function encode
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {IMtaRailroadStopTimeUpdate} message MtaRailroadStopTimeUpdate message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MtaRailroadStopTimeUpdate.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.track != null && Object.hasOwnProperty.call(message, "track"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.track);
+        if (message.trainStatus != null && Object.hasOwnProperty.call(message, "trainStatus"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.trainStatus);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified MtaRailroadStopTimeUpdate message, length delimited. Does not implicitly {@link MtaRailroadStopTimeUpdate.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {IMtaRailroadStopTimeUpdate} message MtaRailroadStopTimeUpdate message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    MtaRailroadStopTimeUpdate.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a MtaRailroadStopTimeUpdate message from the specified reader or buffer.
+     * @function decode
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {MtaRailroadStopTimeUpdate} MtaRailroadStopTimeUpdate
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MtaRailroadStopTimeUpdate.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.MtaRailroadStopTimeUpdate();
+        while (reader.pos < end) {
+            let tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    message.track = reader.string();
+                    break;
+                }
+            case 2: {
+                    message.trainStatus = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a MtaRailroadStopTimeUpdate message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {MtaRailroadStopTimeUpdate} MtaRailroadStopTimeUpdate
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    MtaRailroadStopTimeUpdate.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a MtaRailroadStopTimeUpdate message.
+     * @function verify
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    MtaRailroadStopTimeUpdate.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.track != null && message.hasOwnProperty("track"))
+            if (!$util.isString(message.track))
+                return "track: string expected";
+        if (message.trainStatus != null && message.hasOwnProperty("trainStatus"))
+            if (!$util.isString(message.trainStatus))
+                return "trainStatus: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a MtaRailroadStopTimeUpdate message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MtaRailroadStopTimeUpdate} MtaRailroadStopTimeUpdate
+     */
+    MtaRailroadStopTimeUpdate.fromObject = function fromObject(object) {
+        if (object instanceof $root.MtaRailroadStopTimeUpdate)
+            return object;
+        let message = new $root.MtaRailroadStopTimeUpdate();
+        if (object.track != null)
+            message.track = String(object.track);
+        if (object.trainStatus != null)
+            message.trainStatus = String(object.trainStatus);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MtaRailroadStopTimeUpdate message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {MtaRailroadStopTimeUpdate} message MtaRailroadStopTimeUpdate
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MtaRailroadStopTimeUpdate.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        let object = {};
+        if (options.defaults) {
+            object.track = "";
+            object.trainStatus = "";
+        }
+        if (message.track != null && message.hasOwnProperty("track"))
+            object.track = message.track;
+        if (message.trainStatus != null && message.hasOwnProperty("trainStatus"))
+            object.trainStatus = message.trainStatus;
+        return object;
+    };
+
+    /**
+     * Converts this MtaRailroadStopTimeUpdate to JSON.
+     * @function toJSON
+     * @memberof MtaRailroadStopTimeUpdate
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MtaRailroadStopTimeUpdate.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for MtaRailroadStopTimeUpdate
+     * @function getTypeUrl
+     * @memberof MtaRailroadStopTimeUpdate
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    MtaRailroadStopTimeUpdate.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/MtaRailroadStopTimeUpdate";
+    };
+
+    return MtaRailroadStopTimeUpdate;
 })();
 
 export const MercuryFeedHeader = $root.MercuryFeedHeader = (() => {

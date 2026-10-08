@@ -130,6 +130,7 @@ extend transit_realtime.TripDescriptor {
 
 extend transit_realtime.TripUpdate.StopTimeUpdate {
   optional NyctStopTimeUpdate nyct_stop_time_update = 1001;
+  optional MtaRailroadStopTimeUpdate mta_railroad_stop_time_update = 1005;
 }
 
 message TransitModificationExtension {
@@ -168,4 +169,3 @@ extend transit_realtime.ReplacementStop {
 extend transit_realtime.TripDescriptor.ModifiedTripSelector {
   optional TransitModifiedTripSelector transit_modified_trip_selector_extension = 9514;
 }
-
