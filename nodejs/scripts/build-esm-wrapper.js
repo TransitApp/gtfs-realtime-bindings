@@ -1,15 +1,7 @@
 /**
- * Writes gtfs-realtime.mjs: a thin ES module that re-exports the CommonJS
- * build (gtfs-realtime.js) instead of a second pbjs ES6 build.
- *
- * One build means one module instance and one set of types (types.d.ts) for
- * `import` and `require` alike. Two builds made TypeScript treat the CJS and
- * ESM types as unrelated (a TS2322 when a CJS library and an ESM app share
- * these types) and loaded two copies that both write to protobufjs's shared
- * root at runtime.
- *
- * The export names come from the CJS module itself, so the wrapper follows the
- * proto without a hand-kept list.
+ * Writes gtfs-realtime.mjs: an ES module that re-exports the CommonJS
+ * build (gtfs-realtime.js) rather than running pbjs twice. This avoids duplicating types
+ * and module instances, which can cause conflicts between CJS and ESM types.
  */
 'use strict';
 
