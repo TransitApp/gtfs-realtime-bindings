@@ -31,6 +31,8 @@ npm run test
 
 **Note:** The build script automatically replaces `import Long = require("long")` with `import { Long } from "protobufjs"` in the TypeScript definition files. This maintains compatibility with CommonJS TypeScript projects by using the Long stub type included in the ProtobufJS library instead of requiring a separate "long" package. 
 
+**Note:** `gtfs-realtime.mjs` is not a second pbjs build. `npm run buildProto:esm` generates it from `gtfs-realtime.js` with `scripts/build-esm-wrapper.js`: a thin ES module that re-exports the CommonJS build. `import` and `require` therefore share one module instance and one set of types (`types.d.ts`). Don't edit it by hand; rerun the build.
+
 Update the version number in `package.json`.
 
 Publish the package to NPM:
